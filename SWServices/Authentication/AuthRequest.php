@@ -1,7 +1,8 @@
 <?php
 namespace SWServices\Authentication;
 
-function sendReq($url, $pass, $user){
+class AuthRequest{
+    public static function sendReq($url, $pass, $user){
     $curl = curl_init();
     curl_setopt_array($curl, array(
         CURLOPT_URL => $url . "/security/authenticate",
@@ -12,20 +13,24 @@ function sendReq($url, $pass, $user){
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_HTTPHEADER => array(
-            "cache-control: no-cache",
             "password: ". $pass,
             "user: " . $user
         ),
         ));
     $response = curl_exec($curl);
     $err = curl_error($curl);
+    echo $err;
 
     curl_close($curl);
     if ($err) {
     throw new Exception("cURL Error #:" . $err);
     } else {
-    return $response;
+        
+    return json_encode($response);
     }
   
 }
+}
+
+
 ?>

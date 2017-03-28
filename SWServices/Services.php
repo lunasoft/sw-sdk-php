@@ -2,14 +2,14 @@
 namespace SWServices;
 
      class Services {
-        private $_token = null;
-        private  $_user = null;
-        private  $_password = null;
-        private $_url = null;
+        private static $_token = null;
+        private  static $_user = null;
+        private  static $_password = null;
+        private static $_url = null;
 
         public function __construct($params) {
             if(isset($params['url'])){
-                $this->$_url = $params['url'];
+                self::$_url = $params['url'];
             }
             else{
                 throw new Exception('URL debe especificarse');
@@ -18,13 +18,13 @@ namespace SWServices;
                 throw new Exception('Datos de autenticación deben especificarse');
             }
             if(isset($params['user'])){
-                $this->$_user = $params['user'];
+                self::$_user = $params['user'];
             }
             if(isset($params['password'])){
-                $this->$_password = $params['password'];
+                self::$_password = $params['password'];
             }
             if(isset($params['token'])){
-                $this->$_token = $params['token'];
+                self::$_token = $params['token'];
             }
            
                 
@@ -36,17 +36,17 @@ namespace SWServices;
         }
 
         public function get_url(){
-            return  $this->$_url;
+            return  self::$_url;
         }
         public function get_user(){
-            return  $this->$_user;
+            return  self::$_user;
         }
         public function get_password(){
-            return  $this->$_password;
+            return  self::$_password;
         }
 
         public function set_token($token){
-             $this->$_token = $token;
+             self::$_token = $token;
         }
         
     };

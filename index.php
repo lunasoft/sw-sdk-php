@@ -10,7 +10,10 @@ $params = array(
     "password"=> "12345678A"
 );
 
-Authentication::auth($params);
+$auth = Authentication::auth($params);
+$token = $auth::Token();
+header('Content-type: application/json');
+echo $token;
 
 
 ?>

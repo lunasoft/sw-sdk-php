@@ -18,7 +18,7 @@ class AuthenticationService extends Services{
     
 
     public function Token(){
-        AR::sendReq($this->get_url(), $this->get_password(), $this->get_user());
+        return AR::sendReq(Services::get_url(), Services::get_password(), Services::get_user());
     }
 }
 
