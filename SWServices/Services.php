@@ -32,7 +32,7 @@ namespace SWServices;
         }
         
         public function get_token(){
-            return  $this->$_token;
+            return  self::$_token;
         }
 
         public function get_url(){
