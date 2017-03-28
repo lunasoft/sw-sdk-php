@@ -7,26 +7,32 @@ class AuthRequest{
     curl_setopt_array($curl, array(
         CURLOPT_URL => $url . "/security/authenticate",
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_ENCODING => "",
+        CURLOPT_ENCODING => "UTF-8",
         CURLOPT_MAXREDIRS => 10,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "POST",
         CURLOPT_HTTPHEADER => array(
+             "cache-control: no-cache",
             "password: ". $pass,
-            "user: " . $user
+            "user: " . $user,
+            "Content-length: 0"
         ),
         ));
     $response = curl_exec($curl);
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     $err = curl_error($curl);
-    echo $err;
+    
 
     curl_close($curl);
     if ($err) {
     throw new Exception("cURL Error #:" . $err);
-    } else {
+    } else if($httpcode!='200') {
         
-    return json_encode($response);
+    die($response);
+    }
+    else{
+        return $response;
     }
   
 }

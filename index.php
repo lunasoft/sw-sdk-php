@@ -9,11 +9,17 @@ $params = array(
     "user"=>"demo",
     "password"=> "12345678A"
 );
-
-$auth = Authentication::auth($params);
+try{
+    $auth = Authentication::auth($params);
 $token = $auth::Token();
-header('Content-type: application/json');
+header('Content-type: text/plain');
+
 echo $token;
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
 
 
 ?>
