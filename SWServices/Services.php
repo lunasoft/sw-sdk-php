@@ -61,14 +61,14 @@ use SWServices\Authentication\AuthenticationService as Authentication;
         public static function get_url(){
             return  self::$_url;
         }
-        public function get_user(){
+        public static function get_user(){
             return  self::$_user;
         }
-        public function get_password(){
+        public static function get_password(){
             return  self::$_password;
         }
 
-        public function set_token($token){
+        public static function set_token($token){
              self::$_token = $token;
         }
         
