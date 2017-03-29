@@ -4,7 +4,6 @@ namespace SWServices\Stamp;
 
 class StampRequest{
     function sendReq($url, $token, $xml){
-
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -31,6 +30,7 @@ class StampRequest{
         $data .= "--" . $delimiter . "--\r\n";
 
         $handle = curl_init($url.'/cfdi33/stamp/v1');
+        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($handle, CURLOPT_POST, true);
         curl_setopt($handle, CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
@@ -49,7 +49,7 @@ class StampRequest{
         } 
         else 
         {
-            return $response;
+            return json_decode($response);
         }
     }
 }

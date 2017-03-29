@@ -1,0 +1,23 @@
+*   Trying 13.65.94.204...
+* TCP_NODELAY set
+* Connected to services.test.sw.com.mx (13.65.94.204) port 80 (#0)
+> POST /cfdi33/stamp/v1 HTTP/1.1
+Host: services.test.sw.com.mx
+Accept: */*
+Authorization: T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo
+Cache-Control: no-cache
+Content-Length: 143
+Expect: 100-continue
+Content-Type: text/xml; boundary=------------------------30f0c6da8bbe4db1
+
+* Done waiting for 100-continue
+< HTTP/1.1 403 Forbidden
+< Content-Length: 0
+< Server: Microsoft-IIS/8.0
+< X-Powered-By: ASP.NET
+< Set-Cookie: ARRAffinity=bb73c35cc32641955612b65b922d28ccc66776a42f5c193102595ec227d3ee67;Path=/;Domain=services.test.sw.com.mx
+< Date: Tue, 28 Mar 2017 21:49:53 GMT
+* HTTP error before end of send, stop sending
+< 
+* Curl_http_done: called premature == 0
+* Closing connection 0
