@@ -18,7 +18,7 @@
             "email": "heltton.ramirez@sw.com.mx"
         }
     ],
-    "require": {
+    "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
    "autoload": {
