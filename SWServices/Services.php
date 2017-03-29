@@ -1,11 +1,14 @@
 <?php
 namespace SWServices;
+use SWServices\Authentication\AuthenticationService as Authentication;
 
      class Services {
         private static $_token = null;
-        private  static $_user = null;
-        private  static $_password = null;
+        private static $_user = null;
+        private static $_password = null;
         private static $_url = null;
+        private static $_expirationDate = null;
+        private static $_timeSession = "PT2H";
 
         public function __construct($params) {
             if(isset($params['url'])){
@@ -25,6 +28,9 @@ namespace SWServices;
             }
             if(isset($params['token'])){
                 self::$_token = $params['token'];
+                date_default_timezone_set("America/Mexico_City");
+                self::$_expirationDate = new \DateTime('NOW');
+                self::$_expirationDate->add(new \DateInterval(self::$_timeSession));
             }
            
                 
@@ -32,6 +38,22 @@ namespace SWServices;
         }
         
         public function get_token(){
+
+            if(self::$_token == null || new \DateTime('NOW') > self::$_expirationDate)
+            {
+                $params = array(
+                    "url"=>self::$_url,
+                    "user"=>self::$_user,
+                    "password"=> self::$_password
+                );
+
+                $auth = Authentication::auth($params);
+                $token = $auth::Token();
+                self::$_token = json_decode($token)->data->token;
+                date_default_timezone_set("America/Mexico_City");
+                $_expirationDate = new \DateTime('NOW');
+                $_expirationDate->add(new \DateInterval(self::$_timeSession));
+            }
             return  self::$_token;
         }
 
