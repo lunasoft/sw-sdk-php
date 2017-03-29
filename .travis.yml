@@ -14,7 +14,7 @@ before_script:
 # Commands you want to run that will verify your build.
 script: 
 - phpunit --bootstrap ./SWSDK.php ./tests/AuthTests
-- phpunit --bootstrap ./SWSDK.php ./tests/Stamp/StampTests
+- phpunit --bootstrap ./SWSDK.php ./tests/StampTests
 
 # allow_failures: Allow this build to fail under the specified environments.
 # fast_finish: If your build fails do not continue trying to build, just stop.
