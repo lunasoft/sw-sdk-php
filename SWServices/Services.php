@@ -38,7 +38,7 @@ use SWServices\Authentication\AuthenticationService as Authentication;
 
         }
         
-        public function get_token(){
+        public static function get_token(){
 
             if(self::$_token == null || new \DateTime('NOW') > self::$_expirationDate)
             {
@@ -50,7 +50,7 @@ use SWServices\Authentication\AuthenticationService as Authentication;
 
                 $auth = Authentication::auth($params);
                 $token = $auth::Token();
-                self::$_token = json_decode($token)->data->token;
+                self::set_token(json_decode($token)->data->token);
                 date_default_timezone_set("America/Mexico_City");
                 $_expirationDate = new \DateTime('NOW');
                 $_expirationDate->add(new \DateInterval(self::$_timeSession));
