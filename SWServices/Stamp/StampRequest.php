@@ -3,7 +3,7 @@
 namespace SWServices\Stamp;
 
 class StampRequest{
-    function sendReq($url, $token, $xml){
+    public static function sendReq($url, $token, $xml){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
