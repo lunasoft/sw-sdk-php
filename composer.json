@@ -1,0 +1,18 @@
+{
+    "name": "sw/sdk",
+    "description": "PHP Library for SW Services",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Rich Barusta",
+            "email": "ricardo.barusta@sw.com.mx"
+        },
+        {
+            "name": "Alex Ramos",
+            "email": "alejandro.ramos@sw.com.mx"
+        }
+    ],
+    "require": {
+        "phpunit/phpunit": "^5.7"
+    }
+}
