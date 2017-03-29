@@ -24,7 +24,7 @@ class AuthenticationService extends Services{
     }
     
 
-    public function Token(){
+    public static function Token(){
         return AR::sendReq(Services::get_url(), Services::get_password(), Services::get_user());
     }
 }
