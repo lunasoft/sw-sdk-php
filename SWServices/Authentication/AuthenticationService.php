@@ -5,6 +5,7 @@ namespace SWServices\Authentication;
 
 use SWServices\Services as Services;
 use SWServices\Authentication\AuthRequest as AR;
+use Exception;
 
 
 class AuthenticationService extends Services{
@@ -13,7 +14,13 @@ class AuthenticationService extends Services{
     }
 
     public static function auth($params){
+        if(!is_array($params)){
+            
+            throw new Exception('No hay valores');
+            
+        }
         return new AuthenticationService($params);
+        
     }
     
 

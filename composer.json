@@ -14,5 +14,16 @@
     ],
     "require": {
         "phpunit/phpunit": "^5.7"
+    },
+   "autoload": {
+    "psr-4": {
+      "SWServices\\": "SWServices/",
+      "tests\\":"tests/"
+    }
+  },
+     "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
+ use Exception;
 
      class Services {
         private static $_token = null;
