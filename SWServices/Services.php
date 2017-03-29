@@ -58,7 +58,7 @@ use SWServices\Authentication\AuthenticationService as Authentication;
             return  self::$_token;
         }
 
-        public function get_url(){
+        public static function get_url(){
             return  self::$_url;
         }
         public function get_user(){
