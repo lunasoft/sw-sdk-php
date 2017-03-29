@@ -1,7 +1,9 @@
 {
-    "name": "lunasoft/sw-sdk-php",
+    "name": "sw-sdk-php/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
+    "homepage":"https://github.com/lunasoft/sw-sdk-php",
+    "license": "MIT",
     "authors": [
         {
             "name": "Rich Barusta",
