@@ -1,5 +1,5 @@
 {
-    "name": "sw/sdk",
+    "name": "lunasoft/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
     "authors": [
