@@ -12,6 +12,10 @@
         {
             "name": "Alex Ramos",
             "email": "alejandro.ramos@sw.com.mx"
+        },
+        {
+            "name": "Heltton Ramirez",
+            "email": "heltton.ramirez@sw.com.mx"
         }
     ],
     "require": {
