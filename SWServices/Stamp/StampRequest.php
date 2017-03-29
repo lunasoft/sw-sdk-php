@@ -29,27 +29,30 @@ class StampRequest{
         // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
-        $handle = curl_init($url.'/cfdi33/stamp/v1');
-        curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($handle, CURLOPT_POST, true);
-        curl_setopt($handle, CURLOPT_HTTPHEADER , array(
+        $curl  = curl_init($url.'/cfdi33/stamp/v1');
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_POST, true);
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
             'Authorization: '.$token
             ));  
-        curl_setopt($handle, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl , CURLOPT_POSTFIELDS, $data);
 
-        $response = curl_exec($handle);
-        $err = curl_error($handle);
-        curl_close($handle);
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl );
 
-        if ($err)
+        if ($err) 
         {
-            return $err;
-        } 
-        else 
-        {
-            return json_decode($response);
+            throw new Exception("cURL Error #:" . $err);
+        } else if($httpcode!='200') {
+
+            die($response);
+        }
+        else{
+            return $response;
         }
     }
 }
