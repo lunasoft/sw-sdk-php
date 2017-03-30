@@ -1,4 +1,6 @@
-![PHP](https://raw.githubusercontent.com/php-earth/php-resources-assets/master/images/community/elephpant.png)
+<p align="center">
+    <img src="https://raw.githubusercontent.com/php-earth/php-resources-assets/master/images/community/elephpant.png">
+</p>
 
 A continuación encontrara la documentación necesaria para consumir nuestro SDK de servicios proveido por **SmarterWeb** para Timbrado de **CFDI 3.3** mediante un servicio **API REST**
 
