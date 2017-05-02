@@ -16,7 +16,10 @@ class StampService extends Services{
         return new StampService($params);
     }
     public static function StampV1($xml){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml);
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1");
+    }
+     public static function StampV2($xml){
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2");
     }
 }
 
