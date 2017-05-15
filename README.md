@@ -168,6 +168,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 ```json
 {"data":{"tfd":"<tfd:TimbreFiscalDigital xsi:schemaLocation=\"http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd..."},"status":"success"}
+
 ```
 
 
@@ -516,4 +517,5 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
   },
   "status": "success"
 }
+
 ```
