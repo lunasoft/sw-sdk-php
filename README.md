@@ -429,7 +429,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 **Timbrar XML en formato string utilizando token**
 ```php
 <?php
-    require_once 'vendor/autoload.php';
+    require_once "vendor/autoload.php";
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
@@ -439,15 +439,15 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     try
     {
-        header('Content-type: application/json');
-        $xml = file_get_contents('./file.xml');
+        header("Content-type: application/json");
+        $xml = file_get_contents("./file.xml");
         $stamp = StampService::Set($params);
         $result = $stamp::StampV4($xml);
         echo $result;
     }
     catch(Exception $e)
     {
-        header('Content-type: text/plain');
+        header("Content-type: text/plain");
         echo $e->getMessage();
     }
 ?>
