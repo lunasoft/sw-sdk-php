@@ -18,6 +18,6 @@
     catch(Exception $e)
     {
         header('Content-type: text/plain');
-        echo $e->getMessage();s
+        echo $e->getMessage();
     }
 ?>
