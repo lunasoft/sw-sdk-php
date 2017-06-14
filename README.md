@@ -517,3 +517,35 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
   "status": "success"
 }
 ```
+
+#### Generación de sello para CFDI v3.3 con OpenSSL#####
+Para la generacón del sello para la versión 3.3 de CFDI usando solo las funciones de **OpenSSL** en PHP se creó el **SealService**. Para obtener el sello es necesario tener habilitada la extensión de OpenSSL. El método **obtenerSello** de la clase **SealService** recibe un arreglo asociativo con los parámetros necesarios para realizar el sello (**cadenaOriginal, archivoCerPem, archivoKeyPem**).
+
+```php
+<?php 
+    require_once 'vendor/autoload.php';
+    use SWServices\Toolkit\SealService as Sellar;
+
+    $params = array(
+        "cadenaOriginal"=> "./cadenaOriginal.txt",
+        "archivoKeyPem"=> "./key.pem",
+        "archivoCerPem"=> "./cer.pem"
+    );
+
+    try {
+        $result = Sellar::obtenerSello($params);
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+    
+?>
+```
+
+En caso de no ocurrir excepciones, el objeto tipo JSON devuelto sería como el siguiente:
+```json
+{
+    "status": "success",
+    "sello": "l3DgkCUJR8BSSvTyrLD8Xl2tYmIZa2Kf733bVEZuTBYcKSYoeBnxYufQUY8paJwJYKq0dwzxy8JYM43qFDR91m\/cyTtaOSaSBGxvdlf5GU3AYen8SDpsbViOWpc0jTz3sOvel7cyRLwMzf0S3cxV6QD3zE3iH+0IbePA\/oCjwnr0zEMwy5HuveHK+U85GdyX+Pr03vywlbeB79ye80lg5hIT2gp4Xo0s00Ilv\/h2X1bHy3\/wlmAq\/izRqtw2Oa3ajT6R7NaGsNjN7WsvlHRVdm\/eEiW9P0Pi7SP4VnXq0SmEDCZtFTmeGWCk6yLfgGOvq6cjLMHllRMZkyb0DSrE1A=="
+}
+```
