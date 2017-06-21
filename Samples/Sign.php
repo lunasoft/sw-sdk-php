@@ -1,6 +1,6 @@
 <?php 
 	require_once 'vendor/autoload.php';
-    use SWServices\Toolkit\SealService as Sellar;
+    use SWServices\Toolkit\SignService as Sellar;
 
     $params = array(
 	    "cadenaOriginal"=> "'./cadenaOriginal.txt'",
@@ -9,7 +9,7 @@
     );
 
     try {
-        $result = Sellar::obtenerSello($params);
+        $result = Sellar::ObtenerSello($params);
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";

@@ -5,6 +5,6 @@
     require_once dirname(__FILE__) . '/SWServices/Authentication/AuthRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampService.php';
-    require_once dirname(__FILE__) . '/SWServices/Toolkit/SealService.php';
+    require_once dirname(__FILE__) . '/SWServices/Toolkit/SignService.php';
 ?>
    

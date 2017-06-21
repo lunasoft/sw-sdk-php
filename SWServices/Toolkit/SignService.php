@@ -4,9 +4,9 @@ use Exception;
 use DOMDocument;
 use XSLTProcessor;
 
-	class SealService {
+	class SignService {
 		
-		public static function obtenerSello($params) {
+		public static function ObtenerSello($params) {
 			self::_checkOpenssl();
 			if(isset($params['cadenaOriginal']) && isset($params['archivoCerPem']) && isset($params['archivoKeyPem'])){
                 $cadena_original = $params['cadenaOriginal'];
