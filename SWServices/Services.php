@@ -1,7 +1,7 @@
 <?php
 namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
- use Exception;
+use Exception;
 
      class Services {
         private static $_token = null;
@@ -33,9 +33,6 @@ use SWServices\Authentication\AuthenticationService as Authentication;
                 self::$_expirationDate = new \DateTime('NOW');
                 self::$_expirationDate->add(new \DateInterval(self::$_timeSession));
             }
-           
-                
-
         }
         
         public static function get_token(){
