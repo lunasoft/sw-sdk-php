@@ -1,0 +1,12 @@
+{
+    "name": "richbarusta/implement",
+    "authors": [
+        {
+            "name": "Rich Barusta",
+            "email": "ricardo.barusta@sw.com.mx"
+        }
+    ],
+    "require": {
+        "lunasoft/sw-sdk-php": "dev-master"
+    }
+}
