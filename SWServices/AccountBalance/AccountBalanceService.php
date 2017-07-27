@@ -38,14 +38,4 @@ class AccountBalanceService {
         return ABR::sendReq(self::$_url, self::$_token);
     }
 }
-
-
-
-
-
-
-
-
-
-
 ?>

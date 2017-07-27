@@ -4,8 +4,11 @@
     
     use PHPUnit\Framework\TestCase;
     use SWServices\Stamp\StampService as StampService;
+    use SWServices\Toolkit\SignService as Sellar;
     use Exception;
-    
+    use DOMDocument;
+    use XSLTProcessor;
+	error_reporting(E_ERROR);
 	final class StampTests extends TestCase{
 		
 		
@@ -23,11 +26,9 @@
 			    "password"=> "123456789"
 				);
 
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
-
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -38,11 +39,9 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
-
 			$this->assertEquals($resultSpect,$result->status);
         }
         public function testStampXMLV2()
@@ -53,11 +52,9 @@
 			    "user"=>"demo",
 			    "password"=> "123456789"
 				);
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
-			
 			$this->assertEquals($resultSpect,$result->status);
         }
 /*----------------------------------V2---------------------------------------------------------------------------------------------------------------------*/
@@ -68,8 +65,7 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
 			$this->assertEquals($resultSpect,$result->status);
@@ -85,11 +81,10 @@
 			    "password"=> "123456789"
 				);
 
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
-
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
 			$this->assertTrue(is_base64($result->data->cfdi));
@@ -102,11 +97,10 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
-
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
 			$this->assertTrue(is_base64($result->data->cfdi));
@@ -120,11 +114,9 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml);
-
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -138,13 +130,11 @@
 			    "password"=> "123456789"
 				);
 
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
-
 			$this->assertTrue($resultSpect == $result->status);
-			$this->assertTrue($is_valid_b64_cfdi);
         }
 
         public function testStampXMLV3byToken_B64()
@@ -154,11 +144,10 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
-			
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
         }
@@ -170,11 +159,9 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/file.xml');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml);
-
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -187,12 +174,10 @@
 			    "user"=>"demo",
 			    "password"=> "123456789"
 				);
-
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
-
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
         }
@@ -204,15 +189,69 @@
 				"url"=>"http://services.test.sw.com.mx",
 				"token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
 				);
-			$xml = file_get_contents('./Tests/Resources/B64.txt');
-			
+			$xml = file_get_contents(GenerateXML::createXML());
+			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
-			
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
         }
     }
 
+	final Class GenerateXML {
+
+		public static function createXML() {
+			date_default_timezone_set('America/Mexico_City');
+			$xml = simplexml_load_file('./Tests/Resources/file.xml'); //leemos el xml base
+			$xml["Fecha"] = date("Y-m-d\TH:i:s");
+			$xml->asXML('./Tests/Resources/fileTest.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
+
+			$xml = file_get_contents('./Tests/Resources/fileTest.xml');
+
+			$xmlFile="./Tests/Resources/fileTest.xml";
+		 
+		    // Ruta al archivo XSLT
+		    $xslFile = "./Tests/Resources/cert_pruebas/cadenaoriginal_3_3.xslt"; 
+		 
+		    // Crear un objeto DOMDocument para cargar el CFDI
+		    $xml = new DOMDocument("1.0","UTF-8"); 
+		    // Cargar el CFDI
+		    $xml->load($xmlFile);
+		 
+		    // Crear un objeto DOMDocument para cargar el archivo de transformación XSLT
+		    $xsl = new DOMDocument();
+		    $xsl->load($xslFile);
+		 
+		    // Crear el procesador XSLT que nos generará la cadena original con base en las reglas descritas en el XSLT
+		    $proc = new XSLTProcessor;
+		    // Cargar las reglas de transformación desde el archivo XSLT.
+		    $proc->importStyleSheet($xsl);
+		    // Generar la cadena original y asignarla a una variable
+		    $cadenaOriginal = $proc->transformToXML($xml);
+			 
+
+			file_put_contents("./Tests/Resources/cadenaOriginal.txt", $cadenaOriginal); //escribimos la cadena original en un archivo
+
+			$params = array(
+			    "cadenaOriginal"=> "./Tests/Resources/cadenaOriginal.txt",
+			    "archivoKeyPem"=> "./Tests/Resources/cert_pruebas/AAA010101AAA.key.pem",
+			    "archivoCerPem"=> "./Tests/Resources/cert_pruebas/AAA010101AAA.cer.pem"
+		    );
+
+		    try {
+		        $result = Sellar::ObtenerSello($params);
+		        if($result->status=="success"){
+		        	$xml = simplexml_load_file('./Tests/Resources/fileTest.xml');
+		        	$xml["Sello"] = $result->sello;
+		        	$xml->asXML('./Tests/Resources/fileTest.xml');
+		        	return "./Tests/Resources/fileTest.xml";
+		        }
+		    } catch(Exception $e) {
+		        echo 'Caught exception: ',  $e->getMessage(), "\n";
+		    }
+
+		    return '/Tests/Resources/file.xml';
+		}
+    }
 
 ?>
