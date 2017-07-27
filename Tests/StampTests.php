@@ -20,14 +20,14 @@
 			$params = array(
 			    "url"=>"http://services.test.sw.com.mx",
 			    "user"=>"demo",
-			    "password"=> "12345678A"
+			    "password"=> "123456789"
 				);
-			//$xml = $GLOBALS["xml"];
+
 			$xml = file_get_contents('./Tests/Resources/file.xml');
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
-			$result = json_decode($result);
+
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -42,7 +42,7 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
-			$result = json_decode($result);
+
 			$this->assertEquals($resultSpect,$result->status);
         }
         public function testStampXMLV2()
@@ -51,18 +51,13 @@
 			$params = array(
 			    "url"=>"http://services.test.sw.com.mx",
 			    "user"=>"demo",
-			    "password"=> "12345678A"
+			    "password"=> "123456789"
 				);
-			//$xml = $GLOBALS["xml"];
 			$xml = file_get_contents('./Tests/Resources/file.xml');
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
-			$result = json_decode($result);
-			var_dump("---------------------------TFD---------------------------------------------------------------------------------------------------------------------------");
-			var_dump($result->data->tfd);
-			var_dump("---------------------------CFDI---------------------------------------------------------------------------------------------------------------------------");
-			var_dump($result->data->cfdi);
+			
 			$this->assertEquals($resultSpect,$result->status);
         }
 /*----------------------------------V2---------------------------------------------------------------------------------------------------------------------*/
@@ -77,8 +72,6 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
-			$result = json_decode($result);
-			var_dump($result);
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -89,20 +82,17 @@
 			$params = array(
 			    "url"=>"http://services.test.sw.com.mx",
 			    "user"=>"demo",
-			    "password"=> "12345678A"
+			    "password"=> "123456789"
 				);
-			//$xml = $GLOBALS["xml"];
+
 			$xml = file_get_contents('./Tests/Resources/B64.txt');
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
-			$is_valid_b64_tfd = is_base64($result->data->tfd);
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
-			$this->assertTrue($is_valid_b64_cfdi && $is_valid_b64_tfd);
+
+			$this->assertTrue($resultSpect == $result->status);
+			$this->assertTrue(is_base64($result->data->tfd));
+			$this->assertTrue(is_base64($result->data->cfdi));
         }
 
         public function testStampXMLV2byToken_B64()
@@ -116,13 +106,10 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
-			$is_valid_b64_tfd = is_base64($result->data->tfd);
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
-			$this->assertTrue($is_valid_b64_cfdi && $is_valid_b64_tfd);
+
+			$this->assertTrue($resultSpect == $result->status);
+			$this->assertTrue(is_base64($result->data->tfd));
+			$this->assertTrue(is_base64($result->data->cfdi));
         }
 
 		/*--------------------------------V3-----------------------------------------------------------------------------------------------------------------------*/
@@ -137,8 +124,7 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml);
-			$result = json_decode($result);
-			var_dump($result);
+
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -149,19 +135,15 @@
 			$params = array(
 			    "url"=>"http://services.test.sw.com.mx",
 			    "user"=>"demo",
-			    "password"=> "12345678A"
+			    "password"=> "123456789"
 				);
-			//$xml = $GLOBALS["xml"];
+
 			$xml = file_get_contents('./Tests/Resources/B64.txt');
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
-			
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
+
+			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue($is_valid_b64_cfdi);
         }
 
@@ -176,13 +158,9 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
 			
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
-			$this->assertTrue($is_valid_b64_cfdi);
+			$this->assertTrue($resultSpect == $result->status);
+			$this->assertTrue(is_base64($result->data->cfdi));
         }
 		/*--------------------------------V4-----------------------------------------------------------------------------------------------------------------------*/
 		 public function testStampXMLV4byToken()
@@ -196,8 +174,7 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml);
-			$result = json_decode($result);
-			var_dump($result);
+
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -208,20 +185,16 @@
 			$params = array(
 			    "url"=>"http://services.test.sw.com.mx",
 			    "user"=>"demo",
-			    "password"=> "12345678A"
+			    "password"=> "123456789"
 				);
-			//$xml = $GLOBALS["xml"];
+
 			$xml = file_get_contents('./Tests/Resources/B64.txt');
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
-			
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
-			$this->assertTrue($is_valid_b64_cfdi);
+
+			$this->assertTrue($resultSpect == $result->status);
+			$this->assertTrue(is_base64($result->data->cfdi));
         }
 
         public function testStampXMLV4byToken_B64()
@@ -235,13 +208,9 @@
 			
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
-			$result = json_decode($result);
-			var_dump($result);
 			
-			$is_valid_b64_cfdi = is_base64($result->data->cfdi);
-			
-			
-			$this->assertTrue($is_valid_b64_cfdi);
+			$this->assertTrue($resultSpect == $result->status);
+			$this->assertTrue(is_base64($result->data->tfd));
         }
     }
 

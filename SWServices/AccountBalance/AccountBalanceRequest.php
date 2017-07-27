@@ -1,33 +1,32 @@
 <?php
-namespace SWServices\Authentication;
-use Exception;
+namespace SWServices\AccountBalance;
 
-class AuthRequest{
-    public static function sendReq($url, $pass, $user){
+class AccountBalanceRequest {
+    public static function sendReq($url, $token) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url . "/security/authenticate",
+            CURLOPT_URL => $url . "/account/balance/",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "UTF-8",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => array(
-                 "cache-control: no-cache",
-                "password: ". $pass,
-                "user: " . $user,
-                "Content-length: 0"
+                "cache-control: no-cache",
+                "Content-length: 0",
+                "authorization: bearer ".$token,
             ),
         ));
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
+        
 
         curl_close($curl);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else {
+        } else{
             return json_decode($response);
         }
       
