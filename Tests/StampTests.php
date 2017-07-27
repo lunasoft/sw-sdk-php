@@ -55,6 +55,7 @@
 			$xml = file_get_contents(GenerateXML::createXML());
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
+			var_dump($result);
 			$this->assertEquals($resultSpect,$result->status);
         }
 /*----------------------------------V2---------------------------------------------------------------------------------------------------------------------*/
