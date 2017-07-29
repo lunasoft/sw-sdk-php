@@ -41,6 +41,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -54,6 +56,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV1($xml);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
         public function testStampXMLV2()
@@ -67,7 +71,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
-			//var_dump($result);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
 /*----------------------------------V2---------------------------------------------------------------------------------------------------------------------*/
@@ -81,6 +86,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -98,6 +105,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
 			$this->assertTrue(is_base64($result->data->cfdi));
@@ -114,6 +123,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV2($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
 			$this->assertTrue(is_base64($result->data->cfdi));
@@ -130,6 +141,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -147,6 +160,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
         }
 
@@ -161,6 +176,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV3($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
         }
@@ -175,6 +192,8 @@
 			$xml = file_get_contents(self::$generateXML->createXML()); sleep(1);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertEquals($resultSpect,$result->status);
         }
 
@@ -191,6 +210,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
         }
@@ -206,6 +227,8 @@
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
 			$result = $stamp::StampV4($xml,true);
+			var_dump($result);
+			echo "-------------------";
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->tfd));
         }
