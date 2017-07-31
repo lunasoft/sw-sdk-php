@@ -1,5 +1,6 @@
 <?php
 namespace SWServices\AccountBalance;
+use Exception;
 
 class AccountBalanceRequest {
     public static function sendReq($url, $token) {

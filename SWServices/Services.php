@@ -3,7 +3,7 @@ namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
 use Exception;
 
-     class Services {
+    class Services {
         private static $_token = null;
         private static $_user = null;
         private static $_password = null;

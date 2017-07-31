@@ -1,7 +1,7 @@
 <?php 
 
 namespace SWServices\Stamp;
-
+use Exception;
 class StampRequest{
     public static function sendReq($url, $token, $xml, $version){
         $delimiter = '-------------' . uniqid();
