@@ -5,7 +5,7 @@
 	$params = array(
 	    "url"=>"http://services.test.sw.com.mx",
 	    "user"=>"demo",
-	    "password"=> "12345678a9"
+	    "password"=> "123456789"
 	);
 	
 	try {
