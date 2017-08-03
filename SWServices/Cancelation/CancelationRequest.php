@@ -24,10 +24,8 @@ class CancelationRequest {
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else if($httpcode!='200' && $httpcode!='201' && $httpcode!= '202') {
-            die($response);
         } else{
-            return $response;
+            return json_decode($response);
         }
     }
 
@@ -74,10 +72,8 @@ class CancelationRequest {
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else if($httpcode!='200') {
-            die($response);
         } else{
-            return $response;
+            return json_decode($response);
         }
     }
 }

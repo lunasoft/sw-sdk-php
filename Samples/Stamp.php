@@ -13,7 +13,7 @@
         $xml = file_get_contents('./file.xml');
         $stamp = StampService::Set($params);
         $result = $stamp::StampV1($xml);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {

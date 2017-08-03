@@ -1,7 +1,7 @@
 <?php 
 
 namespace SWServices\Stamp;
-
+use Exception;
 class StampRequest{
     public static function sendReq($url, $token, $xml, $version){
         $delimiter = '-------------' . uniqid();
@@ -46,10 +46,8 @@ class StampRequest{
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else if($httpcode!='200') {
-            die($response);
         } else {
-            return $response;
+            return json_decode($response);
         }
     }
 
@@ -97,10 +95,8 @@ class StampRequest{
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else if($httpcode!='200') {
-            die($response);
         } else{
-            return $response;
+            return json_decode($response);
         }
     }
 }

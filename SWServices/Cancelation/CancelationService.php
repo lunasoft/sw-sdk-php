@@ -4,6 +4,7 @@ namespace SWServices\Cancelation;
 
 
 use SWServices\Cancelation\CancelationRequest as cancelationRequest;
+use Exception;
 
 class CancelationService {
     private static $_cfdiData = null;
