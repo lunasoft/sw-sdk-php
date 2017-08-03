@@ -1,8 +1,8 @@
 <?php
 	require_once 'vendor/autoload.php';
-	
 	use SWServices\Authentication\AuthenticationService as Authentication;
-	$params = array(
+	
+  $params = array(
 	    "url"=>"http://services.test.sw.com.mx",
 	    "user"=>"demo",
 	    "password"=> "123456789"
