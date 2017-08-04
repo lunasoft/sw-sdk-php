@@ -2,9 +2,7 @@
     "name": "lunasoft/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
-
-    "version": "0.0.2.1",
-
+    "version": "0.0.3.0",
     "homepage":"https://github.com/lunasoft/sw-sdk-php",
     "license": "MIT",
     "authors": [
@@ -19,6 +17,10 @@
         {
             "name": "Heltton Ramirez",
             "email": "heltton.ramirez@sw.com.mx"
+        },
+        {
+            "name": "Flavio Ochoa",
+            "email": "flavio.ochoa@sw.com.mx"
         }
     ],
     "require-dev": {

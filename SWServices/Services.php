@@ -1,9 +1,9 @@
 <?php
 namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
- use Exception;
+use Exception;
 
-     class Services {
+    class Services {
         private static $_token = null;
         private static $_user = null;
         private static $_password = null;
@@ -33,9 +33,6 @@ use SWServices\Authentication\AuthenticationService as Authentication;
                 self::$_expirationDate = new \DateTime('NOW');
                 self::$_expirationDate->add(new \DateInterval(self::$_timeSession));
             }
-           
-                
-
         }
         
         public static function get_token(){
@@ -50,7 +47,7 @@ use SWServices\Authentication\AuthenticationService as Authentication;
 
                 $auth = Authentication::auth($params);
                 $token = $auth::Token();
-                self::set_token(json_decode($token)->data->token);
+                self::set_token($token->data->token);
                 date_default_timezone_set("America/Mexico_City");
                 $_expirationDate = new \DateTime('NOW');
                 $_expirationDate->add(new \DateInterval(self::$_timeSession));

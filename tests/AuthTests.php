@@ -10,7 +10,7 @@
             $params = array(
                 "url"=>"http://services.test.sw.com.mx",
                 "user"=>"demo",
-                "password"=> "12345678A"
+                "password"=> "123456789"
             );
              $this->assertInstanceOf(
                     AuthenticationService::class,
