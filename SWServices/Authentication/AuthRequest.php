@@ -3,7 +3,7 @@ namespace SWServices\Authentication;
 use Exception;
 
 class AuthRequest{
-    public static function sendReq($url, $pass, $user){
+    public static function sendReq($url, $pass, $user,$proxy){
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url . "/security/authenticate",
@@ -20,6 +20,9 @@ class AuthRequest{
                 "Content-length: 0"
             ),
         ));
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);

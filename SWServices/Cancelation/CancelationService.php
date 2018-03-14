@@ -11,13 +11,15 @@ class CancelationService {
     private static $_url = null;
     private static $_token = null;
     private static $_xml = null;
+    private static $_proxy = null;
 
     public function __construct($params) {
         $c = count($params);
-        if($c == 7)
+        if($c == 7 || $c == 8)
             self::setCSD($params);
-        else if ($c == 3)
+        else if ($c == 3 || $c == 4)
             self::setXml($params);
+        
         else
            throw new Exception('Número de parámetros incompletos.');
     }
@@ -27,11 +29,11 @@ class CancelationService {
     }
 
     public static function CancelationByCSD() {
-        return cancelationRequest::sendReqCSD(self::$_url, self::$_token, self::$_cfdiData);
+        return cancelationRequest::sendReqCSD(self::$_url, self::$_token, self::$_cfdiData, self::$_proxy);
     }
 
     public static function CancelationByXML() {
-        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml);
+        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml, $_proxy);
     }
 
     private static function setCSD($params) {
@@ -45,6 +47,9 @@ class CancelationService {
             ];
             self::$_url = $params['url'];
             self::$_token = $params['token'];
+            if(isset($params['proxy'])){
+                self::$_proxy = $params['proxy'];
+            }
         } else {
             throw new Exception('Parámetros incompletos. Debe especificarse uuid, password, rfc, b64Cer, b64Key');
         }
@@ -55,6 +60,9 @@ class CancelationService {
             self::$_url = $params['url'];
             self::$_token = $params['token'];
             self::$_xml = $params['xml'];
+            if(isset($params['proxy'])){
+                self::$_proxy = $params['proxy'];
+            }
         } else {
             throw new Exception('Parámetros incompletos. Debe especificarse url, token, y archivo xml');
         }

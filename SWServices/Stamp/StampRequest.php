@@ -3,7 +3,7 @@
 namespace SWServices\Stamp;
 use Exception;
 class StampRequest{
-    public static function sendReq($url, $token, $xml, $version){
+    public static function sendReq($url, $token, $xml, $version, $proxy){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -32,6 +32,10 @@ class StampRequest{
         $curl  = curl_init($url.'/cfdi33/stamp/'.$version);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
+        
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),

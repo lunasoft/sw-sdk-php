@@ -3,7 +3,7 @@ namespace SWServices\AccountBalance;
 use Exception;
 
 class AccountBalanceRequest {
-    public static function sendReq($url, $token) {
+    public static function sendReq($url, $token, $proxy) {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url . "/account/balance/",
@@ -19,6 +19,9 @@ class AccountBalanceRequest {
                 "authorization: bearer ".$token,
             ),
         ));
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);

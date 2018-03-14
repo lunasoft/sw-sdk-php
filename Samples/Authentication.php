@@ -1,8 +1,9 @@
 <?php
-	require_once 'vendor/autoload.php';
+	include('../SWSDK.php');
 	
 	use SWServices\Authentication\AuthenticationService as Authentication;
 	$params = array(
+		"proxy"=>"localhost:8888",
 	    "url"=>"http://services.test.sw.com.mx",
 	    "user"=>"demo",
 	    "password"=> "123456789"
