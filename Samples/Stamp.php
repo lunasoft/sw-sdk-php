@@ -1,5 +1,5 @@
 <?php
-    require_once 'vendor/autoload.php';
+    include('../SWSDK.php');
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
@@ -12,8 +12,8 @@
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
         $stamp = StampService::Set($params);
-        $result = $stamp::StampV1($xml);
-        var_dump($result);
+        $result = $stamp::StampV4($xml);
+        echo json_encode($result);
     }
     catch(Exception $e)
     {

@@ -59,6 +59,12 @@ composer install
 ```
 De esta manera descarga las dependencias que antes escribimos dentro del require que en nuestro caso es el **SDK**
 
+#### En caso de no usar composer ####
+Se puede hacer uso de las clases mediante la implementacion manual haciendo uso del archivo SWSDK.php en lugar del archivo vendor.php
+
+```php
+	include('SWSDK.php');
+```
 ----------------
 Implementaci&oacute;n
 ---------
@@ -71,7 +77,14 @@ La librería cuenta con dos servicios principales los que son la Autenticacion y
 **Url de Pruebas:** http://services.test.sw.com.mx
 **Usuario de Pruebas:** demo
 **Constraseña de Pruebas:** 123456789
-
+#### Nueva funcionalidad para el soporte con servidores Proxy ####
+Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
+```php
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "proxy"=> "server.domain.com:8888"
+    );
+```
 #### Autenticaci&oacute;n #####
 El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que estan en este ejemplo para el ambiente de **Pruebas**.
 
@@ -171,6 +184,14 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 ```json
 {"data":{"tfd":"<tfd:TimbreFiscalDigital xsi:schemaLocation=\"http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd..."},"status":"success"}
 
+```
+#### Nueva funcionalidad para el soporte con servidores Proxy ####
+Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy".
+```php
+    $params = array(
+        
+        "proxy"=> "server.domain.com"
+    );
 ```
 
 
