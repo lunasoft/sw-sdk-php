@@ -9,6 +9,7 @@ use Exception;
         private static $_password = null;
         private static $_url = null;
         private static $_expirationDate = null;
+        private static $_proxy = null;
         private static $_timeSession = "PT2H";
 
         public function __construct($params) {
@@ -26,6 +27,9 @@ use Exception;
             }
             if(isset($params['password'])){
                 self::$_password = $params['password'];
+            }
+            if(isset($params['proxy'])){
+                self::$_proxy = $params['proxy'];
             }
             if(isset($params['token'])){
                 self::$_token = $params['token'];
@@ -68,6 +72,10 @@ use Exception;
         public static function set_token($token){
              self::$_token = $token;
         }
+        public static function get_proxy(){
+            return self::$_proxy;
+        }
+        
         
     };
 

@@ -5,11 +5,14 @@ use Exception;
 
 class CancelationRequest {
 
-    public static function sendReqCSD($url, $token, $cfdiData) {
+    public static function sendReqCSD($url, $token, $cfdiData, $proxy) {
         $data = json_encode($cfdiData);
         $curl  = curl_init($url.'/cfdi33/cancel/csd');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: application/json;  ',
             'Content-Length: ' . strlen($data),
@@ -29,7 +32,7 @@ class CancelationRequest {
         }
     }
 
-    public static function sendReqXML($url, $token, $xml){
+    public static function sendReqXML($url, $token, $xml, $proxy){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -58,6 +61,9 @@ class CancelationRequest {
         $curl  = curl_init($url.'/cfdi33/cancel/xml');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),

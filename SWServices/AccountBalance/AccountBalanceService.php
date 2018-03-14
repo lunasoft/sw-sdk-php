@@ -10,6 +10,7 @@ class AccountBalanceService {
 
     private static $_url = null;
     private static $_token = null;
+    private static $_proxy = null;
 
     public function __construct($params) {
         if(!is_array($params)) { 
@@ -27,6 +28,9 @@ class AccountBalanceService {
         } else {
             throw new Exception('Datos de autenticación deben especificarse');
         }
+        if(isset($params['proxy'])){
+            self::$_proxy = $params['proxy'];
+        }
     }
 
     public static function Set($params){
@@ -35,7 +39,7 @@ class AccountBalanceService {
     }
     
     public static function GetAccountBalance(){
-        return ABR::sendReq(self::$_url, self::$_token);
+        return ABR::sendReq(self::$_url, self::$_token, self::$_proxy);
     }
 }
 ?>
