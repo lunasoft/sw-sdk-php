@@ -1,2 +1,12 @@
-# Add any directories, files, or patterns you don't want to be tracked by version control
+
 /vendor/
+*./vendor/
+Samples/vendor/autoload.php
+Samples/vendor/composer/ClassLoader.php
+Samples/vendor/composer/LICENSE
+Samples/vendor/composer/autoload_classmap.php
+Samples/vendor/composer/autoload_namespaces.php
+Samples/vendor/composer/autoload_psr4.php
+Samples/vendor/composer/autoload_real.php
+Samples/vendor/composer/autoload_static.php
+Samples/vendor/composer/installed.json
