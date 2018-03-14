@@ -59,6 +59,12 @@ composer install
 ```
 De esta manera descarga las dependencias que antes escribimos dentro del require que en nuestro caso es el **SDK**
 
+#### En caso de no usar composer ####
+Se puede hacer uso de las clases mediante la implementacion manual haciendo uso del archivo SWSDK.php en lugar del archivo vendor.php
+
+```php
+	include('SWSDK.php');
+```
 ----------------
 Implementaci&oacute;n
 ---------
@@ -72,12 +78,11 @@ La librería cuenta con dos servicios principales los que son la Autenticacion y
 **Usuario de Pruebas:** demo
 **Constraseña de Pruebas:** 123456789
 #### Nueva funcionalidad para el soporte con servidores Proxy ####
-Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy".
+Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
-        "user"=>"demo",
-        "proxy"=> "server.domain.com"
+        "proxy"=> "server.domain.com:8888"
     );
 ```
 #### Autenticaci&oacute;n #####
