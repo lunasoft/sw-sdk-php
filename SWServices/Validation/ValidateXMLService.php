@@ -16,10 +16,7 @@ class ValidarXML extends Services{
     }
     
     public static function ValidaXML($xml, $isb64 = false){
-       return ($isb64?
-                validateRequest::sendReqXMLb64(Services::get_url(), Services::get_token(), $xml, Services::get_proxy())
-               :
-                validateRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy()));
+        return validateRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy());
     }    
 }
 

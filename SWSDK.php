@@ -1,5 +1,4 @@
 <?php
-
     file_exists("vendor/autoload.php")?require "vendor/autoload.php":"";
     require_once dirname(__FILE__) . '/SWServices/Services.php';
     require_once dirname(__FILE__) . '/SWServices/Authentication/AuthenticationService.php';
@@ -16,6 +15,4 @@
     require_once dirname(__FILE__) . '/SWServices/JsonIssuer/JsonIssuerRequest.php';
     require_once dirname(__FILE__) . '/SWServices/JsonIssuer/JsonIssuerService.php';
     require_once dirname(__FILE__) . '/SWServices/Toolkit/SignService.php';
-
 ?>
-   
