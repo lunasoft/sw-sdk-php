@@ -20,9 +20,11 @@ try {
 	$result = $auth::Token();
 	header('Content-type: text/plain');
 	if($result->status == "success") {
-		//echo $result->data->token;
-	} else { //lógica de error independiente para cada proyecto
-		//echo $result->message;
+            echo $result->data->token;
+            echo "\n\n---------------------------------\n\n";
+	} else {
+            echo $result->message;
+            echo "\n\n---------------------------------\n\n";
 	}
      
 } catch(Exception $e){
