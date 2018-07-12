@@ -73,7 +73,6 @@ class ValidateRequest{
                 )
             );
         
-        
         $data = '';
         // populate file fields
         foreach ($fileFields as $name => $file) {
