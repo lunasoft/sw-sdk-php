@@ -1,11 +1,10 @@
 <?php
     namespace tests;
-    
-    use PHPUnit\Framework\TestCase;
+
     use SWServices\Authentication\AuthenticationService as AuthenticationService;
     use Exception;
 
-    final class AuthTests extends TestCase{
+    final class AuthTests {
         public function testSuccess(){
             $params = array(
                 "url"=>"http://services.test.sw.com.mx",
@@ -19,7 +18,6 @@
         }
         public function testError(){
             $this->expectException(Exception::class);
-            
             AuthenticationService::auth('');
             
         }
