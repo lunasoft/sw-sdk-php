@@ -14,26 +14,17 @@ class EmisionTimbrado extends stampRequest{
     public static function Set($params){
         return new EmisionTimbrado($params);
     }
-    public static function EmisionTimbradoV1($xml){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1",Services::get_proxy());
+    public static function EmisionTimbradoV1($xml, $isb64 = false){
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy());
     }
      public static function EmisionTimbradoV2($xml, $isb64 = false){
-         if($isb64){
-            return stampRequest::sendReqB64(Services::get_url(), Services::get_token(), $xml, "v2",Services::get_proxy());
-         }
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2",Services::get_proxy());
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy());
     }
      public static function EmisionTimbradoV3($xml, $isb64 = false){
-         if($isb64){
-            return stampRequest::sendReqB64(Services::get_url(), Services::get_token(), $xml, "v3",Services::get_proxy());
-         }
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3",Services::get_proxy());
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy());
     }
      public static function EmisionTimbradoV4($xml, $isb64 = false){
-         if($isb64){
-            return stampRequest::sendReqB64(Services::get_url(), Services::get_token(), $xml, "v4",Services::get_proxy());
-         }
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4",Services::get_proxy());
+        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy());
     }
 }
 

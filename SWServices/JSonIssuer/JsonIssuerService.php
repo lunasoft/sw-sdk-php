@@ -14,30 +14,18 @@ class JsonEmisionTimbrado extends Services{
     public static function Set($params){
         return new JsonEmisionTimbrado($params);
     }
-    public static function jsonEmisionTimbradoV1($json){
-        return $isb64? 
-                    jsonIssuerRequest::sendReqB64(Services::get_url(), Services::get_token(), $json, "v1",Services::get_proxy())
-                : 
-                    jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v1",Services::get_proxy());
+    public static function jsonEmisionTimbradoV1($json, $isb64 = false){
+        return  jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v1", $isb64, Services::get_proxy());
     }
      public static function jsonEmisionTimbradoV2($json, $isb64 = false){
-        return $isb64? 
-                    jsonIssuerRequest::sendReqB64(Services::get_url(), Services::get_token(), $json, "v2",Services::get_proxy())
-                : 
-                    jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v2",Services::get_proxy());
+        return  jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v2", $isb64, Services::get_proxy());
     }
 
      public static function jsonEmisionTimbradoV3($json, $isb64 = false){
-        return $isb64? 
-                    jsonIssuerRequest::sendReqB64(Services::get_url(), Services::get_token(), $json, "v3",Services::get_proxy())
-                : 
-                    jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v3",Services::get_proxy());
+        return  jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v3", $isb64, Services::get_proxy());
     }
      public static function jsonEmisionTimbrado4($json, $isb64 = false){
-        return $isb64? 
-                    jsonIssuerRequest::sendReqB64(Services::get_url(), Services::get_token(), $json, "v4",Services::get_proxy())
-                : 
-                    jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v4",Services::get_proxy());
+        return  jsonIssuerRequest::sendReq(Services::get_url(), Services::get_token(), $json, "v4", $isb64, Services::get_proxy());
     }
 }
 
