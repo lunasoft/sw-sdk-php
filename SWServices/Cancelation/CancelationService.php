@@ -13,27 +13,28 @@ class CancelationService {
     private static $_xml = null;
     private static $_proxy = null;
 
-    public function __construct($params) {
-        $c = count($params);
-        if($c == 7 || $c == 8)
-            self::setCSD($params);
-        else if ($c == 3 || $c == 4)
-            self::setXml($params);
-        
-        else
-           throw new Exception('Número de parámetros incompletos.');
-    }
-
     public static function Set($params) {
         return new CancelationService($params);
     }
 
     public static function CancelationByCSD() {
+        self::setCSD($params);
         return cancelationRequest::sendReqCSD(self::$_url, self::$_token, self::$_cfdiData, self::$_proxy);
     }
 
     public static function CancelationByXML() {
-        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml, $_proxy);
+        self::setXML($params);
+        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_cfdiData, $_proxy);
+    }
+    
+    public static function CancelationByUUID(){
+        self::setUUID($params);
+        return cancelationRequest::sendReqUUID(self::$_url, self::$_token, self::$_cfdiData, $_proxy);
+    }
+    
+    public static function CancelationByPFX(){
+        self::setPFX($params);
+        return cancelationRequest::sendReqPFX(self::$_url, self::$_token, self::$_cfdiData, $_proxy);
     }
 
     private static function setCSD($params) {
@@ -52,6 +53,40 @@ class CancelationService {
             }
         } else {
             throw new Exception('Parámetros incompletos. Debe especificarse uuid, password, rfc, b64Cer, b64Key');
+        }
+    }
+    
+    private static function setPFX($params) {
+        if(isset($params['url']) && isset($params['token']) && isset($params['uuid']) && isset($params['password']) && isset($params['rfc']) && isset($params['b64Pfx'])) {
+            self::$_cfdiData = [
+                'uuid'=> $params['uuid'],
+                'password'=> $params['password'],
+                'rfc'=> $params['rfc'],
+                'b64Cer'=> $params['b64Pfx']
+            ];
+            self::$_url = $params['url'];
+            self::$_token = $params['token'];
+            if(isset($params['proxy'])){
+                self::$_proxy = $params['proxy'];
+            }
+        } else {
+            throw new Exception('Parámetros incompletos. Debe especificarse uuid, password, rfc, b64Cer, b64Key');
+        }
+    }
+    
+    private static function setUUID($params) {
+        if(isset($params['url']) && isset($params['token']) && isset($params['uuid']) && isset($params['rfc'])) {
+            self::$_cfdiData = [
+                'uuid'=> $params['uuid'],
+                'rfc'=> $params['rfc']
+            ];
+            self::$_url = $params['url'];
+            self::$_token = $params['token'];
+            if(isset($params['proxy'])){
+                self::$_proxy = $params['proxy'];
+            }
+        } else {
+            throw new Exception('Parámetros incompletos. Debe especificarse uuid, rfc');
         }
     }
 

@@ -1,8 +1,8 @@
 <?php
 	include('../SWSDK.php');
-	
 	use SWServices\Authentication\AuthenticationService as Authentication;
-	$params = array(
+	
+  $params = array(
 		"proxy"=>"localhost:8888",
 	    "url"=>"http://services.test.sw.com.mx",
 	    "user"=>"demo",

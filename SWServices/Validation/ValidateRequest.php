@@ -1,14 +1,70 @@
-<?php 
+<?php
+namespace SWServices\Validation;
 
-namespace SWServices\Stamp;
+use SWServices\Services as Services;
 use Exception;
-class StampRequest{
-        
-    public static $path = '/cfdi33/stamp/';
-    public static function getPath() { return self::$path; }
-    public static function setPath($servicio) { self::$path = $servicio; }   
+
+class ValidateRequest{
     
-    public static function sendReq($url, $token, $xml, $version, $proxy){
+ public static function sendReqLco($url, $token, $lco, $proxy){
+           
+    $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => $url."/lco/".$lco,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "Authorization: bearer ".$token
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+               throw new Exception("cURL Error #:" . $err);
+           } else{
+               return json_decode($response);
+           }
+ }
+ 
+ public static function sendReqLrfc($url, $token, $lrfc, $proxy){
+     $curl = curl_init();
+
+    curl_setopt_array($curl, array(
+      CURLOPT_URL => $url."/lrfc/".$lrfc,
+      CURLOPT_RETURNTRANSFER => true,
+      CURLOPT_ENCODING => "",
+      CURLOPT_MAXREDIRS => 10,
+      CURLOPT_TIMEOUT => 30,
+      CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+      CURLOPT_CUSTOMREQUEST => "GET",
+      CURLOPT_HTTPHEADER => array(
+        "Authorization: bearer ".$token
+      ),
+    ));
+
+    $response = curl_exec($curl);
+    $err = curl_error($curl);
+
+    curl_close($curl);
+
+    if ($err) {
+               throw new Exception("cURL Error #:" . $err);
+           } else{
+               return json_decode($response);
+           }
+     
+ } 
+    
+ public static function sendReqXML($url, $token, $xml, $proxy){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -16,31 +72,26 @@ class StampRequest{
                 'content' => $xml
                 )
             );
-
+        
         $data = '';
         // populate file fields
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
-            // "filename" attribute is not essential; server-side scripts may use it
             $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
             ' filename="' . $name . '"' . "\r\n";
-            // this is, again, informative only; good practice to include though
             $data .= 'Content-Type: ' . $file['type'] . "\r\n";
-            // this endline must be here to indicate end of headers
             $data .= "\r\n";
-            // the file itself (note: there's no encoding of any kind)
             $data .= $file['content'] . "\r\n";
         }
         // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
-        $curl  = curl_init($url.static::$path.$version);
+        $curl  = curl_init($url.'/validate/cfdi33');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
         if(isset($proxy)){
             curl_setopt($curl , CURLOPT_PROXY, $proxy);
         }
-        
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
@@ -55,13 +106,12 @@ class StampRequest{
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else {
+        } else{
             return json_decode($response);
         }
     }
-
-
-    public static function sendReqB64($url, $token, $xml, $version){
+    
+    public static function sendReqXMLb64($url, $token, $xml, $proxy){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -69,27 +119,26 @@ class StampRequest{
                 'content' => $xml
                 )
             );
-
+        
         $data = '';
         // populate file fields
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
-            // "filename" attribute is not essential; server-side scripts may use it
             $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
             ' filename="' . $name . '"' . "\r\n";
-            // this is, again, informative only; good practice to include though
             $data .= 'Content-Type: ' . $file['type'] . "\r\n";
-            // this endline must be here to indicate end of headers
             $data .= "\r\n";
-            // the file itself (note: there's no encoding of any kind)
             $data .= $file['content'] . "\r\n";
         }
         // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
-        $curl  = curl_init($url.$this::$path.$version.'/b64');
+        $curl  = curl_init($url.'/validate/cfdi33');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
@@ -109,4 +158,5 @@ class StampRequest{
         }
     }
 }
+
 ?>
