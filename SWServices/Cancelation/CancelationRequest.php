@@ -2,11 +2,77 @@
 
 namespace SWServices\Cancelation;
 use Exception;
+class CancelationRequest{
 
-class CancelationRequest {
+    public static function sendReqUUID($url, $token, $rfc, $uuid, $proxy){
+        $curl  = curl_init($url.'/cfdi33/cancel/'.$rfc.'/'.$uuid);
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
+            'Content-Type: application/json;  ',
+            'Authorization: Bearer '.$token
+            ));  
+        curl_setopt($curl , CURLOPT_POSTFIELDS, "");
 
-    public static function sendReqCSD($url, $token, $cfdiData, $proxy) {
-        $data = json_encode($cfdiData);
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            return json_decode($response);
+        }
+    }
+    
+    public static function sendReqPFX($url, $token, $rfc, $pfxB64, $password, $uuid, $proxy){
+        $data = json_encode(
+                    [
+                        "b64Pfx"=>$pfxB64,
+                        "rfc"=>$rfc,
+                        "password"=>$password,
+                        "uuid"=>$uuid
+                    ]
+                );
+        $curl  = curl_init($url.'/cfdi33/cancel/pfx');
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_POST, true);
+        if(isset($proxy)){
+            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        }
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
+            'Content-Type: application/json;  ',
+            'Content-Length: ' . strlen($data),
+            'Authorization: Bearer '.$token
+            ));  
+        curl_setopt($curl , CURLOPT_POSTFIELDS, $data);
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            return json_decode($response);
+        }
+    }
+    
+    public static function sendReqCSD($url, $token, $rfc, $cerB64, $keyB64, $password, $uuid, $proxy) {
+        $data = json_encode(
+                    [
+                        "b64Key"=>$keyB64,
+                        "b64Cer"=>$cerB64,
+                        "rfc"=>$rfc,
+                        "password"=>$password,
+                        "uuid"=>$uuid
+                    ]
+                );
         $curl  = curl_init($url.'/cfdi33/cancel/csd');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
@@ -42,17 +108,12 @@ class CancelationRequest {
             );
 
         $data = '';
-        // populate file fields
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
-            // "filename" attribute is not essential; server-side scripts may use it
             $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
             ' filename="' . $name . '"' . "\r\n";
-            // this is, again, informative only; good practice to include though
             $data .= 'Content-Type: ' . $file['type'] . "\r\n";
-            // this endline must be here to indicate end of headers
             $data .= "\r\n";
-            // the file itself (note: there's no encoding of any kind)
             $data .= $file['content'] . "\r\n";
         }
         // last delimiter
@@ -83,3 +144,4 @@ class CancelationRequest {
         }
     }
 }
+?>

@@ -7,7 +7,6 @@ use SWServices\Services as Services;
 use SWServices\Authentication\AuthRequest as AR;
 use Exception;
 
-
 class AuthenticationService extends Services{
     public function __construct($params) {
         parent::__construct($params);

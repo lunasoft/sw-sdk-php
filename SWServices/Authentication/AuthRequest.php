@@ -33,7 +33,6 @@ class AuthRequest{
         } else {
             return json_decode($response);
         }
-      
     }
 }
 

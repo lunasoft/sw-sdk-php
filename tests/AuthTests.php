@@ -12,14 +12,14 @@
                 "user"=>"demo",
                 "password"=> "123456789"
             );
-             $this->assertInstanceOf(
-                    AuthenticationService::class,
-                    AuthenticationService::auth($params)
-                );
+            $authenticate = AuthenticationService::auth($params);
+            $result = $authenticate::Token();
+            $result->status;
+                  
+            $this->assert($result->status, "success");
         }
         public function testError(){
             $this->expectException(Exception::class);
-            
             AuthenticationService::auth('');
             
         }
