@@ -225,7 +225,7 @@ class StampTests extends TestCase{
 			
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
-        }
+        } 
 		/*--------------------------------V4-----------------------------------------------------------------------------------------------------------------------*/
 		 public function testStampXMLV4byToken()
         {
