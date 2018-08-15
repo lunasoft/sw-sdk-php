@@ -41,6 +41,8 @@
         }
     },
     "require": {
-        "phpunit/phpunit": "* dev-master"
+        "phpunit/phpunit": "dev-master",
+        "doctrine/instantiator" : "1.0.2"
+        
     }
 }
