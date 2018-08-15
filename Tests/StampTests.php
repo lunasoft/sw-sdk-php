@@ -2,7 +2,7 @@
 
 namespace tests;
     
-    use PHPUnit\Framework\TestCaseTest;
+    use PHPUnit\Framework\TestCase;
     use SWServices\Stamp\Timbrado as StampService;
     use SWServices\Toolkit\SignService as Sellar;
     use Exception;
@@ -11,7 +11,7 @@ namespace tests;
 	error_reporting(E_ERROR);
 
 
-class StampTests extends TestCaseTest{
+class StampTests extends TestCase{
 		
 		protected static $generateXML;
 
