@@ -19,7 +19,7 @@ class EmisionTimbrado extends Services{
         stampRequest::setPath('/cfdi33/issue/');
         return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy());
     }
-     public static function EmisionTimbradoV3($xml, $isb64 = false){
+     public static function EmisionTimbradoV3($xml, $isb64 = false){ 
         stampRequest::setPath('/cfdi33/issue/');
         return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy());
     }

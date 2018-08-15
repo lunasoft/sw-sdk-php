@@ -1,9 +1,9 @@
 <?php
 
-	namespace tests;
+namespace tests;
     
-    use PHPUnit\Framework\TestCase;
-    use SWServices\Stamp\StampService as StampService;
+    use PHPUnit\Framework\TestCaseTest;
+    use SWServices\Stamp\Timbrado as StampService;
     use SWServices\Toolkit\SignService as Sellar;
     use Exception;
     use DOMDocument;
@@ -11,7 +11,7 @@
 	error_reporting(E_ERROR);
 
 
-	final class StampTests extends TestCase{
+class StampTests extends TestCaseTest{
 		
 		protected static $generateXML;
 
@@ -366,5 +366,4 @@
 		    return '/Tests/Resources/file.xml';
 		}
     }
-
-?>
+    
