@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>sw-sdk-php</name>
+	<comment></comment>
+	<projects>
+		<project>SW-SDK-Ruby</project>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.aptana.editor.php.phpNature</nature>
+	</natures>
+</projectDescription>

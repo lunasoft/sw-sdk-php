@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd" uri="www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd"/>
+    <system systemId="http://www.sat.gob.mx/sitio_internet/cfd/catalogos/catCFDI.xsd" uri="www.sat.gob.mx/sitio_internet/cfd/catalogos/catCFDI.xsd"/>
+    <system systemId="http://www.sat.gob.mx/sitio_internet/cfd/tipoDatos/tdCFDI/tdCFDI.xsd" uri="www.sat.gob.mx/sitio_internet/cfd/tipoDatos/tdCFDI/tdCFDI.xsd"/>
+</catalog>
