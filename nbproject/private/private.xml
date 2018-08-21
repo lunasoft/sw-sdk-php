@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/laragon/www/sw-sdk-php/.travis.yml</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/Tests/AccountBalanceTests.php</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/Tests/CancelationTests.php</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/Tests/SignTests.php</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/composer.json</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/vendor/phpunit/phpunit/tests/Framework/TestCaseTest.php</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/Tests/AuthTests.php</file>
+            <file>file:/C:/laragon/www/sw-sdk-php/Tests/StampTests.php</file>
+        </group>
+    </open-files>
+</project-private>

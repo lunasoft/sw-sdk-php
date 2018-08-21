@@ -2,11 +2,11 @@
 
 	namespace tests;
     
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\TestCaseTest;
     use SWServices\Cancelation\CancelationService as CancelationService;
     use Exception;
     
-	final class CancelationTests extends TestCase {
+	final class CancelationTests extends TestCaseTest {
 		public function testCancelationByCSD() {
     		$resultSpect = "success";
 
