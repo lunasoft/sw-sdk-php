@@ -145,15 +145,18 @@ class CancelationRequest{
     
     public static function sendReqGet($url, $token, $rfc, $proxy, $service){       
         $curl = curl_init();
-        curl_setopt_array($curl, array(
-          CURLOPT_URL => "$url.$service.$rfc",
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => "",
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 30,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => "GET",
-          CURLOPT_HTTPHEADER => array(
+            if(isset($proxy)){
+               curl_setopt($curl , CURLOPT_PROXY, $proxy);
+            }
+        curl_setopt_array($curl, array(    
+            CURLOPT_URL => $url.$service.$rfc,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
             "Authorization: bearer ".$token,
             "Cache-Control: no-cache"
           ),

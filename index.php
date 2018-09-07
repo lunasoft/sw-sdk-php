@@ -6,25 +6,21 @@ use SWServices\Stamp\EmisionTimbrado as emisionTimbrado;
 use SWServices\Validation\ValidarXML as validarXML;
 use SWServices\Validation\ValidaLco as validaLco;
 use SWServices\Validation\ValidaLrfc as validaLrfc;
-use SWServices\JSonIssuer\JsonIssuerService as jsonIssuerService;
 use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
 use SWServices\Cancelation\CancelationService as cancelationService;
 use SWServices\AccountBalance\AccountBalanceService as accountBalanceService;
 use SWServices\SatQuery\ServicioConsultaSAT as consultaCfdiSAT;
 
+
 header('Content-type: text/plain');
 
-echo "\n\n------------ Account Balance ---------------------\n\n";
+
 $params = array(
     "url"=>"http://services.test.sw.com.mx",
     //"token" => "T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRkcVNTMno1eU9QV2t1UWdPSFg0TDliYmF4NGp1RjVka1BRM2hNMTNGWjNaM1NXZTE1SFJWSW9mQkFuYmRwaHhEYUd4NFB1YUtDU1p1bzQwR2ttVS9raTFPUDRqRFVudHB6cHdGMVQ5dnB0aGVLN1R6cFBqaStiUFlsbzcwdDgzMjNiMlk2azVwayszNVlWZWhxSGF4VFQ4d1Z1ampsZHRtU252V1JJU216YUwwMml1S3dOR3JaQ216ekFyZUdEbVRaRk9FUzFkaE5BQWRpRXZYT3N5bk44YzVLUlBROWpKay9MZXRPbWhXdmRreENwT1RDbURpQW82UkxsbFlqN3RySWxHdzZLZ1NjQzB6WjFlajNCYkFUeXRtK0MrWHJ3RWh2QzJzWDdYeEpWRXpwdkFLRmd1VGRudFhvWExjRllHRisvdnYyM1B5TmE4TWQvZm9pZTVuaS9tdUxvRkh2T2FBV2hyMzkweDdBeXcrZ2ptSE4wUnFBUnhBdyt0dGhpZVc.FB_Y2NmPBmfDdPBC0zFCgTLSnVkVaHrWU_pXpeljbYU"
     "user"=>"demo",
     "password"=> "123456789"
       );
-
-    $accountBalance = accountBalanceService::Set($params);
-    $accResponse = $accountBalance::GetAccountBalance();
-    var_dump($accResponse);
 
 echo "\n\n------------Token---------------------\n\n";
 try {
@@ -40,6 +36,13 @@ try {
     } catch(Exception $e){
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
+
+ echo "\n\n------------ Account Balance ---------------------\n\n"; 
+    $accountBalance = accountBalanceService::Set($params);
+    $accResponse = $accountBalance::GetAccountBalance();
+    var_dump($accResponse);
+
+
 
     $xml = file_get_contents('Tests/Resources/file2.xml');
     
@@ -62,12 +65,12 @@ echo "\n\n---------------- Validación LCO -----------------\n\n";
     $validateLCO = validaLco::Set($params);
     $resultadoLCO = $validateLCO::ValidaLco('20001000000300022816');
     var_dump($resultadoLCO);      
-       
+      
 echo "\n\n----------------- Validación LRFC ----------------\n\n";     
     $validateLCRFC = validaLrfc::Set($params);
     $resultadoLRFC= $validateLCRFC::ValidaLrfc('LAN8507268IA');
     var_dump($resultadoLRFC);
-    
+   
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";     
     $json = file_get_contents("Tests/Resources/cfdi33_json_pagos.json"); 
         
@@ -109,7 +112,6 @@ echo "\n\n---------------- Cancelación por PFX -----------------\n\n";
     $cancelRequestPFX = cancelationService::Set($params);
     $cancelationPFX = $cancelRequestPFX::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
     var_dump($cancelationPFX);
-     
  
  echo "\n\n---------------- Cancelación por XML -----------------\n\n";   
     $cancelRequestXML = cancelationService::Set($params);
@@ -133,6 +135,26 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
        $consultaCfdi = consultaCfdiSAT::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuidV);
       
        var_dump($consultaCfdi);
+        
+echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";         
        
+        $rfc = "LAN7008173R5";
+        $consultaPendientes = cancelationService::Set($params);
+        $consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
+        var_dump($consultaPendientes);    
+    
+echo "\n\n--------------- Consulta consulta Relacionados ------------------\n\n";      
+
+        $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+        $cfdiRelacionados = cancelationService::Set($params);
+        $cfdiRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuidV);
+        var_dump($cfdiRelacionados);
+        
+echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n";        
+        
+        $accion = "Aceptacion";
+        $aceptarRechazar = cancelationService::Set($params);
+        $aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
+        var_dump($aceptarRechazar);
 
 ?>

@@ -53,7 +53,6 @@ class CancelationService extends Services {
        return cancelationRequest::sendReqGet(Services::get_url(), Services::get_token(), $rfc, Services::get_proxy(), '/pendings/'); 
     }
     
-    
     public static function ConsultarCFDIRelacionadosUUID($rfc, $uuid){
         return cancelationRequest::sendReqUUID(Services::get_url(), Services::get_token(), $rfc, $uuid, Services::get_proxy(), '/relations/');
     }
@@ -69,10 +68,6 @@ class CancelationService extends Services {
     public static function ConsultarCFDIRelacionadosXML(){
         return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/relations/xml');
     }
-    
-    public static function ConsultarStatusCFDISAT(){
         
-    }
-    
 }
 ?>
