@@ -1,5 +1,6 @@
 <?php
 namespace SWServices\SatQuery;
+use Exception;
 
 class SatQueryRequest{
         
@@ -17,8 +18,15 @@ class SatQueryRequest{
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $soap = curl_exec($ch);
+            $err = curl_error($ch);
+        
+            $err = curl_error($ch);
         curl_close($ch);
-        return SatQueryRequest::response(SatQueryRequest::xml2array($soap));
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            return SatQueryRequest::response(SatQueryRequest::xml2array($soap));
+        }
     }
     
     public static function getSoapBody($rfcEmisor,$rfcReceptor, $total,$uuid){

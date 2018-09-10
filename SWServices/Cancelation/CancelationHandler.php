@@ -2,7 +2,7 @@
 namespace SWServices\Cancelation;
 use Exception;
 
-class cancelationHandler{
+class CancelationHandler{
 
     public static function uuidsReq($data){
         $array = [];
@@ -15,10 +15,6 @@ class cancelationHandler{
     
     public static function uuidReq($data){
      return array("uuid" => $data);
-    }
-        
-    public static function soapBody(){
-        
     }
 }
 ?>

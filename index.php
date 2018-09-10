@@ -125,7 +125,7 @@ echo "\n\n-----------------Cancelación por CSD ----------------\n\n";
 
 echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";  
 
-        $soapUrl = "https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc";
+        $soapUrl = "https://consultaqr.facturaelectronica.sat.gob.x/ConsultaCFDIService.svc";
         $re = "LSO1306189R5";
         $rr = "LSO1306189R5";
         $tt = 1.16;
@@ -134,7 +134,7 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
        $consultaCfdi = consultaCfdiSAT::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuidV);
       
        var_dump($consultaCfdi);
-        
+       
 echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";         
        
         $rfc = "LAN7008173R5";
