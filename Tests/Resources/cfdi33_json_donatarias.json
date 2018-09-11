@@ -1,0 +1,101 @@
+{
+"HasComplemento": true,
+"CfdiRelacionados": null,
+"Emisor": {
+"Rfc": "LAN8507268IA",
+"RegimenFiscal": "601"
+},
+"Receptor": {
+"Rfc": "XAXX010101000",
+"Nombre": "MI RAZON SOCIAL",
+"UsoCFDI": "P01"
+},
+"Conceptos": [
+{
+"ImporteLength": 6,
+"Descuento_Length": 0,
+"ValorUnitario_Length": 2,
+"Cantidad_Length": 0,
+"Impuestos": {
+"Traslados": [
+{
+"ImporteLength": 6,
+"BaseLength": 6,
+"Base": 5.950000,
+"Impuesto": "002",
+"TipoFactor": "Tasa",
+"TasaOCuota": "0.160000",
+"TasaOCuotaSpecified": true,
+"Importe": 0.952000,
+"ImporteSpecified": true
+}
+],
+"Retenciones": null
+},
+"InformacionAduanera": null,
+"CuentaPredial": null,
+"ComplementoConcepto": null,
+"Parte": null,
+"ClaveProdServ": "47131806",
+"NoIdentificacion": "121",
+"Cantidad": 1.0,
+"ClaveUnidad": "H87",
+"Unidad": null,
+"Descripcion": "industrial",
+"ValorUnitario": 5.95,
+"Importe": 5.950000,
+"DescuentoSpecified": false
+}
+],
+"Impuestos": {
+"Retenciones": null,
+"Traslados": [
+{
+"Impuesto": "002",
+"TipoFactor": "Tasa",
+"TasaOCuota": 0.160000,
+"Importe": 0.952000
+}
+],
+"TotalImpuestosRetenidosSpecified": false,
+"TotalImpuestosTrasladados": 0.95,
+"TotalImpuestosTrasladadosSpecified": true
+},
+"Complemento": [
+{
+"HasElements": true,
+"Any": [
+{
+"donat:Donatarias": {
+"@xmlns:donat": "http://www.sat.gob.mx/donat",
+"@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+"@xsi:schemaLocation": "http://omawww.sat.gob.mx/sitio_internet/cfd/donat/donat.xsd",
+"@fechaAutorizacion": "2017-01-09",
+"@leyenda": "Este comprobante ampara un donativo, el cual será destinado por la donataria a los fines propios de su objeto social. En el caso de que los bienes donados hayan sido deducidos previamente para los efectos de impuestos sobre la renta, este donativo no es deducible. La reproducción no autorizada de este comprobante constituye un delito en los términos de las disposiciones fiscales Efectos Fiscales al Pago",
+"@noAutorizacion": "325-SAT-28-I-(21)-4109",
+"@version": "1.1"
+}
+}
+]
+}
+],
+"Addenda": null,
+"Version": "3.3",
+"Serie": "U",
+"Folio": "636712423998149078248",
+"Fecha": "2018-08-30T17:13:19",
+"FormaPago": "01",
+"FormaPagoSpecified": true,
+"NoCertificado": "20001000000300022760",
+"CondicionesDePago": null,
+"SubTotal": 5.95,
+"DescuentoSpecified": false,
+"Moneda": "MXN",
+"TipoCambioSpecified": false,
+"Total": 6.90,
+"TipoDeComprobante": "I",
+"MetodoPago": "PUE",
+"MetodoPagoSpecified": true,
+"LugarExpedicion": "45200",
+"Confirmacion": null
+}

@@ -1,0 +1,91 @@
+{
+    "HasComplemento": true,
+    "CfdiRelacionados": null,
+    "Emisor": {
+        "Rfc": "LAN7008173R5",
+        "Nombre": "LUNA SOFT SA DE CV ECC11",
+        "RegimenFiscal": "601"
+    },
+    "Receptor": {
+        "Rfc": "AAQM610917QJA",
+        "Nombre": "ECC11 SMARTERWEB",
+        "ResidenciaFiscalSpecified": false,
+        "NumRegIdTrib": null,
+        "UsoCFDI": "P01"
+    },
+    "Conceptos": [
+        {
+            "ImporteLength": 0,
+            "Descuento_Length": 0,
+            "ValorUnitario_Length": 0,
+            "Cantidad_Length": 0,
+            "Impuestos": null,
+            "InformacionAduanera": null,
+            "CuentaPredial": null,
+            "ComplementoConcepto": null,
+            "Parte": null,
+            "ClaveProdServ": "84111506",
+            "NoIdentificacion": null,
+            "Cantidad": 1.0,
+            "ClaveUnidad": "ACT",
+            "Unidad": null,
+            "Descripcion": "ECC11",
+            "ValorUnitario": 1.0,
+            "Importe": 1.0,
+            "DescuentoSpecified": false
+        }
+    ],
+    "Impuestos": null,
+    "Complemento": [
+        {
+            "HasElements": true,
+            "Any": [
+                {
+                    "Ecc12:Estadodecuentacombustible": {
+                        "Version": "1.2",
+                        "TipoOperacion": "Tarjeta",
+                        "NumeroDeCuenta": "12355",
+                        "SubTotal": "1.1",
+                        "Total": "2.2",
+                        "Conceptos": [{
+                                "Identificador": "123",
+                                "Fecha": "2018-05-22T00:00:00",
+                                "Rfc": "AAQM610917QJA",
+                                "ClaveEstacion": "1234567890",
+                                "Cantidad": "1.1",
+                                "TipoCombustible": "1",
+                                "Unidad": "12345",
+                                "NombreCombustible": "123445",
+                                "FolioOperacion": "12345",
+                                "ValorUnitario": "1.1",
+                                "Importe": "1.1",
+                                "Traslados": [{
+                                    "Impuesto": "IVA",
+                                    "TasaOCuota": "16",
+                                    "Importe": "1.1"
+                                }]
+                        }]
+                    }
+                }
+            ]
+        }
+    ],
+    "Addenda": null,
+    "Version": "3.3",
+    "Serie": "OK",
+    "Folio": "636711864762214516248",
+    "Fecha": "2018-08-30T01:41:16",
+    "FormaPagoSpecified": false,
+    "NoCertificado": "20001000000300022815",
+    "CondicionesDePago": null,
+    "SubTotal": 1.0,
+    "DescuentoSpecified": false,
+    "Moneda": "XXX",
+    "TipoCambioSpecified": false,
+    "Total": 1.0,
+    "TipoDeComprobante": "I",
+    "MetodoPago": "PUE",
+    "MetodoPagoSpecified": true,
+    "LugarExpedicion": "45110",
+    "Confirmacion": null
+}

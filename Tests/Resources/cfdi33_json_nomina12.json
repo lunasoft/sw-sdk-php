@@ -1,0 +1,116 @@
+{
+    "Version": "3.3",
+    "Serie": "U",
+    "Folio": "636711830311568973248",
+    "Fecha": "2018-08-30T12:43:51",
+    "FormaPago": "99",
+    "FormaPagoSpecified": true,
+    "SubTotal": 1646.32,
+    "Descuento": 38.00,
+    "DescuentoSpecified": true,
+    "Moneda": "MXN",
+    "TipoCambioSpecified": false,
+    "Total": 1608.32,
+    "TipoDeComprobante": "N",
+    "MetodoPago": "PUE",
+    "MetodoPagoSpecified": true,
+    "LugarExpedicion": "45200",
+    "HasComplemento": true,
+    "Emisor": {
+        "Rfc": "LAN7008173R5",
+        "Nombre": "MI RAZON SOCIAL",
+        "RegimenFiscal": "601"
+    },
+    "Receptor": {
+        "Rfc": "RASG920318DXA",
+        "Nombre": "PRUEBA UNO",
+        "ResidenciaFiscalSpecified": false,
+        "NumRegIdTrib": null,
+        "UsoCFDI": "P01"
+    },
+    "Conceptos": [
+        {
+            "ClaveProdServ": "84111505",
+            "Cantidad": 1.0,
+            "ClaveUnidad": "ACT",
+            "Descripcion": "Pago de nómina",
+            "ValorUnitario": 1646.32,
+            "Importe": 1646.32,
+            "Descuento": 38.00,
+            "DescuentoSpecified": true
+        }
+    ],
+    "Complemento": [
+        {
+            "HasElements": true,
+            "Any": [
+                {
+                    "Nomina12:Nomina": {
+                        "Version": "1.2",
+                        "TipoNomina": "O",
+                        "FechaPago": "2018-05-31",
+                        "FechaInicialPago": "2018-05-16",
+                        "FechaFinalPago": "2018-05-31",
+                        "NumDiasPagados": "16",
+                        "TotalPercepciones": "1530.88",
+                        "TotalDeducciones": "38.00",
+                        "TotalOtrosPagos": "115.44",
+                        "Emisor": {
+                            "RegistroPatronal": "PROED3"
+                        },
+                        "Receptor": {
+                            "Curp": "RASG920318HJCMLB07",
+                            "NumSeguridadSocial": "12312312333",
+                            "FechaInicioRelLaboral": "2006-01-04",
+                            "Antigüedad": "P647W",
+                            "TipoContrato": "01",
+                            "Sindicalizado": "No",
+                            "TipoJornada": "01",
+                            "TipoRegimen": "02",
+                            "NumEmpleado": "1712141307340EC",
+                            "RiesgoPuesto": "2",
+                            "PeriodicidadPago": "04",
+                            "SalarioBaseCotApor": "100",
+                            "SalarioDiarioIntegrado": "95.68",
+                            "ClaveEntFed": "JAL"
+                        },
+                        "Percepciones": {
+                            "TotalSueldos": "1530.88",
+                            "TotalGravado": "1530.88",
+                            "TotalExento": "0.00",
+                            "Percepcion": [
+                                {
+                                "TipoPercepcion": 0,
+                                "Clave": "001",
+                                "Concepto": "Sueldos, Salarios  Rayas y Jornales",
+                                "ImporteGravado": "1530.88",
+                                "ImporteExento": "0.00"
+                                }
+                            ]
+                        },
+                        "Deducciones": {
+                            "TotalOtrasDeducciones": "38.00",
+                            "Deduccion": [
+                                {
+                                    "TipoDeduccion": 0,
+                                    "Clave": "001",
+                                    "Concepto": "Seguridad social",
+                                    "Importe": "38"
+                                }
+                            ]
+                        },
+                        "OtrosPagos": [{
+                            "Clave": "002",
+                            "Concepto": "Subsidio para el empleo",
+                            "Importe": 115.44,
+                            "SubsidioAlEmpleo": {
+                                "SubsidioCausado": 200.63
+                            },
+                            "TipoOtroPago": 1
+                        }]
+                    }
+                }
+            ]
+        }
+    ]
+}
