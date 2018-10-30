@@ -60,6 +60,13 @@ class SatQueryRequest{
         $obj = (object)[];
         $obj->CodigoEstatus = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["CodigoEstatus"];
         $obj->Estado = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["Estado"];
+        try{
+            $obj->EsCancelable = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EsCancelable"];
+            $obj->EstatusCancelacion = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EstatusCancelacion"];
+        }
+        catch(Exception $e){
+            return $data;
+        }
         return $obj;
     }
 }
