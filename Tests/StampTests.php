@@ -1,9 +1,9 @@
 <?php
 
-	namespace tests;
+namespace tests;
     
     use PHPUnit\Framework\TestCase;
-    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\Timbrado as StampService;
     use SWServices\Toolkit\SignService as Sellar;
     use Exception;
     use DOMDocument;
@@ -11,7 +11,7 @@
 	error_reporting(E_ERROR);
 
 
-	final class StampTests extends TestCase{
+class StampTests extends TestCase{
 		
 		protected static $generateXML;
 
@@ -40,7 +40,7 @@
 
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV1($xml);
+			$result = $stamp::TimbradoV1($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -60,7 +60,7 @@
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV1($xml);
+			$result = $stamp::TimbradoV1($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -80,7 +80,7 @@
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV2($xml);
+			$result = $stamp::TimbradoV2($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -100,7 +100,7 @@
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV2($xml);
+			$result = $stamp::TimbradoV2($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -124,7 +124,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV2($xml,true);
+			$result = $stamp::TimbradoV2($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -147,7 +147,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV2($xml,true);
+			$result = $stamp::TimbradoV2($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -170,7 +170,7 @@
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV3($xml);
+			$result = $stamp::TimbradoV3($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -194,7 +194,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV3($xml,true);
+			$result = $stamp::TimbradoV3($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -215,7 +215,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV3($xml,true);
+			$result = $stamp::TimbradoV3($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -225,7 +225,7 @@
 			
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
-        }
+        } 
 		/*--------------------------------V4-----------------------------------------------------------------------------------------------------------------------*/
 		 public function testStampXMLV4byToken()
         {
@@ -236,7 +236,7 @@
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV4($xml);
+			$result = $stamp::TimbradoV4($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -259,7 +259,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV4($xml,true);
+			$result = $stamp::TimbradoV4($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -281,7 +281,7 @@
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::StampV4($xml,true);
+			$result = $stamp::TimbradoV4($xml,true);
 			var_dump($result);
 			echo "-------------------";
 			
@@ -366,5 +366,4 @@
 		    return '/Tests/Resources/file.xml';
 		}
     }
-
-?>
+    

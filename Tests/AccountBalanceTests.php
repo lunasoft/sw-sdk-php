@@ -1,11 +1,11 @@
 <?php
     namespace tests;
     
-    use PHPUnit\Framework\TestCase;
+    use PHPUnit\Framework\TestCaseTest;
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
     use Exception;
 
-    final class AccountBalanceTests extends TestCase {
+    final class AccountBalanceTests extends TestCaseTest {
         public function testSuccess(){
             $resultSpect = "success";
             $params = array(

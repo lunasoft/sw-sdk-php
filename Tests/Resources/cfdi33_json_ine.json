@@ -1,0 +1,112 @@
+{
+    "Addenda": null,
+    "Version": "3.3",
+    "Serie": null,
+    "Folio": "636712221142347429248",
+    "Fecha": "2018-08-30T11:35:14",
+    "FormaPagoSpecified": false,
+    "NoCertificado": "20001000000300022815",
+    "CondicionesDePago": "Una sola exhibición",
+    "SubTotal": 5.00,
+    "DescuentoSpecified": false,
+    "Moneda": "MXN",
+    "TipoCambioSpecified": false,
+    "Total": 5.80,
+    "TipoDeComprobante": "I",
+    "MetodoPago": "PUE",
+    "MetodoPagoSpecified": true,
+    "LugarExpedicion": "27100",
+    "Confirmacion": null,
+    "HasComplemento": true,
+    "Emisor": {
+        "Rfc": "LAN7008173R5",
+        "Nombre": "LUNASOFT.",
+        "RegimenFiscal": "601"
+    },
+    "Receptor": {
+        "Rfc": "AAA010101AAA",
+        "Nombre": "SW SMARTERWEB",
+        "ResidenciaFiscalSpecified": false,
+        "NumRegIdTrib": null,
+        "UsoCFDI": "G01"
+    },
+    "Conceptos": [
+        {
+            "ImporteLength": 2,
+            "Descuento_Length": 0,
+            "ValorUnitario_Length": 2,
+            "Cantidad_Length": 6,
+            "Impuestos": {
+                "Traslados": [
+                    {
+                        "ImporteLength": 2,
+                        "BaseLength": 2,
+                        "Base": 5.00,
+                        "Impuesto": "002",
+                        "TipoFactor": "Tasa",
+                        "TasaOCuota": "0.160000",
+                        "TasaOCuotaSpecified": true,
+                        "Importe": "0.80",
+                        "ImporteSpecified": true
+                    }
+                ],
+                "Retenciones": null
+            },
+            "InformacionAduanera": null,
+            "CuentaPredial": null,
+            "ComplementoConcepto": null,
+            "Parte": null,
+            "ClaveProdServ": "31121212",
+            "NoIdentificacion": "003",
+            "Cantidad": "2.500000",
+            "ClaveUnidad": "D13",
+            "Unidad": "m",
+            "Descripcion": "Descripción local",
+            "ValorUnitario": "2.00",
+            "Importe": "5.00",
+            "DescuentoSpecified": false
+        }
+    ],
+    "Impuestos": {
+        "Retenciones": null,
+        "Traslados": [
+            {
+                "Impuesto": "002",
+                "TipoFactor": "Tasa",
+                "TasaOCuota": "0.160000",
+                "Importe": "0.80"
+            }
+        ],
+        "TotalImpuestosRetenidosSpecified": false,
+        "TotalImpuestosTrasladados": 0.80,
+        "TotalImpuestosTrasladadosSpecified": true
+    },
+    "Complemento": [
+        {
+            "HasElements": true,
+            "Any": [
+                {
+                    "Ine:Ine": {
+                        "Version": "1.1",
+                        "TipoProceso": "Ordinario",
+                        "TipoComite": "1",
+                        "Entidad": [{
+                            "ClaveEntidad": "COA",
+                            "Contabilidad": [
+                                {
+                                    "IdContabilidad": "1"
+                                },
+                                {
+                                    "IdContabilidad": "3"
+                                },
+                                {
+                                    "IdContabilidad": "4"
+                                }
+                            ]
+                        }]
+                    }
+                }
+            ]
+        }
+    ]
+}
