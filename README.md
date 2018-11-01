@@ -679,6 +679,7 @@ Como su nombre lo indica, este servicio recibe todos los elementos que componen 
 * Key (.key)
 * Password del archivo key
 * RFC emisor 
+* UUID
 
 Esto ya que nuestro servidor generara el acuse de cancelación.
 
@@ -698,18 +699,19 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
 
     $params = array(
         "url"=>"http://services.test.sw.com.mx/",   
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo",
-        "uuid"=> "06a46e4b-b154-4c12-bb77-f9a63ed55ff2",
-        "password"=> "123456789",
-        "rfc"=> "LAN7008173R5",
-        "b64Cer"=> file_get_contents("./b64Cer.txt"),
-        "b64Key"=> file_get_contents("./b64Key.txt")
+        "user" => "demo",
+        "password" => "123456789"
     );
 
     try {
         header('Content-type: application/json');
+        $cerB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
+		$keyB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key'));
+		$password = "12345678a";
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
         $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByCSD();
+        $result = $cancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -736,14 +738,91 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
 
     $params = array(
         "url"=>"http://services.test.sw.com.mx/",   
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo",
-        "xml"=> file_get_contents("./cancelByXml.xml"),
+        "user" => "demo",
+        "password" => "123456789"
     );
 
     try {
         header('Content-type: application/json');
+        
         $cancelationService = CancelationService::Set($params);
         $result = $cancelationService::CancelationByXML();
+        var_dump($result);
+    } catch(Exception $e) {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+
+### Cancelación por PFX ###
+
+Como su nombre lo indica, este servicio recibe el PFX en base64, así como RFC Emisor, Password del PFX y UUID.
+
+Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+
+Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+
+```php
+<?php 
+    require_once 'vendor/autoload.php';
+    use SWServices\Cancelation\CancelationService as CancelationService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx/",   
+        "user" => "demo",
+        "password" => "123456789"
+    );
+
+    try {
+        header('Content-type: application/json');
+        $pfxB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.pfx'));
+        $password = "12345678a";
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
+        $cancelationService = CancelationService::Set($params);
+        $result = $cancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
+        var_dump($result);
+    } catch(Exception $e) {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+
+### Cancelación por UUID ###
+
+Como su nombre lo indica, este servicio recibe el RFC Emisor y UUID.
+
+Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+
+Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+
+```php
+<?php 
+    require_once 'vendor/autoload.php';
+    use SWServices\Cancelation\CancelationService as CancelationService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx/",   
+        "user" => "demo",
+        "password" => "123456789"
+    );
+
+    try {
+        header('Content-type: application/json');
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
+        $cancelationService = CancelationService::Set($params);
+        $result = $cancelationService::CancelationByUUID($rfc, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
