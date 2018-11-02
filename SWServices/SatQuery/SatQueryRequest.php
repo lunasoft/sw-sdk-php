@@ -52,8 +52,7 @@ class SatQueryRequest{
     }
     
     public static function xml2array($xml){
-        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", 
-                str_replace("a:","", '<?xml version="1.0" encoding="utf-8"?>'.$xml)))),TRUE);
+        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", str_replace("a:","", str_replace("i:","",'<?xml version="1.0" encoding="utf-8"?>'.$xml))))),TRUE);
     }
     
     public static function response($data){
