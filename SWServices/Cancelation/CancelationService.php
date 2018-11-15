@@ -4,6 +4,7 @@ namespace SWServices\Cancelation;
 
 
 use SWServices\Cancelation\CancelationRequest as cancelationRequest;
+use SWServices\Cancelation\CancelationHandler as cancelationHandler;
 use SWServices\Services as Services;
 use Exception;
 
