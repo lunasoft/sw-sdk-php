@@ -20,5 +20,7 @@
     require_once dirname(__FILE__) . '/SWServices/Toolkit/SignService.php';
     require_once dirname(__FILE__) . '/SWServices/SatQuery/SatQueryRequest.php';
     require_once dirname(__FILE__) . '/SWServices/SatQuery/SatQueryService.php';
+    require_once dirname(__FILE__) . '/SWServices/Csd/CsdRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/Csd/CsdService.php';
     
 ?>
