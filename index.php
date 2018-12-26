@@ -10,6 +10,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
 use SWServices\Cancelation\CancelationService as cancelationService;
 use SWServices\AccountBalance\AccountBalanceService as accountBalanceService;
 use SWServices\SatQuery\ServicioConsultaSAT as consultaCfdiSAT;
+use SWServices\Csd\CsdService as csdService;
 
 
 header('Content-type: text/plain');
@@ -156,4 +157,15 @@ echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n
         $aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
         var_dump($aceptarRechazar);
 
+echo "\n\n--------------- Subir certificado ------------------\n\n";
+        
+        $isActive = true;
+        $certificateType = "stamp";
+        $password = "12345678a";
+        $b64Cer = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
+        $b64Key = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
+        $obj = csdService::Set($params);
+        $response = csdService::UploadCsd($isActive, $certificateType, $b64Cer, $b64Key, $password);
+        var_dump($response);
+        
 ?>
