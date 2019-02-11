@@ -14,9 +14,13 @@ class SatQueryRequest{
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
             curl_setopt($ch, CURLOPT_TIMEOUT, 10);
             curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); 
+            curl_setopt($ch, CURLOPT_TIMEOUT_MS, 50000);
             curl_setopt($ch, CURLOPT_POSTFIELDS, $xml_post_string);
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-
+            set_time_limit(0);
             $soap = curl_exec($ch);
             $err = curl_error($ch);
         
@@ -52,14 +56,15 @@ class SatQueryRequest{
     }
     
     public static function xml2array($xml){
-        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", 
-                str_replace("a:","", '<?xml version="1.0" encoding="utf-8"?>'.$xml)))),TRUE);
+        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", str_replace("a:","", str_replace("i:","",'<?xml version="1.0" encoding="utf-8"?>'.$xml))))),TRUE);
     }
     
     public static function response($data){
         $obj = (object)[];
         $obj->CodigoEstatus = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["CodigoEstatus"];
         $obj->Estado = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["Estado"];
+        $obj->EsCancelable = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EsCancelable"];
+        $obj->EstatusCancelacion = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EstatusCancelacion"];
         return $obj;
     }
 }

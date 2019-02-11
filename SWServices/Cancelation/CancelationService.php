@@ -1,9 +1,8 @@
 <?php
-
 namespace SWServices\Cancelation;
 
-
 use SWServices\Cancelation\CancelationRequest as cancelationRequest;
+use SWServices\Cancelation\CancelationHandler as cancelationHandler;
 use SWServices\Services as Services;
 use Exception;
 
@@ -61,11 +60,11 @@ class CancelationService extends Services {
         return cancelationRequest::sendReqCSD(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidReq($uuid), $cerB64, $keyB64, $password, Services::get_proxy(), '/relations/csd');
     }
     
-    public static function ConsultarCFDIRelacionadosPFX(){
-        return cancelationRequest::sendReqPFX(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidReq($uuids), $pfxB64, $password, Services::get_proxy(), '/acceptreject/pfx');
+    public static function ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid){
+        return cancelationRequest::sendReqPFX(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidReq($uuid), $pfxB64, $password, Services::get_proxy(), '/relations/pfx');
     }
     
-    public static function ConsultarCFDIRelacionadosXML(){
+    public static function ConsultarCFDIRelacionadosXML($xml){
         return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/relations/xml');
     }
         
