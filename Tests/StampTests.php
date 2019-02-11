@@ -3,7 +3,7 @@
 namespace tests;
     
     use PHPUnit\Framework\TestCase;
-    use SWServices\Stamp\Timbrado as StampService;
+    use SWServices\Stamp\StampService as StampService;
     use SWServices\Toolkit\SignService as Sellar;
     use Exception;
     use DOMDocument;
