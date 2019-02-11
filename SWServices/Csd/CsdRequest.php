@@ -5,13 +5,13 @@ use Exception;
 class CsdRequest{
     public static function uploadCsdRequest($url, $token, $isActive, $certificateType, $cerB64, $keyB64, $password, $proxy, $service) {
         $data = json_encode(array_merge(
-                    [
+                    array(
                         "is_active"=>$isActive,
-                        "certificate_type"=>$certificateType,
+                        "type"=>$certificateType,
                         "b64Key"=>$keyB64,
                         "b64Cer"=>$cerB64,
                         "password"=>$password
-                    ])
+                    ))
                 );
         $curl  = curl_init($url.$service);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);

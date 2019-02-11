@@ -1,3 +1,4 @@
+
 <p align="center">
     <img src="https://www.theblocklearning.com/wp-content/uploads/2018/09/logo_php-600x600.png" width="250" height="250">
 </p>
@@ -96,8 +97,8 @@ El servicio de Autenticación es utilizado principalmente para obtener el **toke
     try
     {
         header('Content-type: application/json');
-        $auth = Authentication::auth($params);
-        $token = $auth::Token();
+        Authentication::auth($params);
+        $token = Authentication::Token();
         echo $token;
     }
     catch(Exception $e)
@@ -130,8 +131,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV1($xml);
+        StampService::Set($params);
+        $result = StampService::StampV1($xml);
         var_dump($result);
 
     }
@@ -162,8 +163,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV1($xml);
+        StampService::Set($params);
+        $result = StampService::StampV1($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -197,8 +198,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV2($xml);
+        StampService::Set($params);
+        $result = StampService::StampV2($xml);
         var_dump($result);
 
     }
@@ -231,8 +232,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV2($xml);
+        StampService::Set($params);
+        $result = StampService::StampV2($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -265,9 +266,9 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV2($xml,true);
+        $result = StampService::StampV2($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -303,8 +304,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV3($xml);
+        StampService::Set($params);
+        $result = StampService::StampV3($xml);
         var_dump($result);
 
     }
@@ -337,8 +338,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV3($xml);
+        StampService::Set($params);
+        $result = StampService::StampV3($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -371,9 +372,9 @@ Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV3($xml,true);
+        $result = StampService::StampV3($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -411,8 +412,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV4($xml);
+        StampService::Set($params);
+        $result = StampService::StampV4($xml);
         var_dump($result);
 
     }
@@ -456,8 +457,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header("Content-type: application/json");
         $xml = file_get_contents("./file.xml");
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV4($xml);
+        StampService::Set($params);
+        $result = StampService::StampV4($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -501,9 +502,9 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV4($xml,true);
+        $result = StampService::StampV4($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -542,14 +543,14 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
 ```php
-use SWServices\Stamp\EmisionTimbrado as emisionTimbrado;
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
-$issue = emisionTimbrado::Set($params);
-$resultadoIssue = $issue::EmisionTimbradoV1($xml);
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV1($xml);
 var_dump($resultadoIssue);
 );
 ```
@@ -558,14 +559,14 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 
 **Ejemplo de uso**
 ```php
-use SWServices\Stamp\EmisionTimbrado as emisionTimbrado;
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
-$issue = emisionTimbrado::Set($params);
-$resultadoIssue = $issue::EmisionTimbradoV2($xml);
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
 var_dump($resultadoIssue);
 );
 ```
@@ -574,14 +575,14 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
 
 **Ejemplo de uso**
 ```php
-use SWServices\Stamp\EmisionTimbrado  as emisionTimbrado;
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
-$issue = emisionTimbrado::Set($params);
-$resultadoIssue = $issue::EmisionTimbradoV3($xml);
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV3($xml);
 var_dump($resultadoIssue);
 );
 ```
@@ -590,14 +591,14 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 
 **Ejemplo de uso**
 ```php
-use SWServices\Stamp\EmisionTimbrado  as emisionTimbrado;
+use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
-$issue = emisionTimbrado::Set($params);
-$resultadoIssue = $issue::EmisionTimbradoV4($xml);
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
 var_dump($resultadoIssue);
 );
 ```
@@ -610,14 +611,14 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
 ```php
-use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
-$jsonIssuerStamp = jsonEmisionTimbrado::Set($params);
-$resultadoJson = $jsonIssuerStamp::jsonEmisionTimbradoV1($json);
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
 var_dump($resultadoJson);
 );
 ```
@@ -626,14 +627,14 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
 
 **Ejemplo de uso**
 ```php
-use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
-$jsonIssuerStamp = jsonEmisionTimbrado::Set($params);
-$resultadoJson = $jsonIssuerStamp::jsonEmisionTimbradoV2($json);
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
 var_dump($resultadoJson);
 );
 ```
@@ -648,8 +649,8 @@ $params = array(
 "user"=>"demo",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
-$jsonIssuerStamp = jsonEmisionTimbrado::Set($params);
-$resultadoJson = $jsonIssuerStamp::jsonEmisionTimbradoV3($json);
+jsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
 var_dump($resultadoJson);
 );
 ```
@@ -658,14 +659,14 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 
 **Ejemplo de uso**
 ```php
-use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
-$jsonIssuerStamp = jsonEmisionTimbrado::Set($params);
-$resultadoJson = $jsonIssuerStamp::jsonEmisionTimbradoV4($json);
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV4($json);
 var_dump($resultadoJson);
 );
 ```
@@ -710,8 +711,8 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
 		$password = "12345678a";
 		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
 		$rfc = "LAN8507268IA";
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -745,8 +746,8 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
     try {
         header('Content-type: application/json');
         
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByXML();
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByXML();
         var_dump($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -784,8 +785,8 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
         $password = "12345678a";
 		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
 		$rfc = "LAN8507268IA";
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -821,8 +822,8 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
         header('Content-type: application/json');
 		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
 		$rfc = "LAN8507268IA";
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByUUID($rfc, $uuid);
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByUUID($rfc, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -902,8 +903,8 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
     );
 
     try {
-        $accountBalance = AccountBalanceService::Set($params);
-        $result = $accountBalance::GetAccountBalance();
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::GetAccountBalance();
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -979,7 +980,7 @@ $params = array(
 "password"=> "123456789"
 );
 $rfc = "LAN7008173R5";
-$consultaPendientes = cancelationService::Set($params);
+cancelationService::Set($params);
 $consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
 var_dump($consultaPendientes);
 ```
@@ -1004,7 +1005,7 @@ $keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7
 $password = "12345678a";
 $rfc = "LAN7008173R5";
 $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
-$aceptarRechazar = cancelationService::Set($params);
+cancelationService::Set($params);
 $aceptarRechazar = cancelationService::AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids);
 var_dump($aceptarRechazar);
 ```
@@ -1025,7 +1026,7 @@ $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7
 $password = "12345678a";
 $rfc = "LAN7008173R5";
 $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
-$aceptarRechazar = cancelationService::Set($params);
+cancelationService::Set($params);
 $aceptarRechazar = cancelationService::AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids);
 var_dump($aceptarRechazar);
 ```
@@ -1077,7 +1078,7 @@ $params = array(
 "password"=> "123456789"
 );
 $xml = file_get_contents('Tests\Resources\fileAcceptReject.xml');
-$aceptarRechazar = cancelationService::Set($params);
+cancelationService::Set($params);
 $aceptarRechazar = cancelationService::AceptarRechazarCancelacionXML($xml);
 var_dump($aceptarRechazar);
 ```
@@ -1098,7 +1099,7 @@ $params = array(
 $rfc = "LAN7008173R5";
 $uuid = "6ab07bef-4446-43ea-a3fd-04a804309457";
 $accion = "Rechazo";
-$aceptarRechazar = cancelationService::Set($params);
+cancelationService::Set($params);
 $aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
 var_dump($aceptarRechazar);
 ```
@@ -1123,7 +1124,7 @@ $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7
 $keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-$consultaRelacionados = cancelationService::Set($params);
+cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
 var_dump($consultaRelacionados);
 ```
@@ -1143,7 +1144,7 @@ $params = array(
 $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-$consultaRelacionados = cancelationService::Set($params);
+cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
 var_dump($consultaRelacionados);
 ```
@@ -1193,7 +1194,7 @@ $params = array(
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
 $xml = file_get_contents('Tests\Resources\fileRelations.xml');
-$consultaRelacionados = cancelationService::Set($params);
+cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosXML($xml);
 var_dump($consultaRelacionados);
 ```
@@ -1212,7 +1213,7 @@ $params = array(
 );
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-$consultaRelacionados = cancelationService::Set($params);
+cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 var_dump($consultaRelacionados);
 ```

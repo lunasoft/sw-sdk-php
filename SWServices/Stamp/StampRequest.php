@@ -3,20 +3,14 @@
 namespace SWServices\Stamp;
 use Exception;
 class StampRequest{
-        
-    public static $path = '/cfdi33/stamp/';
-    public static function getPath() { return self::$path; }
-    public static function setPath($servicio) { self::$path = $servicio; }   
-    
-    public static function sendReq($url, $token, $xml, $version, $isB64, $proxy){
+    public static function sendReq($url, $token, $xml, $version, $isB64, $proxy, $path){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
-            'xml' => array(
+                'xml' => array(
                 'type' => 'text/xml',
                 'content' => $xml
                 )
             );
-
         $data = '';
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
@@ -28,7 +22,7 @@ class StampRequest{
         }
         $data .= "--" . $delimiter . "--\r\n";
         
-        $curl  = curl_init($url.static::$path.$version.($isB64?'/b64':''));
+        $curl  = curl_init($url.$path.$version.($isB64?'/b64':''));
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
         if(isset($proxy)){

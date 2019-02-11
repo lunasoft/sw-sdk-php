@@ -1,7 +1,5 @@
 <?php
-
 namespace SWServices\Cancelation;
-
 
 use SWServices\Cancelation\CancelationRequest as cancelationRequest;
 use SWServices\Cancelation\CancelationHandler as cancelationHandler;
