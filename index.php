@@ -23,57 +23,86 @@ $params = array(
       );
 
 echo "\n\n------------Token---------------------\n\n";
-try {
+try{
     Authentication::auth($params);
 	$result = Authentication::Token();
 	
 	if($result->status == "success") {
             echo $result->data->token;
             
-	} else {
+    } 
+    else {
             echo $result->message;
 	}
-    } catch(Exception $e){
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 
  echo "\n\n------------ Account Balance ---------------------\n\n"; 
+try {
     AccountBalanceService::Set($params);
     $accResponse = AccountBalanceService::GetAccountBalance();
     var_dump($accResponse);
-
-
-
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
     $xml = file_get_contents('Tests/Resources/file.xml');
     
 echo "\n\n--------------- Emisión Timbrado ------------------\n\n";
+try {
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
     var_dump($resultadoIssue);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
     
 echo "\n\n--------------- Timbrado ------------------\n\n";
+try {
     StampService::Set($params);
     $resultadoStamp = StampService::StampV4($xml);
     var_dump($resultadoStamp);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
        
 echo "\n\n-----------------Validación de XML ----------------\n\n";          
+try {
     ValidarXML::Set($params);
     $resultadoValida = ValidarXML::ValidaXML($xml);
     var_dump($resultadoValida);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
     
 echo "\n\n---------------- Validación LCO -----------------\n\n";    
+try {
     ValidaLco::Set($params);
     $resultadoLCO = ValidaLco::ValidaLco('20001000000300022816');
-    var_dump($resultadoLCO);      
+    var_dump($resultadoLCO); 
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}     
       
 echo "\n\n----------------- Validación LRFC ----------------\n\n";     
+try {
     ValidaLrfc::Set($params);
     $resultadoLRFC = ValidaLrfc::ValidaLrfc('LAN8507268IA');
     var_dump($resultadoLRFC);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
    
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";     
-    $json = file_get_contents("Tests/Resources/cfdi33_json_pagos.json"); 
-        
+try {
+    $json = file_get_contents("Tests/Resources/cfdi33_json_pagos.json");    
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::JsonEmisionTimbradoV4($json);
     
@@ -91,6 +120,10 @@ echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";
            :
             print_r($resultadoJson->message).
             print_r($resultadoJson->messageDetail);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
       
 // Parametros   
     $cerB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
@@ -101,28 +134,48 @@ echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";
     $uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
     $rfc = "LAN8507268IA";
     $xmlCancelacion = "";
+    
 
 echo "\n\n---------------- Cancelación directa por UUID -----------------\n\n";     
+try {
     CancelationService::Set($params);
     $cancelationResult = CancelationService::CancelationByUUID($rfc, $uuid);
     var_dump($cancelationResult);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
  
     
-echo "\n\n---------------- Cancelación por PFX -----------------\n\n";    
+echo "\n\n---------------- Cancelación por PFX -----------------\n\n";
+try {
     CancelationService::Set($params);
     $cancelationPFX = CancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
     var_dump($cancelationPFX);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
  
- echo "\n\n---------------- Cancelación por XML -----------------\n\n";   
+ echo "\n\n---------------- Cancelación por XML -----------------\n\n";
+ try {
     CancelationService::Set($params);
     $cancelationXML = CancelationService::CancelationByXML($xmlCancelacion);
     var_dump($cancelationXML);
+ }
+ catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
       
 echo "\n\n-----------------Cancelación por CSD ----------------\n\n";  
-    
+try {
     CancelationService::Set($params);
     $cancelationCSD = CancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
     var_dump($cancelationCSD);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 
 echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";  
 
@@ -137,35 +190,111 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
        var_dump($consultaCfdi);
        
 echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";         
-       
-        $rfc = "LAN7008173R5";
-        CancelationService::Set($params);
-        $consultaPendientes = CancelationService::PendientesPorCancelar($rfc);
-        var_dump($consultaPendientes);    
+try {       
+    $rfc = "LAN7008173R5";
+    CancelationService::Set($params);
+    $consultaPendientes = CancelationService::PendientesPorCancelar($rfc);
+    var_dump($consultaPendientes);    
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
     
 echo "\n\n--------------- Consulta consulta Relacionados ------------------\n\n";      
-
-        $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
-        CancelationService::Set($params);
-        $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuidV);
-        var_dump($cfdiRelacionados);
+try {
+    $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+    CancelationService::Set($params);
+    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuidV);
+    var_dump($cfdiRelacionados);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
         
 echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n";        
-        
-        $accion = "Aceptacion";
-        CancelationService::Set($params);
-        $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
-        var_dump($aceptarRechazar);
+try { 
+    $accion = "Aceptacion";
+    CancelationService::Set($params);
+    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
+    var_dump($aceptarRechazar);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 
 echo "\n\n--------------- Subir certificado ------------------\n\n";
+try {        
+    $isActive = true;
+    $type = "stamp";
+    $password = "12345678a";
+    $b64Cer = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
+    $b64Key = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
+    CsdService::Set($params);
+    $response = CsdService::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Lista certificados ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::GetListCsd();
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Lista certificados por tipo ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::GetListCsdByType('stamp');
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Lista certificados por Rfc ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::GetListCsdByRfc('LAN7008173R5');
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Buscar certificado por número de csd ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::InfoCsd('20001000000300022816');
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
         
-        $isActive = true;
-        $type = "stamp";
-        $password = "12345678a";
-        $b64Cer = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
-        $b64Key = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
-        $uploadCsd = CsdService::Set($params);
-        $response = $uploadCsd::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
-        var_dump($response);
-        
+
+echo "\n\n--------------- Buscar certificado activo por rfc y tipo ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::InfoActiveCsd('LAN7008173R5', 'stamp');
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}        
+
+echo "\n\n--------------- Desactivar certificado ------------------\n\n";
+try {
+    CsdService::Set($params);
+    $response = CsdService::DisableCsd('20001000000300022763');
+    var_dump($response);
+}
+catch(Exception $e){
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 ?>

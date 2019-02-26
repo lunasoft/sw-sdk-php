@@ -23,8 +23,6 @@ class SatQueryRequest{
             set_time_limit(0);
             $soap = curl_exec($ch);
             $err = curl_error($ch);
-        
-            $err = curl_error($ch);
         curl_close($ch);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);

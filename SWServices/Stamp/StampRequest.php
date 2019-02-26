@@ -43,8 +43,11 @@ class StampRequest{
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else {
-            return json_decode($response);
+        } else{
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 }

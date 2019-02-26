@@ -25,7 +25,10 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
     
@@ -57,7 +60,10 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
     
@@ -90,7 +96,10 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 
@@ -112,7 +121,6 @@ class CancelationRequest{
             $data .= "\r\n";
             $data .= $file['content'] . "\r\n";
         }
-        // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
         $curl  = curl_init($url.$service);
@@ -158,11 +166,15 @@ class CancelationRequest{
         ));
         $response = curl_exec($curl);
         $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }    
 }

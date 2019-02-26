@@ -25,14 +25,17 @@ class ValidateRequest{
 
     $response = curl_exec($curl);
     $err = curl_error($curl);
-
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
 
     if ($err) {
-               throw new Exception("cURL Error #:" . $err);
-           } else{
-               return json_decode($response);
-           }
+        throw new Exception("cURL Error #:" . $err);
+    } else{
+        if($httpcode < 500)
+            return json_decode($response);
+        else
+            throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+    }
  }
  
  public static function sendReqLrfc($url, $token, $lrfc, $proxy){
@@ -53,14 +56,17 @@ class ValidateRequest{
 
     $response = curl_exec($curl);
     $err = curl_error($curl);
-
+    $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
     curl_close($curl);
 
     if ($err) {
-               throw new Exception("cURL Error #:" . $err);
-           } else{
-               return json_decode($response);
-           }
+        throw new Exception("cURL Error #:" . $err);
+    } else{
+        if($httpcode < 500)
+            return json_decode($response);
+        else
+            throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+    }
      
  } 
     
@@ -74,7 +80,6 @@ class ValidateRequest{
             );
         
         $data = '';
-        // populate file fields
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
             $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
@@ -83,7 +88,6 @@ class ValidateRequest{
             $data .= "\r\n";
             $data .= $file['content'] . "\r\n";
         }
-        // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
         $curl  = curl_init($url.'/validate/cfdi33'.($isB64?'/b64':''));

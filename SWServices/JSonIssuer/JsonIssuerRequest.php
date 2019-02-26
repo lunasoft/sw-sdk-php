@@ -7,7 +7,7 @@ use Exception;
 class JsonIssuerRequest{
    
     
- public static function sendReq($url, $token, $json, $version, $isB64, $proxy){
+  public static function sendReq($url, $token, $json, $version, $isB64, $proxy){
     $curl = curl_init();
 
     curl_setopt_array($curl, array(
@@ -28,17 +28,19 @@ class JsonIssuerRequest{
     if(isset($proxy)){
            curl_setopt($curl , CURLOPT_PROXY, $proxy);
        }
-    
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
+       $response = curl_exec($curl);
+       $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+       $err = curl_error($curl );
+       curl_close($curl);
 
-    curl_close($curl);
-
-    if ($err) {
-            throw new Exception("cURL Error #:" . $err);
-        } else {
-            return json_decode($response);
-        }
- }
+       if ($err) {
+           throw new Exception("cURL Error #:" . $err);
+       } else{
+           if($httpcode < 500)
+               return json_decode($response);
+           else
+               throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+       }
+    }
 }
 ?>
