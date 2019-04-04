@@ -3,7 +3,7 @@
 namespace tests;
     
     use PHPUnit\Framework\TestCase;
-    use SWServices\Stamp\Timbrado as StampService;
+    use SWServices\Stamp\StampService as StampService;
     use SWServices\Toolkit\SignService as Sellar;
     use Exception;
     use DOMDocument;
@@ -40,7 +40,7 @@ class StampTests extends TestCase{
 
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV1($xml);
+			$result = $stamp::StampV1($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -60,7 +60,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV1($xml);
+			$result = $stamp::StampV1($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -80,7 +80,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV2($xml);
+			$result = $stamp::StampV2($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -100,7 +100,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV2($xml);
+			$result = $stamp::StampV2($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -124,7 +124,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV2($xml,true);
+			$result = $stamp::StampV2($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -147,7 +147,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV2($xml,true);
+			$result = $stamp::StampV2($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -170,7 +170,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV3($xml);
+			$result = $stamp::StampV3($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -194,7 +194,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV3($xml,true);
+			$result = $stamp::StampV3($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -215,7 +215,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV3($xml,true);
+			$result = $stamp::StampV3($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -236,7 +236,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV4($xml);
+			$result = $stamp::StampV4($xml);
 			var_dump($result);
 			echo "-------------------";
 
@@ -259,7 +259,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV4($xml,true);
+			$result = $stamp::StampV4($xml,true);
 			var_dump($result);
 			echo "-------------------";
 
@@ -281,7 +281,7 @@ class StampTests extends TestCase{
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$xml = base64_encode($xml);
 			$stamp = StampService::Set($params);
-			$result = $stamp::TimbradoV4($xml,true);
+			$result = $stamp::StampV4($xml,true);
 			var_dump($result);
 			echo "-------------------";
 			

@@ -25,17 +25,20 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
     
     public static function sendReqPFX($url, $token, $rfc, $uuid, $pfxB64, $password, $proxy, $service){
         $data = json_encode(array_merge($uuid,
-                    [
+                    array(
                         "b64Pfx"=>$pfxB64,
                         "rfc"=>$rfc,
                         "password"=>$password,
-                    ])
+                    ))
                 );
         $curl  = curl_init($url.$service);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
@@ -57,18 +60,21 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
     
     public static function sendReqCSD($url, $token, $rfc, $uuid, $cerB64, $keyB64, $password, $proxy, $service) {
         $data = json_encode(array_merge($uuid,
-                    [
+                    array(
                         "b64Key"=>$keyB64,
                         "b64Cer"=>$cerB64,
                         "rfc"=>$rfc,
                         "password"=>$password
-                    ])
+                    ))
                 );
         $curl  = curl_init($url.$service);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
@@ -90,14 +96,17 @@ class CancelationRequest{
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 
     public static function sendReqXML($url, $token, $xml, $proxy, $service){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
-            'xml' => array(
+                'xml' => array(
                 'type' => 'text/xml',
                 'content' => $xml
                 )
@@ -112,7 +121,6 @@ class CancelationRequest{
             $data .= "\r\n";
             $data .= $file['content'] . "\r\n";
         }
-        // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
         $curl  = curl_init($url.$service);
@@ -158,11 +166,15 @@ class CancelationRequest{
         ));
         $response = curl_exec($curl);
         $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }    
 }
