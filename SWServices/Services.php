@@ -51,7 +51,12 @@ use Exception;
 
                 $auth = Authentication::auth($params);
                 $token = $auth::Token();
-                self::set_token($token->data->token);
+                if($token->status == "success"){
+                    self::set_token($token->data->token);
+                }
+                else{
+                    throw new Exception("Authentication error: $token->message Detail: $token->messageDetail");
+                }
                 date_default_timezone_set("America/Mexico_City");
                 $_expirationDate = new \DateTime('NOW');
                 $_expirationDate->add(new \DateInterval("P15Y"));
