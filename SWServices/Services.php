@@ -35,7 +35,7 @@ use Exception;
                 self::$_token = $params['token'];
                 date_default_timezone_set("America/Mexico_City");
                 self::$_expirationDate = new \DateTime('NOW');
-                self::$_expirationDate->add(new \DateInterval("PT5Y"));
+                self::$_expirationDate->add(new \DateInterval("P5Y"));
             }
         }
         
