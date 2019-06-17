@@ -15,14 +15,13 @@ class StampServiceCached extends Services {
     }
     public static function StampV1($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/cfdi33/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -31,14 +30,13 @@ class StampServiceCached extends Services {
     }
      public static function StampV2($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/cfdi33/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -47,14 +45,13 @@ class StampServiceCached extends Services {
     }
      public static function StampV3($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/cfdi33/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -63,14 +60,13 @@ class StampServiceCached extends Services {
     }
      public static function StampV4($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/cfdi33/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -80,14 +76,13 @@ class StampServiceCached extends Services {
 
     public static function StampVersion2V1($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -96,14 +91,13 @@ class StampServiceCached extends Services {
     }
     public static function StampVersion2V2($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -112,14 +106,13 @@ class StampServiceCached extends Services {
     }
     public static function StampVersion2V3($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
@@ -128,14 +121,13 @@ class StampServiceCached extends Services {
     }
     public static function StampVersion2V4($xml, $isb64 = false, $ttl = 600){
         try{
-            $sello = self::getSignXml($xml);
-            if(apc_exists($sello)){
-                return self::showError($ttl, apc_fetch($sello));
-            }
-            else{
-                apc_store($sello, sha1($xml), $ttl);
+            $sello = sha1(self::getSignXml($xml));
+            if(apc_add($sello, sha1($xml), $ttl)){
                 $response = stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
                 return $response;
+            }
+            else{
+                return self::showError($ttl, apc_fetch($sello));
             }
         }
         catch(Exeption $ex){
