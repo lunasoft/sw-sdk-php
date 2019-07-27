@@ -144,7 +144,7 @@ class StampServiceCached extends Services {
 
     private static function showError($ttl, $hash){
         $error = array(
-            "message" => "Se evito un duplicado de la factura. Verifique si la misma ya fue timbrada por alguien más.",
+            "message" => "Se evitó un duplicado de la factura. Verifique si la misma ya fue timbrada por alguien más.",
             "messageDetail" => "Factura registrada en la caché hace menos de $ttl segundos por otro proceso, hash(sha1) del xml: $hash",
             "data" => null,
             "status" => "error"
