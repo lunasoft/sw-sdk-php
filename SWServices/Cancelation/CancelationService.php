@@ -15,7 +15,7 @@ class CancelationService extends Services {
         $c = count($params);
         if($c == 7 || $c == 8)
             self::setCSD($params);
-        else if ($c == 3 || $c == 4)
+        else if (($c == 3 || $c == 4) && isset($params['xml']))
             self::setXml($params);
     }
     
