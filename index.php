@@ -11,7 +11,7 @@ use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\ServicioConsultaSAT as ConsultaCfdiSAT;
 use SWServices\Csd\CsdService as CsdService;
-
+use SWServices\Taxpayer\TaxpayerService as ValidarListaNegra;
 
 header('Content-type: text/plain');
 
@@ -134,6 +134,7 @@ catch(Exception $e){
     $uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
     $rfc = "LAN8507268IA";
     $xmlCancelacion = "";
+    $rfcListaNegra = "ZNS1101105T3";
     
 
 echo "\n\n---------------- Cancelación directa por UUID -----------------\n\n";     
@@ -297,4 +298,11 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
+  
+echo "\n\n------------ListaNegra---------------------\n\n";
+
+ValidarListaNegra::Set($params);
+$resultadoListaNegra = ValidarListaNegra::GetTaxpayer($rfcListaNegra);
+var_dump($resultadoListaNegra);
+
 ?>
