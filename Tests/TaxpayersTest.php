@@ -18,10 +18,9 @@
             $this->assertEquals($resultSpect, $result->status);
         }
         public function testError(){
-            $this->expectException(Exception::class);
-            
+            $this->expectException(Exception::class);            
             TaxpayerService::Set('');
-            
+           
         }
          
     }

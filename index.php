@@ -15,13 +15,23 @@ use SWServices\Taxpayer\TaxpayerService as ValidarListaNegra;
 
 header('Content-type: text/plain');
 
-
+$xml = file_get_contents('Tests/Resources/file.xml');
 $params = array(
     "url"=>"http://services.test.sw.com.mx",
     "user"=>"demo",
-    "password"=> "123456789"
+    "password"=> "12345678e"
       );
+      echo "\n\n--------------- Timbrado ------------------\n\n";
+      try {
+          StampService::Set($params);
+          $resultadoStamp = StampService::StampV4($xml);
+          var_dump($resultadoStamp);
+      }
+      catch(Exception $e){
+          echo 'Caught exception: ',  $e->getMessage(), "\n";
+      }
 
+/*
 echo "\n\n------------Token---------------------\n\n";
 try{
     Authentication::auth($params);
@@ -304,5 +314,5 @@ echo "\n\n------------ListaNegra---------------------\n\n";
 ValidarListaNegra::Set($params);
 $resultadoListaNegra = ValidarListaNegra::GetTaxpayer($rfcListaNegra);
 var_dump($resultadoListaNegra);
-
+*/
 ?>

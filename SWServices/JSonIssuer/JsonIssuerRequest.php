@@ -37,7 +37,7 @@ class JsonIssuerRequest{
            throw new Exception("cURL Error #:" . $err);
        } else{
            if($httpcode < 500)
-               return json_decode($response);
+               print(json_decode($response));
            else
                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
        }
