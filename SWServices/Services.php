@@ -33,15 +33,14 @@ use Exception;
             }
             if(isset($params['token'])){
                 self::$_token = $params['token'];
-                date_default_timezone_set("America/Mexico_City");
-                self::$_expirationDate = new \DateTime('NOW');
+                self::$_expirationDate = new \DateTime('NOW', new \DateTimeZone('America/Mexico_City'));
                 self::$_expirationDate->add(new \DateInterval(self::$_timeSession));
             }
         }
         
         public static function get_token(){
 
-            if(self::$_token == null || new \DateTime('NOW') > self::$_expirationDate)
+            if(self::$_token == null || new \DateTime('NOW', new \DateTimeZone('America/Mexico_City')) > self::$_expirationDate)
             {
                 $params = array(
                     "url"=>self::$_url,
@@ -52,8 +51,7 @@ use Exception;
                 $auth = Authentication::auth($params);
                 $token = $auth::Token();
                 self::set_token($token->data->token);
-                date_default_timezone_set("America/Mexico_City");
-                $_expirationDate = new \DateTime('NOW');
+                $_expirationDate = new \DateTime('NOW', new \DateTimeZone('America/Mexico_City'));
                 $_expirationDate->add(new \DateInterval(self::$_timeSession));
             }
             return  self::$_token;
