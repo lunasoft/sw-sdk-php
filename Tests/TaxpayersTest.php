@@ -19,8 +19,7 @@
         }
         public function testError(){
             $this->expectException(Exception::class);            
-            TaxpayerService::Set('');
-           
+            TaxpayerService::Set('');           
         }
          
     }

@@ -1217,3 +1217,20 @@ cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 var_dump($consultaRelacionados);
 ```
+### Servicio lista 69-B ###
+Está modalidad recibe como parámetros el RFC a consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Taxpayer\TaxpayerService as ValidarListaNegra;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfcListaNegra = "ZNS1101105T3";
+ValidarListaNegra::Set($params);
+$resultadoListaNegra = ValidarListaNegra::GetTaxpayer($rfcListaNegra);
+var_dump($resultadoListaNegra);
+```
