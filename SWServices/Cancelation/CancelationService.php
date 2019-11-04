@@ -7,9 +7,16 @@ use SWServices\Services as Services;
 use Exception;
 
 class CancelationService extends Services {
+    private static $_cfdiData = null;
+    private static $_xml = null;
 
     public function __construct($params) {
         parent::__construct($params);
+        $c = count($params);
+        if($c == 7 || $c == 8)
+            self::setCSD($params);
+        else if (($c == 3 || $c == 4) && isset($params['xml']))
+            self::setXml($params);
     }
     
     public static function Set($params){
@@ -66,6 +73,34 @@ class CancelationService extends Services {
     
     public static function ConsultarCFDIRelacionadosXML($xml){
         return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/relations/xml');
+    }
+
+    public static function CancelationByCSDParams() {
+        return cancelationRequest::sendReqCSD(Services::get_url(), Services::get_token(), self::$_cfdiData["rfc"], cancelationHandler::uuidReq(self::$_cfdiData["uuid"]), self::$_cfdiData["b64Cer"], self::$_cfdiData["b64Key"], self::$_cfdiData["password"], Services::get_proxy(), '/cfdi33/cancel/csd');
+    }
+    public static function CancelationByXMLParams() {
+        return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), self::$_xml, Services::get_proxy(), '/cfdi33/cancel/xml');
+    }
+
+    private static function setCSD($params) {
+        if(isset($params['url']) && isset($params['token']) && isset($params['uuid']) && isset($params['password']) && isset($params['rfc']) && isset($params['b64Cer']) && isset($params['b64Key'])) {
+            self::$_cfdiData = [
+                'uuid'=> $params['uuid'],
+                'password'=> $params['password'],
+                'rfc'=> $params['rfc'],
+                'b64Cer'=> $params['b64Cer'],
+                'b64Key'=> $params['b64Key']
+            ];
+        } else {
+            throw new Exception('Parámetros incompletos. Debe especificarse uuid, password, rfc, b64Cer, b64Key');
+        }
+    }
+    private static function setXml($params) {
+        if(isset($params['url']) && isset($params['token']) && isset($params['xml'])) {
+            self::$_xml = $params['xml'];
+        } else {
+            throw new Exception('Parámetros incompletos. Debe especificarse url, token, y archivo xml');
+        }
     }
         
 }
