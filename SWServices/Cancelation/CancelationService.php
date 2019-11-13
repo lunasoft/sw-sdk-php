@@ -33,7 +33,7 @@ class CancelationService {
     }
 
     public static function CancelationByXML() {
-        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml, $_proxy);
+        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml, self::$_proxy);
     }
 
     private static function setCSD($params) {
