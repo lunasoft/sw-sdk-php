@@ -34,8 +34,8 @@ class StampRequest{
         curl_setopt($curl , CURLOPT_POST, true);
         
         // TIMEOUT
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); // seconds
-        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // seconds
+        curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, 0); // seconds
+        curl_setopt($curl, CURLOPT_TIMEOUT, $timeout); // seconds
         // END TIMEOUT
         
         if(isset($proxy)){
