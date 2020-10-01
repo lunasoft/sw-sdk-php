@@ -11,6 +11,7 @@ use Exception;
         private static $_expirationDate = null;
         private static $_proxy = null;
         private static $_timeSession = "PT2H";
+        private static $_timeOut = 60;
 
         public function __construct($params) {
             if(isset($params['url'])){
@@ -36,6 +37,9 @@ use Exception;
                 date_default_timezone_set("America/Mexico_City");
                 self::$_expirationDate = new \DateTime('NOW');
                 self::$_expirationDate->add(new \DateInterval(self::$_timeSession));
+            }
+            if(isset($params['_timeOut'])){
+                self::$_timeOut = $params['_timeOut'];
             }
         }
         
@@ -75,7 +79,9 @@ use Exception;
         public static function get_proxy(){
             return self::$_proxy;
         }
-        
+        public static function get_timeout(){
+            return self::$_timeOut;
+        }
         
     };
 
