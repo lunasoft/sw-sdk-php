@@ -3,7 +3,7 @@
 namespace SWServices\Stamp;
 use Exception;
 class StampRequest{
-    public static function sendReq($url, $token, $xml, $version, $proxy){
+    public static function sendReq($url, $token, $xml, $version, $proxy, $timeout=60){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -32,6 +32,12 @@ class StampRequest{
         $curl  = curl_init($url.'/cfdi33/stamp/'.$version);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+        
+        // TIMEOUT
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); // seconds
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // seconds
+        // END TIMEOUT
+        
         if(isset($proxy)){
             curl_setopt($curl , CURLOPT_PROXY, $proxy);
         }
@@ -56,7 +62,7 @@ class StampRequest{
     }
 
 
-    public static function sendReqB64($url, $token, $xml, $version){
+    public static function sendReqB64($url, $token, $xml, $version, $timeout=60){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -85,6 +91,12 @@ class StampRequest{
         $curl  = curl_init($url.'/cfdi33/stamp/'.$version.'/b64');
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
+
+        // TIMEOUT
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0); // seconds
+        curl_setopt($ch, CURLOPT_TIMEOUT, $timeout); // seconds
+        // END TIMEOUT
+
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
