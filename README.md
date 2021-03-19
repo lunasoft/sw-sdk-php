@@ -39,15 +39,15 @@ Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresa
 
 ```php
 {
-    "name": "richbarusta/implement",
+    "name": "rich-cd/implement",
     "authors": [
         {
-            "name": "Rich Barusta",
-            "email": "ricardo.barusta@sw.com.mx"
+            "name": "Rich Cardenas",
+            "email": "edgar.cardenas@sw.com.mx"
         }
     ],
     "require": {
-        "lunasoft/sw-sdk-php": "dev-master"
+        "lunasoft/sw-sdk-php": "dev-feature/SMARTER-1406"
     }
 }
 ```
@@ -1216,4 +1216,21 @@ $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
 cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 var_dump($consultaRelacionados);
+```
+### Servicio lista 69-B ###
+Está modalidad recibe como parámetros el RFC a consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Taxpayer\TaxpayerService as ValidarListaNegra;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfcListaNegra = "ZNS1101105T3";
+ValidarListaNegra::Set($params);
+$resultadoListaNegra = ValidarListaNegra::GetTaxpayer($rfcListaNegra);
+var_dump($resultadoListaNegra);
 ```

@@ -11,17 +11,13 @@ use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\ServicioConsultaSAT as ConsultaCfdiSAT;
 use SWServices\Csd\CsdService as CsdService;
-
-
+use SWServices\Taxpayer\TaxpayerService as ValidarListaNegra;
 header('Content-type: text/plain');
-
-
 $params = array(
     "url"=>"http://services.test.sw.com.mx",
     "user"=>"demo",
     "password"=> "123456789"
       );
-
 echo "\n\n------------Token---------------------\n\n";
 try{
     Authentication::auth($params);
@@ -38,7 +34,6 @@ try{
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
  echo "\n\n------------ Account Balance ---------------------\n\n"; 
 try {
     AccountBalanceService::Set($params);
@@ -134,8 +129,8 @@ catch(Exception $e){
     $uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
     $rfc = "LAN8507268IA";
     $xmlCancelacion = "";
+    $rfcListaNegra = "ZNS1101105T3";
     
-
 echo "\n\n---------------- Cancelación directa por UUID -----------------\n\n";     
 try {
     CancelationService::Set($params);
@@ -176,9 +171,7 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";  
-
         $soapUrl = "https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc";
         $re = "LSO1306189R5";
         $rr = "LSO1306189R5";
@@ -221,7 +214,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Subir certificado ------------------\n\n";
 try {        
     $isActive = true;
@@ -236,7 +228,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Lista certificados ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -246,7 +237,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Lista certificados por tipo ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -256,7 +246,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Lista certificados por Rfc ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -266,7 +255,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
 echo "\n\n--------------- Buscar certificado por número de csd ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -277,7 +265,6 @@ catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
         
-
 echo "\n\n--------------- Buscar certificado activo por rfc y tipo ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -287,7 +274,6 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }        
-
 echo "\n\n--------------- Desactivar certificado ------------------\n\n";
 try {
     CsdService::Set($params);
@@ -297,4 +283,9 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
+  
+echo "\n\n------------ListaNegra---------------------\n\n";
+ValidarListaNegra::Set($params);
+$resultadoListaNegra = ValidarListaNegra::GetTaxpayer($rfcListaNegra);
+var_dump($resultadoListaNegra);
 ?>
