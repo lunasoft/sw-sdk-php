@@ -47,7 +47,7 @@ Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresa
         }
     ],
     "require": {
-        "dev-feature/SMARTER-1406"
+        "lunasoft/sw-sdk-php": "dev-feature/SMARTER-1406"
     }
 }
 ```
