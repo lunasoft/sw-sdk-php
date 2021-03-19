@@ -39,15 +39,15 @@ Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresa
 
 ```php
 {
-    "name": "richbarusta/implement",
+    "name": "rich-cd/implement",
     "authors": [
         {
-            "name": "Rich Barusta",
-            "email": "ricardo.barusta@sw.com.mx"
+            "name": "Rich Cardenas",
+            "email": "edgar.cardenas@sw.com.mx"
         }
     ],
     "require": {
-        "lunasoft/sw-sdk-php": "dev-master"
+        "dev-feature/SMARTER-1406"
     }
 }
 ```
