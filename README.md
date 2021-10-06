@@ -959,7 +959,7 @@ Ejemplo de uso
 ```php
 require_once 'SWSDK.php';
 use SWServices\SatQuery\ServicioConsultaSAT as consultaCfdiSAT;
-$soapUrl = "http://consultaqrfacturaelectronicatest.sw.com.mx/ConsultaCFDIService.svc";
+$soapUrl = "https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc";
 $re = "LAN8507268IA";
 $rr = "LAN7008173R5";
 $tt = 5800.00;
