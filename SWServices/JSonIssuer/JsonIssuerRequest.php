@@ -6,6 +6,7 @@ use Exception;
 
 class JsonIssuerRequest{
    
+header('Content-Type: text/plain');
     
   public static function sendReq($url, $token, $json, $version, $isB64, $proxy){
     $curl = curl_init();
