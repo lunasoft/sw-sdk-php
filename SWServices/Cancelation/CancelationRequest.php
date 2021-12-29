@@ -5,8 +5,8 @@ use SWServices\Cancelation\cancelationHandler as CancelationHandler;
 use Exception;
 class CancelationRequest{
 
-    public static function sendReqUUID($url, $token, $rfc, $uuid, $proxy, $service, $action = null){
-        $curl  = curl_init($url.$service.$rfc.'/'.$uuid."/".$action);
+    public static function sendReqUUID($url, $token, $rfc, $uuid, $motivo, $foliosustitucion =null, $proxy, $service, $action = null){
+        $curl  = curl_init($url.$service.$rfc.'/'.$uuid."/".$motivo."/".$foliosustitucion."/".$action);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
         (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
@@ -32,12 +32,14 @@ class CancelationRequest{
         }
     }
     
-    public static function sendReqPFX($url, $token, $rfc, $uuid, $pfxB64, $password, $proxy, $service){
+    public static function sendReqPFX($url, $token, $rfc, $motivo, $foliosustitucion=null, $uuid, $pfxB64, $password, $proxy, $service){
         $data = json_encode(array_merge($uuid,
                     array(
                         "b64Pfx"=>$pfxB64,
                         "rfc"=>$rfc,
                         "password"=>$password,
+                        "motivo"=>$motivo,
+                        "foliosustitucion"=>$foliosustitucion
                     ))
                 );
         $curl  = curl_init($url.$service);
@@ -67,13 +69,17 @@ class CancelationRequest{
         }
     }
     
-    public static function sendReqCSD($url, $token, $rfc, $uuid, $cerB64, $keyB64, $password, $proxy, $service) {
+    public static function sendReqCSD($url, $token, $uuid, $password, $rfc, $motivo, $foliosustitucion, $cerB64, $keyB64,  $proxy, $service) {
         $data = json_encode(array_merge($uuid,
                     array(
+                        
                         "b64Key"=>$keyB64,
                         "b64Cer"=>$cerB64,
                         "rfc"=>$rfc,
-                        "password"=>$password
+                        "password"=>$password,
+                        "motivo"=>$motivo,
+                        "foliosustitucion"=>$foliosustitucion
+
                     ))
                 );
         $curl  = curl_init($url.$service);
