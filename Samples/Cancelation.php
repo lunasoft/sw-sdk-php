@@ -21,7 +21,6 @@
         header('Content-type: application/json');
         $cancelationService = CancelationService::Set($params);
         $result = $cancelationService::CancelationByUUID();
-        //echo json_encode($params);
         echo json_encode($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -54,7 +53,6 @@ try {
     header('Content-type: application/json');
     $cancelationService = CancelationService::Set($params);
     $result = $cancelationService::CancelationByCSD();
-    //echo json_encode($params);
     echo json_encode($result);
 } catch(Exception $e) {
     header('Content-type: text/plain');
@@ -88,7 +86,6 @@ try {
     header('Content-type: application/json');
     $cancelationService = CancelationService::Set($params);
     $result = $cancelationService::CancelationByPFX();
-    //echo json_encode($params);
     echo json_encode($result);
     } catch(Exception $e) {
     header('Content-type: text/plain');
@@ -98,14 +95,12 @@ try {
     $resultSpect = "success";
 			$params = array(
 				"url"=>"http://services.test.sw.com.mx/",	
-				"token"=>" ",
-				//"xml"=> file_get_contents("./Tests/Resources/CancelationResources/cancelByXml.xml"),
+				"token"=>" "				
 			);
             $xml=file_get_contents("../Tests/Resources/CancelationResources/cancelByXml.xml");
 		    try {
 		        $cancelationService = CancelationService::Set($params);
 		        $result = $cancelationService::CancelationByXML($xml);
-		        //$this->assertEquals($resultSpect, $result->status);
                 echo json_encode($result);
             } catch(Exception $e) {
             header('Content-type: text/plain');
