@@ -1,6 +1,6 @@
 <?php
 
-	namespace tests;
+namespace tests;
     
     use PHPUnit\Framework\TestCase;
     use SWServices\Stamp\StampService as StampService;
@@ -11,7 +11,7 @@
 	error_reporting(E_ERROR);
 
 
-	final class StampTests extends TestCase{
+class StampTests extends TestCase{
 		
 		protected static $generateXML;
 
@@ -225,7 +225,7 @@
 			
 			$this->assertTrue($resultSpect == $result->status);
 			$this->assertTrue(is_base64($result->data->cfdi));
-        }
+        } 
 		/*--------------------------------V4-----------------------------------------------------------------------------------------------------------------------*/
 		 public function testStampXMLV4byToken()
         {
@@ -366,5 +366,4 @@
 		    return '/Tests/Resources/file.xml';
 		}
     }
-
-?>
+    

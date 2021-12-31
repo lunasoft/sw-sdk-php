@@ -1,18 +1,52 @@
 <?php 
 
 namespace SWServices\Cancelation;
+use SWServices\Cancelation\cancelationHandler as CancelationHandler;
 use Exception;
+class CancelationRequest{
 
-class CancelationRequest {
-
-    public static function sendReqCSD($url, $token, $cfdiData, $proxy) {
-        $data = json_encode($cfdiData);
-        $curl  = curl_init($url.'/cfdi33/cancel/csd');
+    public static function sendReqUUID($url, $token, $rfc, $uuid, $motivo, $foliosustitucion =null, $proxy, $service, $action = null){
+        $curl  = curl_init($url.$service.$rfc.'/'.$uuid."/".$motivo."/".$foliosustitucion."/".$action);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
-        if(isset($proxy)){
-            curl_setopt($curl , CURLOPT_PROXY, $proxy);
+        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+        
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
+            'Content-Type: application/json;  ',
+            'Authorization: Bearer '.$token
+            ));  
+        curl_setopt($curl , CURLOPT_POSTFIELDS, "");
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
+    }
+    
+    public static function sendReqPFX($url, $token, $rfc, $motivo, $foliosustitucion=null, $uuid, $pfxB64, $password, $proxy, $service){
+        $data = json_encode(array_merge($uuid,
+                    array(
+                        "b64Pfx"=>$pfxB64,
+                        "rfc"=>$rfc,
+                        "password"=>$password,
+                        "motivo"=>$motivo,
+                        "foliosustitucion"=>$foliosustitucion
+                    ))
+                );
+        $curl  = curl_init($url.$service);
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_POST, true);
+        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+        
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: application/json;  ',
             'Content-Length: ' . strlen($data),
@@ -28,42 +62,78 @@ class CancelationRequest {
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return json_decode($response);
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+        }
+    }
+    
+    public static function sendReqCSD($url, $token, $uuid, $password, $rfc, $motivo, $foliosustitucion, $cerB64, $keyB64,  $proxy, $service) {
+        $data = json_encode(array_merge($uuid,
+                    array(
+                        
+                        "b64Key"=>$keyB64,
+                        "b64Cer"=>$cerB64,
+                        "rfc"=>$rfc,
+                        "password"=>$password,
+                        "motivo"=>$motivo,
+                        "foliosustitucion"=>$foliosustitucion
+
+                    ))
+                );
+        $curl  = curl_init($url.$service);
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_POST, true);
+       (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+       
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
+            'Content-Type: application/json;  ',
+            'Content-Length: ' . strlen($data),
+            'Authorization: Bearer '.$token
+            ));  
+        curl_setopt($curl , CURLOPT_POSTFIELDS, $data);
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 
-    public static function sendReqXML($url, $token, $xml, $proxy){
+    public static function sendReqXML($url, $token, $xml, $proxy, $service){
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
-            'xml' => array(
+                'xml' => array(
                 'type' => 'text/xml',
                 'content' => $xml
                 )
             );
 
         $data = '';
-        // populate file fields
         foreach ($fileFields as $name => $file) {
             $data .= "--" . $delimiter . "\r\n";
-            // "filename" attribute is not essential; server-side scripts may use it
             $data .= 'Content-Disposition: form-data; name="' . $name . '";' .
             ' filename="' . $name . '"' . "\r\n";
-            // this is, again, informative only; good practice to include though
             $data .= 'Content-Type: ' . $file['type'] . "\r\n";
-            // this endline must be here to indicate end of headers
             $data .= "\r\n";
-            // the file itself (note: there's no encoding of any kind)
             $data .= $file['content'] . "\r\n";
         }
-        // last delimiter
         $data .= "--" . $delimiter . "--\r\n";
 
-        $curl  = curl_init($url.'/cfdi33/cancel/xml');
+        $curl  = curl_init($url.$service);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
-        if(isset($proxy)){
-            curl_setopt($curl , CURLOPT_PROXY, $proxy);
-        }
+        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+        
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
@@ -82,4 +152,36 @@ class CancelationRequest {
             return json_decode($response);
         }
     }
+    
+    public static function sendReqGet($url, $token, $rfc, $proxy, $service){       
+        $curl = curl_init();
+        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+            
+        curl_setopt_array($curl, array(    
+            CURLOPT_URL => $url.$service.$rfc,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+            "Authorization: bearer ".$token,
+            "Cache-Control: no-cache"
+          ),
+        ));
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else{
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+        }
+    }    
 }
+?>

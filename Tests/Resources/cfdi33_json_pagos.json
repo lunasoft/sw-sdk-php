@@ -1,0 +1,62 @@
+{
+    "Version": "3.3",
+    "Serie": "U",
+    "Folio": "50",
+    "Fecha": "2018-08-30T16:06:43",
+    "SubTotal": "0",
+    "Moneda": "XXX",
+    "Total": "0",
+    "TipoDeComprobante": "P",
+    "LugarExpedicion": "45200",
+    "NoCertificado": "",
+    "Certificado": "",
+    "Sello": "",
+    "HasComplemento": true,
+    "Emisor": {
+       "Rfc": "LAN8507268IA",
+       "RegimenFiscal": "601"
+    },
+    "Receptor": {
+       "Rfc": "XAXX010101000",
+       "Nombre": "MI RAZON SOCIAL",
+       "UsoCFDI": "P01"
+    },
+    "Conceptos": [
+        {
+          "ClaveProdServ": "84111506",
+          "Cantidad": 1,
+          "ClaveUnidad": "ACT",
+          "Descripcion": "Pago",
+          "ValorUnitario": "0",
+          "Importe": "0"
+        }
+    ],
+    "Complemento": [
+        {
+            "HasElements": true,
+            "Any": [
+                {
+                    "Pago10:Pagos": {
+                        "Pago": [{
+                           "FechaPago": "2018-02-22T16:11:46",
+                           "FormaDePagoP": "01",
+                           "MonedaP": "MXN",
+                           "Monto": "1",
+                           "DoctoRelacionado": [{
+                              "IdDocumento": "a9543552-167e-4b0c-94e5-b86024dc10f4",
+                              "Serie": "U",
+                              "Folio": "14",
+                              "MonedaDR": "MXN",
+                              "MetodoDePagoDR": "PUE",
+                              "NumParcialidad": "1",
+                              "ImpSaldoAnt": "1.16",
+                              "ImpPagado": "0.1",
+                              "ImpSaldoInsoluto": "1.06"
+                           }]
+                        }]
+                     }
+                }
+            ]
+        }
+    ]
+ }

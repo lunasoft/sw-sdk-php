@@ -25,15 +25,17 @@ class AuthRequest{
         }
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-
+        $err = curl_error($curl );
         curl_close($curl);
+
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
-        } else {
-            return json_decode($response);
+        } else{
+            if($httpcode < 500)
+                return json_decode($response);
+            else
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
-      
     }
 }
 

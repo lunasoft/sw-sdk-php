@@ -1,0 +1,152 @@
+{
+    "HasComplemento": true,
+    "Emisor": {
+        "Rfc": "LAN7008173R5",
+        "Nombre": "CINDEMEX SA DE CV",
+        "RegimenFiscal": "601"
+    },
+    "Receptor": {
+        "Rfc": "AAA010101AAA",
+        "Nombre": "SW SMARTERWEB",
+        "ResidenciaFiscalSpecified": false,
+        "NumRegIdTrib": null,
+        "UsoCFDI": "G03"
+    },
+    "Conceptos": [
+        {
+            "ImporteLength": 2,
+            "Descuento_Length": 0,
+            "ValorUnitario_Length": 2,
+            "Cantidad_Length": 2,
+            "Impuestos": {
+                "Traslados": [
+                    {
+                        "ImporteLength": 2,
+                        "BaseLength": 2,
+                        "Base": "200.00",
+                        "Impuesto": "002",
+                        "TipoFactor": "Tasa",
+                        "TasaOCuota": "0.160000",
+                        "TasaOCuotaSpecified": true,
+                        "Importe": "32.00",
+                        "ImporteSpecified": true
+                    },
+                    {
+                        "ImporteLength": 2,
+                        "BaseLength": 2,
+                        "Base": "232.00",
+                        "Impuesto": "003",
+                        "TipoFactor": "Tasa",
+                        "TasaOCuota": "1.600000",
+                        "TasaOCuotaSpecified": true,
+                        "Importe": 371.20,
+                        "ImporteSpecified": true
+                    }
+                ],
+                "Retenciones": null
+            },
+            "InformacionAduanera": null,
+            "CuentaPredial": null,
+            "ComplementoConcepto": null,
+            "Parte": null,
+            "ClaveProdServ": "50211503",
+            "NoIdentificacion": "131494-1055",
+            "Cantidad": 117.64,
+            "ClaveUnidad": "H87",
+            "Unidad": "07",
+            "Descripcion": "Cigarros",
+            "ValorUnitario": "200.00",
+            "Importe": 23529.47,
+            "DescuentoSpecified": false
+        }
+    ],
+    "Impuestos": {
+        "Retenciones": null,
+        "Traslados": [
+            {
+                "Impuesto": "002",
+                "TipoFactor": "Tasa",
+                "TasaOCuota": 0.160000,
+                "Importe": "32.00"
+            },
+            {
+                "Impuesto": "003",
+                "TipoFactor": "Tasa",
+                "TasaOCuota": 1.600000,
+                "Importe": "371.20"
+            }
+        ],
+        "TotalImpuestosRetenidosSpecified": false,
+        "TotalImpuestosTrasladados": 403.20,
+        "TotalImpuestosTrasladadosSpecified": true
+    },
+    "Complemento": [
+        {
+            "HasElements": true,
+            "Any": [
+                {
+                    "CCE11:ComercioExterior": {
+                       "Version": "1.1",
+                       "TipoOperacion": "2",
+                       "ClaveDePedimento": "A1",
+                       "CertificadoOrigen": "0",
+                       "Incoterm": "FOB",
+                       "Subdivision": "0",
+                       "TipoCambioUSD": "15.6446",
+                       "TotalUSD": "1504.00",
+                        "Emisor": {
+                            "Domicilio": {
+                               "Calle": "CALLE DEL PAPEL",
+                               "Colonia": "0214",
+                               "Localidad": "01",
+                               "Municipio": "014",
+                               "Estado": "QUE",
+                               "Pais": "MEX",
+                               "CodigoPostal": "76199"
+                            }
+                        },
+                        "Receptor": {
+                            "Domicilio": {
+                               "Calle": "CALLE DEL PAPEL",
+                               "Colonia": "0214",
+                               "Localidad": "01",
+                               "Municipio": "014",
+                               "Estado": "QUE",
+                               "Pais": "MEX",
+                               "CodigoPostal": "76199"
+                            }
+                        },
+                        "Mercancias": [{
+                               "NoIdentificacion": "131494-1055",
+                               "ValorUnitarioAduana": "12.78",
+                               "CantidadAduana": "117.64",
+                               "FraccionArancelaria": "01051199",
+                               "UnidadAduana": "07",
+                               "ValorDolares": "1504"
+                        }]
+                    }
+                }
+            ]
+        }
+    ],
+    "Addenda": null,
+    "Version": "3.3",
+    "Serie": "RogueOne",
+    "Folio": "636711851938524252248",
+    "Fecha": "2018-08-30T00:19:53",
+    "FormaPago": "01",
+    "FormaPagoSpecified": true,
+    "NoCertificado": "20001000000300022815",
+    "CondicionesDePago": null,
+    "SubTotal": 23529.47,
+    "DescuentoSpecified": false,
+    "Moneda": "MXN",
+    "TipoCambio": 1.0,
+    "TipoCambioSpecified": true,
+    "Total": 23932.67,
+    "TipoDeComprobante": "I",
+    "MetodoPago": "PUE",
+    "MetodoPagoSpecified": true,
+    "LugarExpedicion": "06300",
+    "Confirmacion": null
+}

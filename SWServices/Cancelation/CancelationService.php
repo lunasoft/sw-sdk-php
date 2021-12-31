@@ -1,72 +1,104 @@
 <?php
-
 namespace SWServices\Cancelation;
 
-
 use SWServices\Cancelation\CancelationRequest as cancelationRequest;
+use SWServices\Cancelation\CancelationHandler as cancelationHandler;
+use SWServices\Services as Services;
 use Exception;
 
-class CancelationService {
-    private static $_cfdiData = null;
-    private static $_url = null;
-    private static $_token = null;
-    private static $_xml = null;
-    private static $_proxy = null;
+class CancelationService extends Services {
+        private static $_password = null;
+        private static $_uuid = null;
+        private static $_rfc = null;
+        private static $_motivo = null;
+        private static $_foliosustitucion= null;
+        private static $_cerB64 = null;
+        private static $_keyB64 = null;
+        private static $_pfxB64 = null;
 
     public function __construct($params) {
-        $c = count($params);
-        if($c == 7 || $c == 8)
-            self::setCSD($params);
-        else if ($c == 3 || $c == 4)
-            self::setXml($params);
-        
-        else
-           throw new Exception('Número de parámetros incompletos.');
+        parent::__construct($params);
+        if(isset($params['password'])){
+            self::$_password = $params['password'];
+        }
+        if(isset($params['rfc'])){
+            self::$_rfc = $params['rfc'];
+        }
+        if(isset($params['motivo'])){
+            self::$_motivo = $params['motivo'];
+        }
+        if(isset($params['foliosustitucion'])){
+            self::$_foliosustitucion = $params['foliosustitucion'];
+        }
+        if(isset($params['cerB64'])){
+            self::$_cerB64 = $params['cerB64'];
+        }
+        if(isset($params['keyB64'])){
+            self::$_keyB64 = $params['keyB64'];
+        }
+        if(isset($params['uuid'])){
+            self::$_uuid = $params['uuid'];
+        }
+        if(isset($params['pfxB64'])){
+            self::$_pfxB64 = $params['pfxB64'];
+        }
     }
-
-    public static function Set($params) {
+    
+    public static function Set($params){
         return new CancelationService($params);
     }
-
+        
     public static function CancelationByCSD() {
-        return cancelationRequest::sendReqCSD(self::$_url, self::$_token, self::$_cfdiData, self::$_proxy);
+        return cancelationRequest::sendReqCSD(Services::get_url(), Services::get_token(),  cancelationHandler::uuidReq(self::$_uuid), self::$_password ,self::$_rfc, self::$_motivo, self::$_foliosustitucion, self::$_cerB64,self::$_keyB64,  Services::get_proxy(), '/cfdi33/cancel/csd');
     }
 
-    public static function CancelationByXML() {
-        return cancelationRequest::sendReqXML(self::$_url, self::$_token, self::$_xml, $_proxy);
+    public static function CancelationByXML($xml) {
+        return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/cfdi33/cancel/xml');
     }
-
-    private static function setCSD($params) {
-        if(isset($params['url']) && isset($params['token']) && isset($params['uuid']) && isset($params['password']) && isset($params['rfc']) && isset($params['b64Cer']) && isset($params['b64Key'])) {
-            self::$_cfdiData = [
-                'uuid'=> $params['uuid'],
-                'password'=> $params['password'],
-                'rfc'=> $params['rfc'],
-                'b64Cer'=> $params['b64Cer'],
-                'b64Key'=> $params['b64Key']
-            ];
-            self::$_url = $params['url'];
-            self::$_token = $params['token'];
-            if(isset($params['proxy'])){
-                self::$_proxy = $params['proxy'];
-            }
-        } else {
-            throw new Exception('Parámetros incompletos. Debe especificarse uuid, password, rfc, b64Cer, b64Key');
-        }
+    
+    public static function CancelationByUUID(){
+        return cancelationRequest::sendReqUUID(Services::get_url(), Services::get_token(), self::$_rfc, self::$_uuid, self::$_motivo, self::$_foliosustitucion, Services::get_proxy(), '/cfdi33/cancel/');
     }
-
-    private static function setXml($params) {
-        if(isset($params['url']) && isset($params['token']) && isset($params['xml'])) {
-            self::$_url = $params['url'];
-            self::$_token = $params['token'];
-            self::$_xml = $params['xml'];
-            if(isset($params['proxy'])){
-                self::$_proxy = $params['proxy'];
-            }
-        } else {
-            throw new Exception('Parámetros incompletos. Debe especificarse url, token, y archivo xml');
-        }
+    
+    public static function CancelationByPFX(){
+        return cancelationRequest::sendReqPFX(Services::get_url(), Services::get_token(),self::$_rfc, self::$_motivo, self::$_foliosustitucion, cancelationHandler::uuidReq(self::$_uuid), self::$_pfxB64, self::$_password,  Services::get_proxy(), '/cfdi33/cancel/pfx');
     }
+    
+    public static function AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids){
+        return cancelationRequest::sendReqPFX(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidsReq($uuids), $pfxB64, $password, Services::get_proxy(), '/acceptreject/pfx');
+    }
+    
+    public static function AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids){
+       return cancelationRequest::sendReqCSD(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidsReq($uuids), $cerB64, $keyB64, $password, Services::get_proxy(), '/acceptreject/csd'); 
+    }
+    
+    public static function AceptarRechazarCancelacionUUID($rfc, $uuid, $accion){
+        return cancelationRequest::sendReqUUID(Services::get_url(), Services::get_token(), $rfc, $uuid, Services::get_proxy(), '/acceptreject/', $accion);
+    }
+    
+    public static function AceptarRechazarCancelacionXML($xml){
+        return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/acceptreject/xml');
+    }
+    
+    public static function PendientesPorCancelar($rfc){
+       return cancelationRequest::sendReqGet(Services::get_url(), Services::get_token(), $rfc, Services::get_proxy(), '/pendings/'); 
+    }
+    
+    public static function ConsultarCFDIRelacionadosUUID($rfc, $uuid){
+        return cancelationRequest::sendReqUUID(Services::get_url(), Services::get_token(), $rfc, $uuid, Services::get_proxy(), '/relations/');
+    }
+    
+    public static function ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid){
+        return cancelationRequest::sendReqCSD(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidReq($uuid), $cerB64, $keyB64, $password, Services::get_proxy(), '/relations/csd');
+    }
+    
+    public static function ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid){
+        return cancelationRequest::sendReqPFX(Services::get_url(), Services::get_token(), $rfc, cancelationHandler::uuidReq($uuid), $pfxB64, $password, Services::get_proxy(), '/relations/pfx');
+    }
+    
+    public static function ConsultarCFDIRelacionadosXML($xml){
+        return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/relations/xml');
+    }
+        
 }
-
 ?>

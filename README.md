@@ -1,7 +1,7 @@
-<p align="center">
-    <img src="https://raw.githubusercontent.com/php-earth/php-resources-assets/master/images/community/elephpant.png">
-</p>
 
+<p align="center">
+    <img src="https://www.theblocklearning.com/wp-content/uploads/2018/09/logo_php-600x600.png" width="250" height="250">
+</p>
 A continuación encontrara la documentación necesaria para consumir nuestro SDK de servicios proveido por **SmarterWeb** para Timbrado de **CFDI 3.3** mediante un servicio **API REST**
 
 Estado Actual
@@ -19,7 +19,7 @@ Dependencias
 * [Composer](https://getcomposer.org/) Para descargar nuestro SDK
 
 ----------------
-Instalaci&oacute;n
+Instalación
 ---------
 Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP ya sea la **5.6** o la version **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
 
@@ -66,12 +66,8 @@ Se puede hacer uso de las clases mediante la implementacion manual haciendo uso 
 	include('SWSDK.php');
 ```
 ----------------
-Implementaci&oacute;n
----------
+# Implementación #
 La librería cuenta con dos servicios principales los que son la Autenticacion y el Timbrado de CFDI (XML).
-
-#### Ejemplos ####
- [Descargar Ejemplos](https://github.com/lunasoft/sw-sdk-php/tree/master/Samples) 
 
 #### Datos de conexión #### 
 **Url de Pruebas:** http://services.test.sw.com.mx
@@ -85,15 +81,14 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
         "proxy"=> "server.domain.com:8888"
     );
 ```
-#### Autenticaci&oacute;n #####
+## Autenticación ###
 El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que estan en este ejemplo para el ambiente de **Pruebas**.
 
 **Obtener Token**
 ```php
 <?php
-    require_once 'vendor/autoload.php';
-    use SWServices\Authentication\AuthenticationService as Authentication;
-    
+    require_once  'SWSDK.php';
+	use SWServices\Authentication\AuthenticationService  as Authentication;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"demo",
@@ -102,8 +97,8 @@ El servicio de Autenticación es utilizado principalmente para obtener el **toke
     try
     {
         header('Content-type: application/json');
-        $auth = Authentication::auth($params);
-        $token = $auth::Token();
+        Authentication::auth($params);
+        $token = Authentication::Token();
         echo $token;
     }
     catch(Exception $e)
@@ -119,7 +114,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 {"data":{"token":"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3..."},"status":"success"}
 ```
 
-#### Timbrar CFDI V1 #####
+## Timbrar CFDI V1 ##
 **StampV1** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 **Timbrar XML en formato string utilizando usuario y contraseña**
@@ -136,8 +131,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV1($xml);
+        StampService::Set($params);
+        $result = StampService::StampV1($xml);
         var_dump($result);
 
     }
@@ -168,8 +163,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV1($xml);
+        StampService::Set($params);
+        $result = StampService::StampV1($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -183,7 +178,6 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 ```json
 {"data":{"tfd":"<tfd:TimbreFiscalDigital xsi:schemaLocation=\"http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd..."},"status":"success"}
-
 ```
 #### Nueva funcionalidad para el soporte con servidores Proxy ####
 Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy".
@@ -194,8 +188,7 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
     );
 ```
 
-
-#### Timbrar CFDI V2 #####
+## Timbrar CFDI V2 ##
 **StampV2** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 **Timbrar XML en formato string utilizando usuario y contraseña**
@@ -212,8 +205,8 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV2($xml);
+        StampService::Set($params);
+        $result = StampService::StampV2($xml);
         var_dump($result);
 
     }
@@ -246,8 +239,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV2($xml);
+        StampService::Set($params);
+        $result = StampService::StampV2($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -280,9 +273,9 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV2($xml,true);
+        $result = StampService::StampV2($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -301,7 +294,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     "tfd":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxjZmRpOkNvbXByb2JhbnRlIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL3d3dy5zYXQuZ29iLm14L2NmZC8zIGh0dHA6Ly93...",
     "status":"success"}
 ```
-#### Timbrar CFDI V3 #####
+## Timbrar CFDI V3 ##
 **StampV3** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 **Timbrar XML en formato string utilizando usuario y contraseña**
@@ -318,8 +311,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV3($xml);
+        StampService::Set($params);
+        $result = StampService::StampV3($xml);
         var_dump($result);
 
     }
@@ -352,8 +345,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV3($xml);
+        StampService::Set($params);
+        $result = StampService::StampV3($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -386,9 +379,9 @@ Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV3($xml,true);
+        $result = StampService::StampV3($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -408,7 +401,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 ```
 
 
-#### Timbrar CFDI V4 #####
+## Timbrar CFDI V4 ##
 **StampV4** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), asi como otros campos por ejemplo: **cadenaOriginalSAT**, **noCertificadoSAT**, **noCertificadoCFDI**, **uuid**, etc
 , en caso contrario lanza una excepción.
 
@@ -426,8 +419,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV4($xml);
+        StampService::Set($params);
+        $result = StampService::StampV4($xml);
         var_dump($result);
 
     }
@@ -471,8 +464,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     {
         header("Content-type: application/json");
         $xml = file_get_contents("./file.xml");
-        $stamp = StampService::Set($params);
-        $result = $stamp::StampV4($xml);
+        StampService::Set($params);
+        $result = StampService::StampV4($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -516,9 +509,9 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
     {
         header('Content-type: application/json');
         $xml = file_get_contents('./file.xml');
-        $stamp = StampService::Set($params);
+        StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
-        $result = $stamp::StampV4($xml,true);
+        $result = StampService::StampV4($xml,true);
         var_dump($result);
     }
     catch(Exception $e)
@@ -549,48 +542,152 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 ```
 
-#### Generación de sello para CFDI v3.3 con OpenSSL #####
-Para la generacón del sello para la versión 3.3 de CFDI usando solo las funciones de **OpenSSL** en PHP se creó el **SealService**. Para obtener el sello es necesario tener habilitada la extensión de OpenSSL. El método **obtenerSello** de la clase **SealService** recibe un arreglo asociativo con los parámetros necesarios para realizar el sello (**cadenaOriginal, archivoCerPem, archivoKeyPem**).
+## Emisión Timbrado ##
+**Emisión Timbrado** Recibe el contenido de un **XML** en formato **String**, posteriormente si la factura y el token son correctos, genera el sellado, y devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
+### Emisión timbrado V1 ###
+Está versión de timbrado regresa únicamente el ***TFD***.
+
+**Ejemplo de uso**
 ```php
-<?php 
-    require_once 'vendor/autoload.php';
-    use SWServices\Toolkit\SealService as Sellar;
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$xml = file_get_contents('Tests/Resources/file.xml');
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV1($xml);
+var_dump($resultadoIssue);
+);
+```
+### Emisión timbrado V2 ###
+Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 
-    $params = array(
-        "cadenaOriginal"=> "./cadenaOriginal.txt",
-        "archivoKeyPem"=> "./key.pem",
-        "archivoCerPem"=> "./cer.pem"
-    );
+**Ejemplo de uso**
+```php
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$xml = file_get_contents('Tests/Resources/file.xml');
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
+var_dump($resultadoIssue);
+);
+```
+### Emisión timbrado V3 ###
+Está versión de timbrado regresa únicamente el ***CFDI***.
 
-    try {
-        $result = Sellar::obtenerSello($params);
-        var_dump($result);
-    } catch(Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
-    
-?>
+**Ejemplo de uso**
+```php
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$xml = file_get_contents('Tests/Resources/file.xml');
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV3($xml);
+var_dump($resultadoIssue);
+);
+```
+### Emisión timbrado V4 ###
+Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
+
+**Ejemplo de uso**
+```php
+use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$xml = file_get_contents('Tests/Resources/file.xml');
+EmisionTimbrado::Set($params);
+$resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
+var_dump($resultadoIssue);
+);
 ```
 
-En caso de no ocurrir excepciones, el objeto tipo JSON devuelto sería como el siguiente:
-```json
-{
-    "status": "success",
-    "sello": "l3DgkCUJR8BSSvTyrLD8Xl2tYmIZa2Kf733bVEZuTBYcKSYoeBnxYufQUY8paJwJYKq0dwzxy8JYM43qFDR91m\/cyTtaOSaSBGxvdlf5GU3AYen8SDpsbViOWpc0jTz3sOvel7cyRLwMzf0S3cxV6QD3zE3iH+0IbePA\/oCjwnr0zEMwy5HuveHK+U85GdyX+Pr03vywlbeB79ye80lg5hIT2gp4Xo0s00Ilv\/h2X1bHy3\/wlmAq\/izRqtw2Oa3ajT6R7NaGsNjN7WsvlHRVdm\/eEiW9P0Pi7SP4VnXq0SmEDCZtFTmeGWCk6yLfgGOvq6cjLMHllRMZkyb0DSrE1A=="
-}
+## Emisión Timbrado JSON ##
+**Emisión Timbrado JSON** Recibe el contenido de un **JSON** en formato **String**, posteriormente si el JSON y el token son correctos, genera el armado y sellado del XML, posteriormente devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario mostrará error al ser enviado a timbrar.
+
+### Emisión timbrado JSON V1 ###
+Está versión de timbrado regresa únicamente el ***TFD***.
+
+**Ejemplo de uso**
+```php
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$json = file_get_contents("Tests/Resources/cfdi.json");
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
+var_dump($resultadoJson);
+);
+```
+### Emisión timbrado JSON V2 ###
+Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
+
+**Ejemplo de uso**
+```php
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$json = file_get_contents("Tests/Resources/cfdi.json");
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
+var_dump($resultadoJson);
+);
+```
+### Emisión timbrado JSON V3 ###
+Está versión de timbrado regresa únicamente el ***CFDI***.
+
+**Ejemplo de uso**
+```php
+use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$json = file_get_contents("Tests/Resources/cfdi.json");
+jsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
+var_dump($resultadoJson);
+);
+```
+### Emisión timbrado JSON V4 ###
+Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
+
+**Ejemplo de uso**
+```php
+use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+$json = file_get_contents("Tests/Resources/cfdi.json");
+JsonEmisionTimbrado::Set($params);
+$resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV4($json);
+var_dump($resultadoJson);
+);
 ```
 
+## Cancelación CFDI 3.3 ##
 
-### Cancelación CFDI 3.3 ###
-
-#### Cancelación por CSD ####
+### Cancelación por CSD ###
 Como su nombre lo indica, este servicio recibe todos los elementos que componen el CSD los cuales son los siguientes:
 
 * Certificado (.cer)
 * Key (.key)
 * Password del archivo key
 * RFC emisor 
+* UUID
 
 Esto ya que nuestro servidor generara el acuse de cancelación.
 
@@ -610,18 +707,19 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
 
     $params = array(
         "url"=>"http://services.test.sw.com.mx/",   
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo",
-        "uuid"=> "06a46e4b-b154-4c12-bb77-f9a63ed55ff2",
-        "password"=> "123456789",
-        "rfc"=> "LAN7008173R5",
-        "b64Cer"=> file_get_contents("./b64Cer.txt"),
-        "b64Key"=> file_get_contents("./b64Key.txt")
+        "user" => "demo",
+        "password" => "123456789"
     );
 
     try {
         header('Content-type: application/json');
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByCSD();
+        $cerB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
+		$keyB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key'));
+		$password = "12345678a";
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -629,7 +727,7 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
 ?>
 ```
 
-#### Cancelación por XML ####
+### Cancelación por XML ###
 
 Como su nombre lo indica, este servicio recibe únicamente el XML sellado con los UUID a cancelar.
 
@@ -648,14 +746,91 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
 
     $params = array(
         "url"=>"http://services.test.sw.com.mx/",   
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo",
-        "xml"=> file_get_contents("./cancelByXml.xml"),
+        "user" => "demo",
+        "password" => "123456789"
     );
 
     try {
         header('Content-type: application/json');
-        $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByXML();
+        
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByXML();
+        var_dump($result);
+    } catch(Exception $e) {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+
+### Cancelación por PFX ###
+
+Como su nombre lo indica, este servicio recibe el PFX en base64, así como RFC Emisor, Password del PFX y UUID.
+
+Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+
+Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+
+```php
+<?php 
+    require_once 'vendor/autoload.php';
+    use SWServices\Cancelation\CancelationService as CancelationService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx/",   
+        "user" => "demo",
+        "password" => "123456789"
+    );
+
+    try {
+        header('Content-type: application/json');
+        $pfxB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.pfx'));
+        $password = "12345678a";
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
+        var_dump($result);
+    } catch(Exception $e) {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+
+### Cancelación por UUID ###
+
+Como su nombre lo indica, este servicio recibe el RFC Emisor y UUID.
+
+Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+
+Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+
+```php
+<?php 
+    require_once 'vendor/autoload.php';
+    use SWServices\Cancelation\CancelationService as CancelationService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx/",   
+        "user" => "demo",
+        "password" => "123456789"
+    );
+
+    try {
+        header('Content-type: application/json');
+		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
+		$rfc = "LAN8507268IA";
+        CancelationService::Set($params);
+        $result = CancelationService::CancelationByUUID($rfc, $uuid);
         var_dump($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -709,7 +884,7 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 | 205 | No Existe  | El sat da una prorroga de 72 hrs para que el comprobante aparezca con estatus Vigente posterior al envió por parte del Proveedor de Certificación de CFDI. Puede que algunos comprobantes no aparezcan al momento, es necesario esperar por lo menos 72 hrs. |
 
 
-### Consultar Saldo CFDI 3.3 ###
+## Consultar Saldo CFDI 3.3 ##
 
 Este servicio recibe el token y genera los elementos que componen la consulta de saldos:
 
@@ -735,8 +910,8 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
     );
 
     try {
-        $accountBalance = AccountBalanceService::Set($params);
-        $result = $accountBalance::GetAccountBalance();
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::GetAccountBalance();
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -744,13 +919,13 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
 ?>
 ```
 
-#### Respuestas de consulta de saldo ####
+### Respuestas de consulta de saldo ###
 El response de consulta de saldo retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
 
 >Tipos de respuesta
 >En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
 
-#### Respuesta exitosa ####
+### Respuesta exitosa ###
 ```json
 {
     "data": {
@@ -776,10 +951,275 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 * unlimited: En caso de que sea verdadero la forma de validar el saldo depende del numero de timbres que tenga el * * distribuidor. En caso de verdadero le descontará los timbres al distribuidor.
 * timbresAsignados: timbres asignados.
 
-#### Respuesta no exitosa ####
+### Respuesta no exitosa ###
 ```json
 {
     "message": "Parámetros incompletos",
     "status": "error"
 }
 ```
+
+## Consulta Status SAT ##
+**Consulta Status SAT** Recibe los parámetros de ***URL Soap***, ***RFC Emisor***, ***RFC Receptor***, ***Total***, y ***UUID*** en formato **String**, posteriormente hace la consulta en el SOAP proporcionado sobre el estatus de la factura.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\SatQuery\ServicioConsultaSAT as consultaCfdiSAT;
+$soapUrl = "http://consultaqrfacturaelectronicatest.sw.com.mx/ConsultaCFDIService.svc";
+$re = "LAN8507268IA";
+$rr = "LAN7008173R5";
+$tt = 5800.00;
+$uuidV = "6ab07bef-4446-43ea-a3fd-04a804309457";
+$consultaCfdi = consultaCfdiSAT::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuidV);
+var_dump($consultaCfdi);
+```
+## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
+Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfc = "LAN7008173R5";
+cancelationService::Set($params);
+$consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
+var_dump($consultaPendientes);
+```
+
+## Aceptar/Rechazar Cancelación ##
+**Aceptar/Rechazar** es el servicio mediante el cual el receptor puede aceptar o rechazar un UUID que obtiene de su lista de pendientes. El método tiene varias maneras de ser consumido, por CSD, PFX, sólo UUID y por XML.
+
+### Aceptar/Rechazar con CSD ###
+Está modalidad recibe como parámetros el RFC del Receptor, Certificado y llave privada [En base64], contraseña de Llave privada y una lista de UUID con su respectiva respuesta.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
+$keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
+$password = "12345678a";
+$rfc = "LAN7008173R5";
+$uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
+cancelationService::Set($params);
+$aceptarRechazar = cancelationService::AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids);
+var_dump($aceptarRechazar);
+```
+
+### Aceptar/Rechazar con PFX ###
+Está modalidad recibe como parámetros el RFC del Receptor, PFX [En base64], contraseña de Llave privada y una lista de UUID con su respectiva respuesta.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
+$password = "12345678a";
+$rfc = "LAN7008173R5";
+$uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
+cancelationService::Set($params);
+$aceptarRechazar = cancelationService::AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids);
+var_dump($aceptarRechazar);
+```
+
+### Aceptar/Rechazar con XML ###
+Está modalidad recibe como parámetros el XML de Aceptación/Rechazo, dentro del cual ya vienen especificados los UUID y su correspondiente respuesta.
+
+XML a envíar
+```xml
+<SolicitudAceptacionRechazo Fecha="2018-09-20T14:48:09" RfcPacEnviaSolicitud="AAA010101AAA" RfcReceptor="LAN7008173R5" xmlns="http://cancelacfd.sat.gob.mx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Folios>
+		<UUID>FD74D156-B9B0-44A5-9906-E08182E8363E</UUID>
+		<Respuesta>Aceptacion</Respuesta>
+	</Folios>
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<DigestValue>QlfpYnalZKv6WAv33vZwMME7noA=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>dwhdSsuP64IFJMuR0sogqxpcQqlN9zq4tBXK6KHGTPMlC/xSXEi30L5SD6ogeCHpu3G2NzaXrE6wRxc8kRLOuSy/LxVEPUJi5HgYnfJMBWSq/EVccf2DD6JY4ihAtgdko7E26liY3RcqczfF9ujh98FC3eu9i1IJCJ9isIZYPqTvthwOtKEQVFvSfeA0wE7aVz1z1wBVur0wnIFHz13//SUHRgHMWrJ9m5pLuH5zVv+MU80dmmrNQ7EXz3krCDj7JMh6/I1ftgYsJMsUzwhcYgy7v9FTGrz3tkn/j8Gq1dWWYcqTtqHUcQtSpdCLgw6d9KojpUsqN5WVVb+HFe2uCA==</SignatureValue>
+		<KeyInfo>
+			<X509Data>
+				<X509IssuerSerial>
+					<X509IssuerName>OID.1.2.840.113549.1.9.2=Responsable: ACDMA, OID.2.5.4.45=SAT970701NN3, L=Coyoacán, S=Distrito Federal, C=MX, PostalCode=06300, STREET=&quot;Av. Hidalgo 77, Col. Guerrero&quot;, E=asisnet@pruebas.sat.gob.mx, OU=Administración de Seguridad de la Información, O=Servicio de Administración Tributaria, CN=A.C. 2 de pruebas(4096)</X509IssuerName>
+					<X509SerialNumber>286524172099382162235533054548081509963388170549</X509SerialNumber>
+				</X509IssuerSerial>
+				<X509Certificate>MIIFxTCCA62gAwIBAgIUMjAwMDEwMDAwMDAzMDAwMjI4MTUwDQYJKoZIhvcNAQELBQAwggFmMSAwHgYDVQQDDBdBLkMuIDIgZGUgcHJ1ZWJhcyg0MDk2KTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMuc2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UEBwwJQ295b2Fjw6FuMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxITAfBgkqhkiG9w0BCQIMElJlc3BvbnNhYmxlOiBBQ0RNQTAeFw0xNjEwMjUyMTUyMTFaFw0yMDEwMjUyMTUyMTFaMIGxMRowGAYDVQQDExFDSU5ERU1FWCBTQSBERSBDVjEaMBgGA1UEKRMRQ0lOREVNRVggU0EgREUgQ1YxGjAYBgNVBAoTEUNJTkRFTUVYIFNBIERFIENWMSUwIwYDVQQtExxMQU43MDA4MTczUjUgLyBGVUFCNzcwMTE3QlhBMR4wHAYDVQQFExUgLyBGVUFCNzcwMTE3TURGUk5OMDkxFDASBgNVBAsUC1BydWViYV9DRkRJMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgvvCiCFDFVaYX7xdVRhp/38ULWto/LKDSZy1yrXKpaqFXqERJWF78YHKf3N5GBoXgzwFPuDX+5kvY5wtYNxx/Owu2shNZqFFh6EKsysQMeP5rz6kE1gFYenaPEUP9zj+h0bL3xR5aqoTsqGF24mKBLoiaK44pXBzGzgsxZishVJVM6XbzNJVonEUNbI25DhgWAd86f2aU3BmOH2K1RZx41dtTT56UsszJls4tPFODr/caWuZEuUvLp1M3nj7Dyu88mhD2f+1fA/g7kzcU/1tcpFXF/rIy93APvkU72jwvkrnprzs+SnG81+/F16ahuGsb2EZ88dKHwqxEkwzhMyTbQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAJ/xkL8I+fpilZP+9aO8n93+20XxVomLJjeSL+Ng2ErL2GgatpLuN5JknFBkZAhxVIgMaTS23zzk1RLtRaYvH83lBH5E+M+kEjFGp14Fne1iV2Pm3vL4jeLmzHgY1Kf5HmeVrrp4PU7WQg16VpyHaJ/eonPNiEBUjcyQ1iFfkzJmnSJvDGtfQK2TiEolDJApYv0OWdm4is9Bsfi9j6lI9/T6MNZ+/LM2L/t72Vau4r7m94JDEzaO3A0wHAtQ97fjBfBiO5M8AEISAV7eZidIl3iaJJHkQbBYiiW2gikreUZKPUX0HmlnIqqQcBJhWKRu6Nqk6aZBTETLLpGrvF9OArV1JSsbdw/ZH+P88RAt5em5/gjwwtFlNHyiKG5w+UFpaZOK3gZP0su0sa6dlPeQ9EL4JlFkGqQCgSQ+NOsXqaOavgoP5VLykLwuGnwIUnuhBTVeDbzpgrg9LuF5dYp/zs+Y9ScJqe5VMAagLSYTShNtN8luV7LvxF9pgWwZdcM7lUwqJmUddCiZqdngg3vzTactMToG16gZA4CWnMgbU4E+r541+FNMpgAZNvs2CiW/eApfaaQojsZEAHDsDv4L5n3M1CC7fYjE/d61aSng1LaO6T1mh+dEfPvLzp7zyzz+UgWMhi5Cs4pcXx1eic5r7uxPoBwcCTt3YI1jKVVnV7/w=</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</SolicitudAceptacionRechazo>
+```
+
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$xml = file_get_contents('Tests\Resources\fileAcceptReject.xml');
+cancelationService::Set($params);
+$aceptarRechazar = cancelationService::AceptarRechazarCancelacionXML($xml);
+var_dump($aceptarRechazar);
+```
+
+### Aceptar/Rechazar con UUID ###
+Está modalidad recibe como parámetros el RFC del Receptor, el UUID, así como su acción a tomar.
+Es importante decir que los certificados correspondientes al RFC deben estar en el administrador de timbres.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfc = "LAN7008173R5";
+$uuid = "6ab07bef-4446-43ea-a3fd-04a804309457";
+$accion = "Rechazo";
+cancelationService::Set($params);
+$aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
+var_dump($aceptarRechazar);
+```
+
+## Consulta documentos relacionados ##
+Este servicio nos permite conocer las facturas que se encuentren relacionadas a un UUID. El método tiene varias maneras de ser consumido, por CSD, PFX, sólo UUID y por XML.
+
+### Documentos relacionados con CSD ###
+Está modalidad recibe como parámetros el RFC del Receptor, Certificado y Llave privada [En base64], contraseña de Llave privada y  el UUID a consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
+
+$keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
+$rfc = "LAN7008173R5";
+$uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+cancelationService::Set($params);
+$consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
+var_dump($consultaRelacionados);
+```
+
+### Documentos relacionados con PFX ###
+Está modalidad recibe como parámetros el RFC del Receptor, PFX [En base64], contraseña de Llave privada y  el UUID a consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
+$rfc = "LAN7008173R5";
+$uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+cancelationService::Set($params);
+$consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
+var_dump($consultaRelacionados);
+```
+
+### Documentos relacionados con XML ###
+Está modalidad recibe como parámetro el XML para consulta de documentos relacionados.
+
+XML a enviar
+```xml
+<PeticionConsultaRelacionados RfcPacEnviaSolicitud="DAL050601L35" RfcReceptor="LAN7008173R5" Uuid="52C02B64-D12E-4163-B581-BF749238896D" xmlns="http://cancelacfd.sat.gob.mx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+		<SignedInfo>
+			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
+			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
+			<Reference URI="">
+				<Transforms>
+					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
+				</Transforms>
+				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
+				<DigestValue>4OL2v3i8dqK9qc4T4gbidVv0D3Q=</DigestValue>
+			</Reference>
+		</SignedInfo>
+		<SignatureValue>br/VM4d589tNJFwoXSBxBGv8J8SDyrvun13m26+ohydrLuvNZXMDhffapexZRvIblcU8cEoD6LcWGv/PFzWb4CN2Yqc+uIllYPAVLO6e5kTPRWMQGRH6KPd8vohFEaIAYHVMkrlrHFi8FtH7b6aZHDuBexa8ZWdvSt/WXpudNK8SGtEv2yoGcyqSMxlJ/pysuvsksS/2qzpLeycoF+SLSw5VVLDM7YoW9C3k6QWxJBNo1KsYofBIE5Tk40i0BbKH5r79Xvs3Ye9Q1f0dwSXHooFjrR4s7E5ukBtpk325bHlwPmhGbk+vQrY7lKPQbo3SMJ13eFzlpfW8StNpCp8mpQ==</SignatureValue>
+		<KeyInfo>
+			<X509Data>
+				<X509IssuerSerial>
+					<X509IssuerName>OID.1.2.840.113549.1.9.2=Responsable: ACDMA, OID.2.5.4.45=SAT970701NN3, L=Coyoacán, S=Distrito Federal, C=MX, PostalCode=06300, STREET=&quot;Av. Hidalgo 77, Col. Guerrero&quot;, E=asisnet@pruebas.sat.gob.mx, OU=Administración de Seguridad de la Información, O=Servicio de Administración Tributaria, CN=A.C. 2 de pruebas(4096)</X509IssuerName>
+					<X509SerialNumber>286524172099382162235533054548081509963388170549</X509SerialNumber>
+				</X509IssuerSerial>
+				<X509Certificate>MIIFxTCCA62gAwIBAgIUMjAwMDEwMDAwMDAzMDAwMjI4MTUwDQYJKoZIhvcNAQELBQAwggFmMSAwHgYDVQQDDBdBLkMuIDIgZGUgcHJ1ZWJhcyg0MDk2KTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMuc2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UEBwwJQ295b2Fjw6FuMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxITAfBgkqhkiG9w0BCQIMElJlc3BvbnNhYmxlOiBBQ0RNQTAeFw0xNjEwMjUyMTUyMTFaFw0yMDEwMjUyMTUyMTFaMIGxMRowGAYDVQQDExFDSU5ERU1FWCBTQSBERSBDVjEaMBgGA1UEKRMRQ0lOREVNRVggU0EgREUgQ1YxGjAYBgNVBAoTEUNJTkRFTUVYIFNBIERFIENWMSUwIwYDVQQtExxMQU43MDA4MTczUjUgLyBGVUFCNzcwMTE3QlhBMR4wHAYDVQQFExUgLyBGVUFCNzcwMTE3TURGUk5OMDkxFDASBgNVBAsUC1BydWViYV9DRkRJMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgvvCiCFDFVaYX7xdVRhp/38ULWto/LKDSZy1yrXKpaqFXqERJWF78YHKf3N5GBoXgzwFPuDX+5kvY5wtYNxx/Owu2shNZqFFh6EKsysQMeP5rz6kE1gFYenaPEUP9zj+h0bL3xR5aqoTsqGF24mKBLoiaK44pXBzGzgsxZishVJVM6XbzNJVonEUNbI25DhgWAd86f2aU3BmOH2K1RZx41dtTT56UsszJls4tPFODr/caWuZEuUvLp1M3nj7Dyu88mhD2f+1fA/g7kzcU/1tcpFXF/rIy93APvkU72jwvkrnprzs+SnG81+/F16ahuGsb2EZ88dKHwqxEkwzhMyTbQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAJ/xkL8I+fpilZP+9aO8n93+20XxVomLJjeSL+Ng2ErL2GgatpLuN5JknFBkZAhxVIgMaTS23zzk1RLtRaYvH83lBH5E+M+kEjFGp14Fne1iV2Pm3vL4jeLmzHgY1Kf5HmeVrrp4PU7WQg16VpyHaJ/eonPNiEBUjcyQ1iFfkzJmnSJvDGtfQK2TiEolDJApYv0OWdm4is9Bsfi9j6lI9/T6MNZ+/LM2L/t72Vau4r7m94JDEzaO3A0wHAtQ97fjBfBiO5M8AEISAV7eZidIl3iaJJHkQbBYiiW2gikreUZKPUX0HmlnIqqQcBJhWKRu6Nqk6aZBTETLLpGrvF9OArV1JSsbdw/ZH+P88RAt5em5/gjwwtFlNHyiKG5w+UFpaZOK3gZP0su0sa6dlPeQ9EL4JlFkGqQCgSQ+NOsXqaOavgoP5VLykLwuGnwIUnuhBTVeDbzpgrg9LuF5dYp/zs+Y9ScJqe5VMAagLSYTShNtN8luV7LvxF9pgWwZdcM7lUwqJmUddCiZqdngg3vzTactMToG16gZA4CWnMgbU4E+r541+FNMpgAZNvs2CiW/eApfaaQojsZEAHDsDv4L5n3M1CC7fYjE/d61aSng1LaO6T1mh+dEfPvLzp7zyzz+UgWMhi5Cs4pcXx1eic5r7uxPoBwcCTt3YI1jKVVnV7/w=</X509Certificate>
+			</X509Data>
+		</KeyInfo>
+	</Signature>
+</PeticionConsultaRelacionados>
+```
+
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfc = "LAN7008173R5";
+$uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+$xml = file_get_contents('Tests\Resources\fileRelations.xml');
+cancelationService::Set($params);
+$consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosXML($xml);
+var_dump($consultaRelacionados);
+```
+
+### Documentos relacionados con UUID ###
+Está modalidad recibe como parámetros el RFC del Receptor y el UUID a consultar.
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Cancelation\CancelationService as cancelationService;
+$params = array(
+"url"=>"http://services.test.sw.com.mx",
+"user"=>"demo",
+"password"=> "123456789"
+);
+$rfc = "LAN7008173R5";
+$uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+cancelationService::Set($params);
+$consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
+var_dump($consultaRelacionados);

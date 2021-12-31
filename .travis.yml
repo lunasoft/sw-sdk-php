@@ -3,8 +3,7 @@ language: php
 
 # Versions of PHP you want your project run with.
 php:
-  - 5.6
-  - 7.0
+  - 7.1
 
 # Commands to be run before your environment runs.
 before_script:
@@ -13,7 +12,6 @@ before_script:
 
 # Commands you want to run that will verify your build.
 script: 
-- phpunit --bootstrap ./SWSDK.php ./tests/AuthTests
 - phpunit --bootstrap ./SWSDK.php ./Tests/StampTests
 
 # allow_failures: Allow this build to fail under the specified environments.
