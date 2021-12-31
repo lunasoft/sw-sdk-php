@@ -178,7 +178,14 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 ```json
 {"data":{"tfd":"<tfd:TimbreFiscalDigital xsi:schemaLocation=\"http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd..."},"status":"success"}
-
+```
+#### Nueva funcionalidad para el soporte con servidores Proxy ####
+Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy".
+```php
+    $params = array(
+        
+        "proxy"=> "server.domain.com"
+    );
 ```
 
 ## Timbrar CFDI V2 ##
@@ -1216,4 +1223,3 @@ $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
 cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 var_dump($consultaRelacionados);
-```
