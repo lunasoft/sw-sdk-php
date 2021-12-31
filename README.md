@@ -69,10 +69,7 @@ Se puede hacer uso de las clases mediante la implementacion manual haciendo uso 
 # Implementación #
 La librería cuenta con dos servicios principales los que son la Autenticacion y el Timbrado de CFDI (XML).
 
-#### Datos de conexión #### 
-**Url de Pruebas:** http://services.test.sw.com.mx
-**Usuario de Pruebas:** demo
-**Constraseña de Pruebas:** 123456789
+
 #### Nueva funcionalidad para el soporte con servidores Proxy ####
 Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
