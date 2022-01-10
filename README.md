@@ -677,15 +677,16 @@ var_dump($resultadoJson);
 ## Cancelación CFDI 3.3 ##
 
 ### Cancelación por CSD ###
-Como su nombre lo indica, este servicio recibe todos los elementos que componen el CSD los cuales son los siguientes:
+Se deben incluir los siguientes datos:
 
 * Certificado (.cer)
 * Key (.key)
 * Password del archivo key
 * RFC emisor 
 * UUID
+* Motivo
+* Folio Sustitución
 
-Esto ya que nuestro servidor generara el acuse de cancelación.
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
@@ -693,7 +694,7 @@ Primeramente se deberá autenticar en nuestros servicios en orden de obtener tok
 
 Paso 2: Enviar datos necesarios
 
-Se envían los datos necesarios para la cancelación, que básicamente es el CSD del emisor que desea cancelar un CFDI, así como el RFC de dicho emisor, el uuid correspondientes al CFDI que se desea cancelar,  y por supuesto el token de acceso anteriormente generado.
+Se envían los datos necesarios para la cancelación y por supuesto el token de acceso anteriormente generado.
 
 Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán enviarse en formato base64** para que podamos procesarlos en nuestro servidor.
 ```php
@@ -701,25 +702,36 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
     require_once 'vendor/autoload.php';
     use SWServices\Cancelation\CancelationService as CancelationService;
 
+    $rfc="";
+    $password="";
+    $uuid=" ";
+    $motivo="02";
+    $foliosustitucion=" ";
+    $b64Cer="MIIFuzCCA6OgAwIBAgIU.........";
+    $b64Key="MIIFDjBABgkqhkiG9w0B.........";
+    $url="http://services.test.sw.com.mx/";
+    $token=" ";
+ 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx/",   
-        "user" => "demo",
-        "password" => "123456789"
-    );
-
-    try {
-        header('Content-type: application/json');
-        $cerB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
-		$keyB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key'));
-		$password = "12345678a";
-		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
-		$rfc = "LAN8507268IA";
-        CancelationService::Set($params);
-        $result = CancelationService::CancelationByCSD($rfc, $cerB64, $keyB64, $password, $uuid);
-        var_dump($result);
-    } catch(Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
+    "url"=>$url,  
+    "token"=>$token,
+    "uuid"=>$uuid,
+    "password"=>$password,
+    "rfc"=>$rfc,
+    "motivo"=>$motivo,
+    "cerB64"=>$b64Cer,
+    "keyB64"=>$b64Key
+);
+    
+try {
+    header('Content-type: application/json');
+    $cancelationService = CancelationService::Set($params);
+    $result = $cancelationService::CancelationByCSD();
+    echo json_encode($result);
+} catch(Exception $e) {
+    header('Content-type: text/plain');
+    echo $e->getMessage();
+}
 ?>
 ```
 
@@ -740,28 +752,33 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
     require_once 'vendor/autoload.php';
     use SWServices\Cancelation\CancelationService as CancelationService;
 
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx/",   
-        "user" => "demo",
-        "password" => "123456789"
-    );
-
-    try {
-        header('Content-type: application/json');
-        
-        CancelationService::Set($params);
-        $result = CancelationService::CancelationByXML();
-        var_dump($result);
-    } catch(Exception $e) {
-        header('Content-type: text/plain');
-        echo $e->getMessage();
-    }
+    $resultSpect = "success";
+	$params = array(
+		"url"=>"http://services.test.sw.com.mx/",	
+		"token"=>" "				
+	);
+            $xml=file_get_contents("../Tests/Resources/CancelationResources/cancelByXml.xml");
+		    try {
+		        $cancelationService = CancelationService::Set($params);
+		        $result = $cancelationService::CancelationByXML($xml);
+                echo json_encode($result);
+            } catch(Exception $e) {
+            header('Content-type: text/plain');
+            echo $e->getMessage();
+            }
 ?>
 ```
 
 ### Cancelación por PFX ###
 
-Como su nombre lo indica, este servicio recibe el PFX en base64, así como RFC Emisor, Password del PFX y UUID.
+Se deben incluir los siguientes datos:
+
+* Pfx 
+* Password del archivo key
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
@@ -769,38 +786,54 @@ Primeramente se deberá autenticar en nuestros servicios en orden de obtener tok
 
 Paso 2: Enviar datos necesarios
 
-Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+Se envían los datos necesarios para la cancelación y el token obtenido previamente.
 
 ```php
 <?php 
     require_once 'vendor/autoload.php';
     use SWServices\Cancelation\CancelationService as CancelationService;
 
+    $rfc=" ";
+    $password=" ";
+    $uuid=" ";
+    $motivo=" ";
+    $foliosustitucion=" ";
+    $b64Pfx="MIIL+QIBAzCCC.................";
+    $url="http://services.test.sw.com.mx/";
+    $token=" ";
+
     $params = array(
-        "url"=>"http://services.test.sw.com.mx/",   
-        "user" => "demo",
-        "password" => "123456789"
+    "url"=>$url,  
+    "token"=>$token,
+    "uuid"=>$uuid,
+    "password"=>$password,
+    "rfc"=>$rfc,
+    "motivo"=>$motivo,
+    "foliosustitucion"=>$foliosustitucion,
+    "pfxB64"=>$b64Pfx,
+    
     );
 
     try {
-        header('Content-type: application/json');
-        $pfxB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.pfx'));
-        $password = "12345678a";
-		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
-		$rfc = "LAN8507268IA";
-        CancelationService::Set($params);
-        $result = CancelationService::CancelationByPFX($rfc, $pfxB64, $password, $uuid);
-        var_dump($result);
+    header('Content-type: application/json');
+    $cancelationService = CancelationService::Set($params);
+    $result = $cancelationService::CancelationByPFX();
+    echo json_encode($result);
     } catch(Exception $e) {
-        header('Content-type: text/plain');
-        echo $e->getMessage();
+    header('Content-type: text/plain');
+    echo $e->getMessage();
     }
 ?>
 ```
 
 ### Cancelación por UUID ###
 
-Como su nombre lo indica, este servicio recibe el RFC Emisor y UUID.
+Se deben incluir los siguientes datos:
+
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
@@ -808,26 +841,32 @@ Primeramente se deberá autenticar en nuestros servicios en orden de obtener tok
 
 Paso 2: Enviar datos necesarios
 
-Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+Se envían los datos necesarios para la cancelación y el token obtenido previamente.
 
 ```php
 <?php 
     require_once 'vendor/autoload.php';
     use SWServices\Cancelation\CancelationService as CancelationService;
 
+    $rfc=" ";
+    $uuid=" ";
+    $motivo=" ";
+    $foliosustitucion=" ";
     $params = array(
-        "url"=>"http://services.test.sw.com.mx/",   
-        "user" => "demo",
-        "password" => "123456789"
+    "url"=>"http://services.test.sw.com.mx",  
+    "token"=>" ",  
+    "rfc"=>$rfc,
+    "uuid"=>$uuid,
+    "motivo"=>$motivo,
+    "foliosustitucion"=>$foliosustitucion
+    
     );
-
+    
     try {
         header('Content-type: application/json');
-		$uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
-		$rfc = "LAN8507268IA";
-        CancelationService::Set($params);
-        $result = CancelationService::CancelationByUUID($rfc, $uuid);
-        var_dump($result);
+        $cancelationService = CancelationService::Set($params);
+        $result = $cancelationService::CancelationByUUID();
+        echo json_encode($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
         echo $e->getMessage();
