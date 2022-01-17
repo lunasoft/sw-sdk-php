@@ -9,14 +9,14 @@
         public function testSuccess(){
             $params = array(
                 "url"=>"http://services.test.sw.com.mx",
-                "user"=>"demo",
-                "password"=> "123456789"
+                "user"=>"usuario",
+                "password"=> "contraseña"
             );
             $authenticate = AuthenticationService::auth($params);
             $result = $authenticate::Token();
             $result->status;
                   
-            $this->assert($result->status, "success");
+            $this->assertEquals($result->status, "success");
         }
         public function testError(){
             $this->expectException(Exception::class);

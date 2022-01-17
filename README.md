@@ -699,7 +699,7 @@ Se envían los datos necesarios para la cancelación y por supuesto el token de 
 Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán enviarse en formato base64** para que podamos procesarlos en nuestro servidor.
 ```php
 <?php 
-    require_once 'vendor/autoload.php';
+    include('./SWSDK.php');
     use SWServices\Cancelation\CancelationService as CancelationService;
 
     $rfc="";
@@ -749,7 +749,7 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
 
 ```php
 <?php 
-    require_once 'vendor/autoload.php';
+    include('./SWSDK.php');
     use SWServices\Cancelation\CancelationService as CancelationService;
 
     $resultSpect = "success";
@@ -790,7 +790,7 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
 
 ```php
 <?php 
-    require_once 'vendor/autoload.php';
+    include('./SWSDK.php');
     use SWServices\Cancelation\CancelationService as CancelationService;
 
     $rfc=" ";
@@ -845,7 +845,7 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
 
 ```php
 <?php 
-    require_once 'vendor/autoload.php';
+    include('./SWSDK.php');
     use SWServices\Cancelation\CancelationService as CancelationService;
 
     $rfc=" ";
