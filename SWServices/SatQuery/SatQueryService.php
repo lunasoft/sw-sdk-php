@@ -6,7 +6,7 @@ use SWServices\SatQuery\SatQueryRequest as satQueryRequest;
 
 class SatQueryService extends Services{
   
-    public static function ServicioConsultaSAT($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $fe8) {
-        return satQueryRequest::soapRequest($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $fe8);
+    public static function ServicioConsultaSAT($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $sello) {
+        return satQueryRequest::soapRequest($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $sello);
     }
 }
