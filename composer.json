@@ -2,8 +2,8 @@
     "name": "lunasoft/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
-    "version": "1.0.0.0",
-    "homepage":"https://github.com/lunasoft/sw-sdk-php",
+    "version": "1.0.2.1",
+    "homepage": "https://github.com/lunasoft/sw-sdk-php",
     "license": "MIT",
     "authors": [
         {
@@ -27,21 +27,25 @@
             "email": "emmanuel.contreras@sw.com.mx"
         }
     ],
-    "require-dev": {
-    },
-   "autoload": {
-    "psr-4": {
-      "SWServices\\": "SWServices/",
-      "tests\\":"tests/"
-    }
-  },
-     "autoload-dev": {
+    "require-dev": {},
+    "autoload": {
         "psr-4": {
+            "SWServices\\": "SWServices/",
             "tests\\": "tests/"
         }
     },
-    "require": {
-        "phpunit/phpunit": "^5",
-        "doctrine/instantiator" : "^1.0.2"
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        },
+        "autoload": {
+            "classmap": [
+                "lib/SWServices"
+            ]
+        },
+        "require": {
+            "guzzlehttp/guzzle": "^7.3",
+            "phpunit/phpunit": "^9.5"
+        }
     }
 }
