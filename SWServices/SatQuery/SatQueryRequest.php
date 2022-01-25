@@ -4,8 +4,8 @@ use Exception;
 
 class SatQueryRequest{
         
-    public static function soapRequest($url, $rfcEmisor, $rfcReceptor, $total, $uuid){
-        $xml_post_string = SatQueryRequest::getSoapBody($rfcEmisor,$rfcReceptor, $total,$uuid);
+    public static function soapRequest($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $sello){
+        $xml_post_string = SatQueryRequest::getSoapBody($rfcEmisor,$rfcReceptor, $total,$uuid,$sello);
         $headers = SatQueryRequest::headers($xml_post_string);
         $ch = curl_init();
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
@@ -31,12 +31,12 @@ class SatQueryRequest{
         }
     }
     
-    public static function getSoapBody($rfcEmisor,$rfcReceptor, $total,$uuid){
+    public static function getSoapBody($rfcEmisor,$rfcReceptor, $total,$uuid, $sello){
         return '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
                                <soapenv:Header/>
                                <soapenv:Body>
                                   <tem:Consulta>
-                                      <tem:expresionImpresa><![CDATA[?re='.$rfcEmisor.'&rr='.$rfcReceptor.'&tt='.$total.'&id='.$uuid.']]></tem:expresionImpresa>
+                                      <tem:expresionImpresa><![CDATA[?re='.$rfcEmisor.'&rr='.$rfcReceptor.'&tt='.$total.'&id='.$uuid.'&fe='.$sello.']]></tem:expresionImpresa>
                                   </tem:Consulta>
                                </soapenv:Body>
                             </soapenv:Envelope>';
