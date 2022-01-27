@@ -1,15 +1,19 @@
 <?php
 namespace SWServices\Stamp;
-
 use SWServices\Services as Services;
+use SWServices\Stamp\StampServiceCached as stampServiceCached;
 use SWServices\Stamp\StampRequest as stampRequest;
-
 class StampService extends Services {
     public function __construct($params) {
         parent::__construct($params);
     }
 
     public static function Set($params){
+        if(isset($params["cached"])){
+            if($params["cached"])
+                return new stampServiceCached($params);
+            return new StampService($params);
+        }
         return new StampService($params);
     }
     public static function StampV1($xml, $isb64 = false){

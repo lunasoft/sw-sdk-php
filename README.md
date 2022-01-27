@@ -1,4 +1,3 @@
-
 <p align="center">
     <img src="https://www.theblocklearning.com/wp-content/uploads/2018/09/logo_php-600x600.png" width="250" height="250">
 </p>
@@ -21,7 +20,7 @@ Dependencias
 ----------------
 Instalación
 ---------
-Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP ya sea la **5.6** o la version **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
+Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una versión de PHP ya sea la **5.6** o la versión **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
 
 #### Instalar Composer #####
 * Paso 1:
@@ -31,11 +30,11 @@ Dar click en **Download**
 * Paso 3:
 Dar clic en **Composer-Setup.exe** esto abrira una ventana en su explorador para que guarde el archivo composer
 * Paso 4:
-Ejecutar el archivo descargado **Composer-Setup.exe** y seguir los pasos de instalacion
+Ejecutar el archivo descargado **Composer-Setup.exe** y seguir los pasos de instalación
 
 #### Preparar nuestro ambiente de Desarrollo #####
 * Paso 1:
-Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresaremos la libreria de la cual queremos hacer uso en nuestro ejemplo es **lunasoft/sw-sdk-php**
+Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresaremos la librería de la cual queremos hacer uso en nuestro ejemplo es **lunasoft/sw-sdk-php**
 
 ```php
 {
@@ -57,10 +56,10 @@ Dentro de tu carpeta de tu proyecto abrir **CMD** o **PowerShell** y escribir lo
 ```
 composer install
 ```
-De esta manera descarga las dependencias que antes escribimos dentro del require que en nuestro caso es el **SDK**
+De esta manera descarga las dependencias que antes escribimos dentro del requiere que en nuestro caso es el **SDK**
 
 #### En caso de no usar composer ####
-Se puede hacer uso de las clases mediante la implementacion manual haciendo uso del archivo SWSDK.php en lugar del archivo vendor.php
+Se puede hacer uso de las clases mediante la implementan manual haciendo uso del archivo SWSDK.php en lugar del archivo vendor.php
 
 ```php
 	include('SWSDK.php');
@@ -74,7 +73,7 @@ La librería cuenta con dos servicios principales los que son la Autenticacion y
 **Usuario de Pruebas:** demo
 **Constraseña de Pruebas:** 123456789
 #### Nueva funcionalidad para el soporte con servidores Proxy ####
-Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
+Si tu posees un servidor proxy en tu empresa y deseas que la librería lo use, debes pasar un parámetro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
@@ -82,7 +81,7 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
     );
 ```
 ## Autenticación ###
-El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que estan en este ejemplo para el ambiente de **Pruebas**.
+El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que están en este ejemplo para el ambiente de **Pruebas**.
 
 **Obtener Token**
 ```php
@@ -182,7 +181,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 ```
 
 ## Timbrar CFDI V2 ##
-**StampV2** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**StampV2** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), así como el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 **Timbrar XML en formato string utilizando usuario y contraseña**
 ```php
@@ -283,7 +282,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 ```json
 {"data":{
-    "cfdi":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxjZmRpOkNvbXByb2JhbnRlIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL3d3dy5zYXQuZ29iLm14L2NmZC8zIGh0dHA6Ly93...",
+  "cfdi":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxjZmRpOkNvbXByb2JhbnRlIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL3d3dy5zYXQuZ29iLm14L2NmZC8zIGh0dHA6Ly93...",
     "tfd":"PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjxjZmRpOkNvbXByb2JhbnRlIHhzaTpzY2hlbWFMb2NhdGlvbj0iaHR0cDovL3d3dy5zYXQuZ29iLm14L2NmZC8zIGh0dHA6Ly93...",
     "status":"success"}
 ```
@@ -357,7 +356,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
    "status":"success"}
 ```
 **Timbrar XML en formato base64 utilizando token/credenciales**<br>
-Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere decir que se puede enviar el xml previamente sellado en formato base64, y la libreria le respondera la misma estructura de respuesta que se usa en v3 normal con el cfdi en base64 tambien.
+Si se desea, se puede usar la versión 3 en la modalidad base64, esto quiere decir que se puede enviar el xml previamente sellado en formato base64, y la librería le responderá la misma estructura de respuesta que se usa en v3 normal con el cfdi en base64 tambien.
 ```php
 <?php
     require_once 'vendor/autoload.php';
@@ -395,8 +394,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 
 ## Timbrar CFDI V4 ##
-**StampV4** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), asi como otros campos por ejemplo: **cadenaOriginalSAT**, **noCertificadoSAT**, **noCertificadoCFDI**, **uuid**, etc
-, en caso contrario lanza una excepción.
+**StampV4** Recibe el contenido de un **XML** ya emitido (sellado) en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**),  así como otros campos por ejemplo: **cadenaOriginalSAT**, **noCertificadoSAT**, **noCertificadoCFDI**, **uuid**, etc. En caso contrario lanza una excepción.
 
 **Timbrar XML en formato string utilizando usuario y contraseña**
 ```php
@@ -487,7 +485,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 }
 ```
 **Timbrar XML en formato base64 utilizando token/credenciales**<br>
-Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere decir que se puede enviar el xml previamente sellado en formato base64, y la libreria le respondera la misma estructura de respuesta que se usa en v4 normal con el cfdi  en base64 tambien.
+Si se desea, se puede usar la versión 4 en la modalidad base64, esto quiere decir que se puede enviar el xml previamente sellado en formato base64, y la librería le responderá la misma estructura de respuesta que se usa en v4 normal con el cfdi en base64 también.
 ```php
 <?php
     require_once 'vendor/autoload.php';
@@ -591,7 +589,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 
 **Ejemplo de uso**
 ```php
-use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
+use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"demo",
@@ -949,6 +947,73 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 {
     "message": "Parámetros incompletos",
     "status": "error"
+}
+```
+
+## Validación LRFC ##
+En este servicio se hace la consulta en la lista LRFC para conocer si el RFC receptor es válido y susceptible de recibir facturas.
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Validation\ValidaLrfc as ValidaLrfc;
+try {
+	$params = array("url"=>"http://services.test.sw.com.mx",
+		"user"=>"demo",
+		"password"=> "123456789"
+	);
+	ValidaLrfc::Set($params);
+	$resultadoLRFC = ValidaLrfc::ValidaLrfc('LAN8507268IA');
+	var_dump($resultadoLRFC);
+}
+catch(Exception  $e){
+	echo  'Caught exception: ', $e->getMessage(), "\n";
+}
+```
+
+## Validación LCO##
+En este servicio se hace la consulta en la lista LCO conocer si el número de certificado consultado receptor se encuentra en dicha lista, y conocer los datos del mismo.
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Validation\ValidaLco as ValidaLco;
+try {
+	$params = array("url"=>"http://services.test.sw.com.mx",
+		"user"=>"demo",
+		"password"=> "123456789"
+	);
+	ValidaLco::Set($params);
+	$resultadoLCO = ValidaLco::ValidaLco('20001000000300022816');
+	var_dump($resultadoLCO);
+}
+catch(Exception  $e){
+	echo  'Caught exception: ', $e->getMessage(), "\n";
+}
+```
+
+## Validación XML##
+En este servicio se hace la validación del CFDI 3.3, validando los siguientes criterios:
+
+- Integridad.
+- Sello.
+- Errores de estructura.
+- Matriz de errores del SAT (incluye complementos).
+- Estatus de la factura en el SAT (en caso de incluir TFD).
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\Validation\ValidarXML as ValidarXML;
+try {
+	$params = array("url"=>"http://services.test.sw.com.mx",
+		"user"=>"demo",
+		"password"=> "123456789"
+	);
+	ValidarXML::Set($params);
+	$resultadoValida = ValidarXML::ValidaXML($xml); // $xml es el string del cfdi
+	var_dump($resultadoValida);
+}
+catch(Exception  $e){
+	echo  'Caught exception: ', $e->getMessage(), "\n";
 }
 ```
 
