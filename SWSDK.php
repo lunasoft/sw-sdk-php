@@ -13,8 +13,6 @@
     require_once dirname(__FILE__) . '/SWServices/AccountBalance/AccountBalanceService.php';
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateXMLService.php';
-    require_once dirname(__FILE__) . '/SWServices/Validation/ValidateLcoService.php';
-    require_once dirname(__FILE__) . '/SWServices/Validation/ValidateLrfcService.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerRequest.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerService.php';
     require_once dirname(__FILE__) . '/SWServices/Toolkit/SignService.php';
