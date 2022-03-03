@@ -46,7 +46,7 @@
             ]
         },
         "require": {
-            "guzzlehttp/guzzle": "^7.3"
+            "guzzlehttp/guzzle": "^7.3",
             "doctrine/instantiator" : "^1.0.2"
         }
 
