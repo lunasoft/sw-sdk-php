@@ -4,21 +4,19 @@ use SWServices\Authentication\AuthenticationService as Authentication;
 use SWServices\Stamp\StampService as StampService;
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 use SWServices\Validation\ValidarXML as ValidarXML;
-use SWServices\Validation\ValidaLco as ValidaLco;
-use SWServices\Validation\ValidaLrfc as ValidaLrfc;
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
-use SWServices\SatQuery\ServicioConsultaSAT as ConsultaCfdiSAT;
+use SWServices\SatQuery\SatQueryService as SatQueryService;
 use SWServices\Csd\CsdService as CsdService;
-
+use SWServices\Services;
 
 header('Content-type: text/plain');
 
 
 $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "user"=>"demo",
+    "user"=>"usuario@test.com",
     "password"=> "123456789"
       );
 
@@ -80,25 +78,6 @@ catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
     
-echo "\n\n---------------- Validación LCO -----------------\n\n";    
-try {
-    ValidaLco::Set($params);
-    $resultadoLCO = ValidaLco::ValidaLco('20001000000300022816');
-    var_dump($resultadoLCO); 
-}
-catch(Exception $e){
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}     
-      
-echo "\n\n----------------- Validación LRFC ----------------\n\n";     
-try {
-    ValidaLrfc::Set($params);
-    $resultadoLRFC = ValidaLrfc::ValidaLrfc('LAN8507268IA');
-    var_dump($resultadoLRFC);
-}
-catch(Exception $e){
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
    
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";     
 try {
@@ -116,8 +95,7 @@ try {
             print_r($resultadoJson->data->selloCFDI).
             print_r($resultadoJson->data->fechaTimbrado).
             print_r($resultadoJson->data->qrCode).
-            print_r($resultadoJson->data->cfdi)
-           :
+            print_r($resultadoJson->data->cfdi):
             print_r($resultadoJson->message).
             print_r($resultadoJson->messageDetail);
 }
@@ -184,8 +162,10 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
         $rr = "LSO1306189R5";
         $tt = 1.16;
         $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+        $sello="bb2k2g==";
+
     
-       $consultaCfdi = ConsultaCfdiSAT::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuidV);
+       $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
       
        var_dump($consultaCfdi);
        
