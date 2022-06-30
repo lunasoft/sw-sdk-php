@@ -2,17 +2,13 @@
     "name": "lunasoft/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
-    "version": "1.0.2.2",
+    "version": "1.0.2.1",
     "homepage": "https://github.com/lunasoft/sw-sdk-php",
     "license": "MIT",
     "authors": [
         {
-            "name": "Martin Flores",
-            "email": "martin.flores@sw.com.mx"
-        },
-        {
-            "name": "Aeyrton Villalobos",
-            "email": "aeyrton.villalobos@sw.com.mx"
+            "name": "Rich Barusta",
+            "email": "ricardo.barusta@sw.com.mx"
         },
         {
             "name": "Alex Ramos",
@@ -21,8 +17,15 @@
         {
             "name": "Heltton Ramirez",
             "email": "heltton.ramirez@sw.com.mx"
+        },
+        {
+            "name": "Flavio Ochoa",
+            "email": "flavio.ochoa@sw.com.mx"
+        },
+        {
+            "name": "Emmanuel Contreras",
+            "email": "emmanuel.contreras@sw.com.mx"
         }
-        
     ],
     "require-dev": {
             "phpunit/phpunit": "^9.5"
