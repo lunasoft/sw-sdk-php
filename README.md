@@ -2,7 +2,7 @@
 <p align="center">
     <img src="https://www.theblocklearning.com/wp-content/uploads/2018/09/logo_php-600x600.png" width="250" height="250">
 </p>
-A continuación encontrara la documentación necesaria para consumir nuestro SDK de servicios proveido por **SmarterWeb** para Timbrado de **CFDI 3.3** mediante un servicio **API REST**
+A continuación encontrara la documentación necesaria para consumir nuestro SDK de servicios proveido por **SmarterWeb** para Timbrado de **CFDI 3.3** y **CFDI 4.0** mediante un servicio **API REST**
 
 Estado Actual
 -------------
@@ -11,6 +11,7 @@ Estado Actual
 Compatibilidad
 -------------
 * CFDI 3.3
+* CFDI 4.0
 * PHP 5.6 ó en su versión PHP 7
 
 Dependencias
@@ -39,11 +40,11 @@ Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresa
 
 ```php
 {
-    "name": "richbarusta/implement",
+    "name": "martinflores/implement",
     "authors": [
         {
-            "name": "Rich Barusta",
-            "email": "ricardo.barusta@sw.com.mx"
+            "name": "Martin Flores",
+            "email": "martin.flores@sw.com.mx"
         }
     ],
     "require": {
@@ -87,7 +88,7 @@ El servicio de Autenticación es utilizado principalmente para obtener el **toke
 	use SWServices\Authentication\AuthenticationService  as Authentication;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
-        "user"=>"demo",
+        "user"=>"usuario@test.com",
         "password"=> "123456789"
     );
     try
@@ -123,7 +124,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"demo",
+            "user"=>"usuario@test.com",
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
@@ -152,7 +153,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -197,7 +198,7 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"demo",
+            "user"=>"usuario@test.com",
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
@@ -228,7 +229,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -262,7 +263,7 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -303,7 +304,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"demo",
+            "user"=>"usuario@test.com",
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
@@ -334,7 +335,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -368,7 +369,7 @@ Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere deci
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -411,7 +412,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"demo",
+            "user"=>"usuario@test.com",
             "password"=> "123456789"
             );
         $xml = file_get_contents('./file.xml');
@@ -453,7 +454,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -498,7 +499,7 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
 
     $params = array(
     "url"=>"http://services.test.sw.com.mx",
-    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo"
+    "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
     try
@@ -549,7 +550,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
@@ -565,7 +566,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
@@ -581,7 +582,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
@@ -597,7 +598,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
@@ -617,7 +618,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
@@ -633,7 +634,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
@@ -649,7 +650,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
 use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 jsonEmisionTimbrado::Set($params);
@@ -665,7 +666,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@demo.com",
 "password"=> "123456789"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
@@ -913,11 +914,25 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 #### Códigos de respuesta de folios de cancelación ####
 | Código  | Mensaje | Descripcion |
 | ------------- | ------------- | ------------- |
-| 201  | UUID Cancelado exitosamente  | Se considera cancelado correctamente. Deberá aparecer con estatus Cancelado ante el SAT de 0 a 72 hrs posterior a la cancelación. |
-| 202 |  UUID Previamente cancelado | Se considera previamente cancelado. Estatus Cancelado ante el SAT. |
-| 203 | UUID No corresponde el RFC del emisor y de quien solicita la cancelación.  |  |
-| 205 | No Existe  | El sat da una prorroga de 72 hrs para que el comprobante aparezca con estatus Vigente posterior al envió por parte del Proveedor de Certificación de CFDI. Puede que algunos comprobantes no aparezcan al momento, es necesario esperar por lo menos 72 hrs. |
-
+| 201  |Se considera una solicitud de cancelación exitosa, sin embargo esto no asegura su cancelación. |
+| 202 |  Folio Fiscal Previamente cancelado | Se considera solicitud de cancelación previamente enviada. Estatus Cancelado ante el SAT. |
+| 203 | Folio Fiscal No corresponde al emisor.  |  |
+| 204 | Folio Fiscal No Aplicable a Cancelación. |  |
+| 205 | Folio Fiscal No Aplicable a Cancelación.  | El sat da una prorroga de 48 hrs para que el comprobante aparezca con estatus Vigente posterior al envió por parte del Proveedor de Certificación de CFDI. Puede que algunos comprobantes no aparezcan al | 204 | Folio Fiscal No Aplicable a Cancelación. |  |momento, es necesario esperar por lo menos 48 hrs. |
+| 206 | UUID no corresponde a un CFDI del Sector Primario. |  |
+| 207 | No se especificó el motivo de cancelación o el motivo no es valido. |  |
+| 208 | Folio Sustitución invalido. |  |
+| 209 | Folio Sustitución no requerido. |  |
+| 210 | 	La fecha de solicitud de cancelación es mayor a la fecha de declaración. |  |
+| 211 | La fecha de solicitud de cancelación límite para factura global. |  |
+| 212 | Relación no valida o inexistente. |  |
+| 300 | Usuario No Válido. |  |
+| 301 | XML Mal Formado. | Este código de error se regresa cuando el request posee información invalida, ejemplo: un RFC de receptor no válido. |
+| 302 | XML Mal Formado. |  |
+| 304 | Certificado Revocado o Caduco. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
+| 305 | Certificado Inválido. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
+| 309 | Certificado Inválido. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
+| 310 | CSD Inválido. |  |
 
 ## Consultar Saldo CFDI 3.3 ##
 
@@ -941,7 +956,7 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
 
     $params = array(
         'url'=> 'services.test.sw.com.mx',
-        'token'=> 'T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRiMTFPRlV3a2kyOWI5WUZHWk85ODJtU0M2UlJEUkFTVXhYTDNKZVdhOXIySE1tUVlFdm1jN3kvRStBQlpLRi9NeWJrd0R3clhpYWJrVUMwV0Mwd3FhUXdpUFF5NW5PN3J5cklMb0FETHlxVFRtRW16UW5ZVjAwUjdCa2g0Yk1iTExCeXJkVDRhMGMxOUZ1YWlIUWRRVC8yalFTNUczZXdvWlF0cSt2UW0waFZKY2gyaW5jeElydXN3clNPUDNvU1J2dm9weHBTSlZYNU9aaGsvalpQMUxrUndzK0dHS2dpTittY1JmR3o2M3NqNkh4MW9KVXMvUHhZYzVLQS9UK2E1SVhEZFJKYWx4ZmlEWDFuSXlqc2ZRYXlUQk1ldlZkU2tEdU10NFVMdHZKUURLblBxakw0SDl5bUxabDFLNmNPbEp6b3Jtd2Q1V2htRHlTdDZ6eTFRdUNnYnVvK2tuVUdhMmwrVWRCZi9rQkU9.7k2gVCGSZKLzJK5Ky3Nr5tKxvGSJhL13Q8W-YhT0uIo',
+        'token'=> 'T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE...............',
     );
 
     try {
@@ -1018,7 +1033,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $rfc = "LAN7008173R5";
@@ -1039,7 +1054,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
@@ -1061,7 +1076,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
@@ -1116,7 +1131,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $xml = file_get_contents('Tests\Resources\fileAcceptReject.xml');
@@ -1135,7 +1150,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $rfc = "LAN7008173R5";
@@ -1158,7 +1173,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
@@ -1180,7 +1195,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
@@ -1230,7 +1245,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $rfc = "LAN7008173R5";
@@ -1250,7 +1265,7 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"demo",
+"user"=>"usuario@test.com",
 "password"=> "123456789"
 );
 $rfc = "LAN7008173R5";
