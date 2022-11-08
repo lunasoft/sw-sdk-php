@@ -2,7 +2,8 @@
 
 namespace SWServices\PDF;
 use Exception;
-
+/*Clase para las funciones de ayuda
+para los servicios PDF*/
 class PdfHelper
 {
     private static $xml = null;
@@ -12,37 +13,16 @@ class PdfHelper
 
     public function __construct($params)
     {
-
-        if (!empty($params['urlApi'])) {
-            self::$_urlApi = $params['urlApi'];
-        } else {
-            echo 'URL API debe especificarse', "\n";
-        }
         if (!empty($params['xml'])) {
             self::$xml = $params['xml'];
-
-
-        } else {
-            echo 'xml null o inválido', "\n";
         }
-    }
-
-
-    public static function get_urlApi()
-    {
-        return self::$_urlApi;
-    }
-    public static function get_response($response)
-    {
-        return self::$_response = $response;
-
     }
     public static function get_xml($isB64)
     {
         try {
 
             if ($isB64 == false) {
-                return self::$xml;
+                return self::validate_xml(self::$xml);
 
             } else {
                 return base64_decode(self::$xml);
@@ -50,9 +30,18 @@ class PdfHelper
 
         } catch (Exception $e) {
             echo 'xml no válido', $e->getMessage(), "\n";
+            exit();
         }
 
 
+    }
+    public static function validate_xml($xml){
+        if(!empty($xml)){
+            return $xml;
+        }else{
+             echo 'xml null o inválido', "\n";
+             exit();
+        }
     }
 
 };

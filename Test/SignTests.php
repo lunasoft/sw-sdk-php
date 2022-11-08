@@ -1,11 +1,11 @@
 <?php
 	namespace tests;
     
-    use PHPUnit\Framework\TestCaseTest;
+    use PHPUnit\Framework\TestCase;
     use SWServices\Toolkit\SignService as Sello;
     use Exception;
 
-    final class SignTests extends TestCaseTest{
+    final class SignTests extends TestCase{
     	public function testSign(){
     		$resultSpect = "success";
     		$params = array(

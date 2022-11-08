@@ -16,14 +16,13 @@ class PdfService extends Services
         return new PdfService($params);
         
     }
-     public static function GeneratePDF($urlApi, $xml, $logo, $templateId,$extras,$isB64=false){
+     public static function GeneratePDF($xml, $logo, $templateId,$extras,$isB64=false){
         $params = array(
-            "xml" => $xml,
-            "urlApi" => $urlApi
+            "xml" => $xml
         );  
         $helper = new PdfHelper($params);
-        $response = PdfRequest::sendReqGenerate($helper::get_urlApi(), Services::get_token(), $helper::get_xml($isB64), $logo, $templateId,$extras);
-        return $helper::get_response($response);
+        $response = PdfRequest::sendReqGenerate(Services::get_urlApi(), Services::get_token(), $helper::get_xml($isB64), $logo, $templateId,$extras);
+        return $response;
     }
      
 }
