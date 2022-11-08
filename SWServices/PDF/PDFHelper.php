@@ -1,13 +1,9 @@
 <?php
 
 namespace SWServices\PDF;
-
 use Exception;
 
-use SimpleXMLElement;
-use function PHPUnit\Framework\isNull;
-
-class pdfhelper
+class PdfHelper
 {
     private static $xml = null;
     private static $_response = null;

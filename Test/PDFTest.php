@@ -1,8 +1,8 @@
 <?php
-
 namespace tests;
+
 use PHPUnit\Framework\TestCase;
-use SWServices\PDF\PDFService as pdfService;
+use SWServices\PDF\PdfService as PdfService;
 use Exception;
 
 final class PDFTest extends TestCase
@@ -20,7 +20,7 @@ final class PDFTest extends TestCase
             "password"=> "swpassut"
         );
 		try {
-			$pdfService = pdfService::Set($params);
+			$pdfService = PdfService::Set($params);
 			$result = $pdfService::GeneratePDF($urlApi, $xml, $logo, $templateId,null,false);
             $resultSpect="success";
 			$this->assertEquals($resultSpect, $result->status);
