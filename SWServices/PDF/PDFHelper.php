@@ -25,7 +25,7 @@ class PdfHelper
                 return self::validate_xml(self::$xml);
 
             } else {
-                return base64_decode(self::$xml);
+                return self::validate_xml(base64_decode(self::$xml));
             }
 
         } catch (Exception $e) {
@@ -39,8 +39,9 @@ class PdfHelper
         if(!empty($xml)){
             return $xml;
         }else{
-             echo 'xml null o inválido', "\n";
-             exit();
+            echo 'xml vacio o dañado',"\n";
+            exit();
+             
         }
     }
 

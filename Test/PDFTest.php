@@ -84,7 +84,7 @@ final class PDFTest extends TestCase
 		try {
 			$pdfService = pdfService::Set($params);
 			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,$extras,true);
-            $resultSpect='URL API debe especificarse'. "\n";
+            $resultSpect='xml null o dañado'. "\n";
 			$this->assertEquals($resultSpect, $result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -94,8 +94,7 @@ final class PDFTest extends TestCase
 	{
         $xml="";
         $logo="";
-        $templateId="extradata";
-        $extras =array("EDIRECCION1"=>"Datos adicionales");
+        $templateId="cfdi40";
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
             "url" => "https://services.test.sw.com.mx",
@@ -104,9 +103,8 @@ final class PDFTest extends TestCase
         );
 		try {
 			$pdfService = pdfService::Set($params);
-			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,$extras,true);
-            $resultSpect='xml null o inválido'. "\n";
-            print_r($result);
+			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,null,false);
+            $resultSpect='xml vacio o dañado'. "\n";
 			$this->assertEquals($resultSpect, $result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
