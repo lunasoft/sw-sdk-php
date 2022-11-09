@@ -83,8 +83,8 @@ final class PDFTest extends TestCase
         );
 		try {
 			$pdfService = pdfService::Set($params);
-			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,$extras,true);
-            $resultSpect='xml null o dañado'. "\n";
+			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,$extras,false);
+            $resultSpect='xml null o dañado';
 			$this->assertEquals($resultSpect, $result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
@@ -103,8 +103,8 @@ final class PDFTest extends TestCase
         );
 		try {
 			$pdfService = pdfService::Set($params);
-			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,null,false);
-            $resultSpect='xml vacio o dañado'. "\n";
+			$result = $pdfService::GeneratePDF($xml, $logo, $templateId,null,true);
+            $resultSpect='xml vacio o dañado';
 			$this->assertEquals($resultSpect, $result);
 		} catch (Exception $e) {
 			echo $e->getMessage();

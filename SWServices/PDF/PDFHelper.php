@@ -29,7 +29,7 @@ class PdfHelper
             }
 
         } catch (Exception $e) {
-            echo 'xml no válido', $e->getMessage(), "\n";
+            echo 'xml no válido', $e->getMessage();
             exit();
         }
 
@@ -39,7 +39,7 @@ class PdfHelper
         if(!empty($xml)){
             return $xml;
         }else{
-            echo 'xml vacio o dañado',"\n";
+            echo 'si responde con el resultado';
             exit();
              
         }
