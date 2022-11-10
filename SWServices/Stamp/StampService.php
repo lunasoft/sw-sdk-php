@@ -39,32 +39,32 @@ class StampService extends Services {
     }
     //Funciones para timbrado V4
     //Funcion que recibe unicamente el CustomId
-    public static function StampV4CustomId($xml, $customId = true, $customIdValue){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, false, false, NULL);
+    public static function StampV4CustomId($xml, $customId = true, $customIdValue, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, false, false, NULL);
     }
     //Funcion que recibe el CustomId + generacion PDF
-    public static function StampV4CustomPdf($xml, $customId = true, $customIdValue , $pdf = true){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, true, false, NULL);
+    public static function StampV4CustomPdf($xml, $customId = true, $customIdValue , $pdf = true, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, true, false, NULL);
     }
     //Funcion que recibe el CustomId + envio de Email
-    public static function StampV4CustomEmail($xml, $customId = true, $customIdValue , $email = true, $emailAddress){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, false, true, $emailAddress);
+    public static function StampV4CustomEmail($xml, $customId = true, $customIdValue , $email = true, $emailAddress, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $customId, $customIdValue, false, true, $emailAddress);
     }
     //Funcion que genera solo el PDF
-    public static function StampV4Pdf($xml, $pdf = true){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, true, false, NULL);
+    public static function StampV4Pdf($xml, $pdf = true, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, true, false, NULL);
     }
     //Funcion que genera el PDF y lo envia por Email
-    public static function StampV4PdfEmail($xml, $pdf = true, $email = true, $emailAddress){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, true, true, $emailAddress);
+    public static function StampV4PdfEmail($xml, $pdf = true, $email = true, $emailAddress, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, true, true, $emailAddress);
     }
     //Funcion que solo envia por Email
-    public static function StampV4Email($xml, $email = true, $emailAddress){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, false, true, $emailAddress);
+    public static function StampV4Email($xml, $email = true, $emailAddress, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', false, NULL, false, true, $emailAddress);
     }
     //Funcion que recibe el CustomID, Genera el Pdf y envia el Email
-    public static function StampV4CustomPdfEmail($xml, $customId = true, $customIdValue, $pdf = true , $email = true, $emailAddress){
-        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isB64, Services::get_proxy(), '/v4/cfdi33/stamp/', true, $customIdValue, true, true, $emailAddress);
+    public static function StampV4CustomPdfEmail($xml, $customId = true, $customIdValue, $pdf = true , $email = true, $emailAddress, $isb64 = false){
+        return StampRequestV4::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', true, $customIdValue, true, true, $emailAddress);
     }
 }
 
