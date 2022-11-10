@@ -1273,3 +1273,55 @@ $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
 cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 var_dump($consultaRelacionados);
+```
+## Servicio PDF ##
+
+### Generar PDF ###
+Servicio mediante el cual se genera un PDF a  partir de un documento XML y una plantilla.
+Se puede utilizar una plantilla genérica o una personalizada más ajustada a sus necesidades.
+
+La función recibe los siguientes parámetros:
+* Datos de autenticación (url, urlapi, user, password)
+* xml (es necesario que el xml esté timbrado)
+* logo (en base64)
+* templateId 
+* extras (datos adicionales a los contenidos en el xml)
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+use SWServices\PDF\PDFService as pdfService;
+
+    $xml = "<?xml version='1.0' encoding='utf-8'?> <cfdi:Comprobante......";
+    $logo = "JP39LSM5mdbtAd1...........";
+    $templateId = "cfdi40";
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    $pdfService = pdfService::Set($params);
+    $result = $pdfService::GeneratePDF($xml, $logo, $templateId, null, false);
+    var_dump($result);
+```
+Plantilla con datos adicionales
+```php
+require_once 'SWSDK.php';
+use SWServices\PDF\PDFService as pdfService;
+
+    $xml = "<?xml version='1.0' encoding='utf-8'?> <cfdi:Comprobante......";
+    $logo = "JP39LSM5mdbtAd1...........";
+    $templateId = "cfdi40";
+    $extras =array("DatExtra1"=>"Datos adicionales",
+                    "DatoExtra2" => "Datos adicionales");
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    $pdfService = pdfService::Set($params);
+    $result = $pdfService::GeneratePDF($xml, $logo, $templateId, $extras, false);
+    var_dump($result);
+```
