@@ -21,5 +21,9 @@
     require_once dirname(__FILE__) . '/SWServices/SatQuery/SatQueryService.php';
     require_once dirname(__FILE__) . '/SWServices/Csd/CsdRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Csd/CsdService.php';
+    require_once dirname(__FILE__) . '/SWServices/PDF/PDFService.php';
+    require_once dirname(__FILE__) . '/SWServices/PDF/PDFRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/PDF/PDFHelper.php';
+    
     
 ?>
