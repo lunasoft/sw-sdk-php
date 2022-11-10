@@ -3,11 +3,11 @@
 namespace SWServices\Stamp;
 use Exception;
 class StampRequestV4{
-    public static function sendReqV4($url, $token, $xml, $version, $isB64, $proxy, $path, $customId, $customIdValue, $pdf, $email, $emailAddress){ //12 Parametros
+    public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $customIdValue, $pdf, $email, $emailAddress){ //12 Parametros
         //Agregar condicionales para los headers que se reciben.
-        $pdf = ($pdf == false)?NULL:"'extra: pdf',";
-        $email = ($email == false)?NULL:"'email: ".$emailAddress."',";
-        $customId = ($customId == false)?NULL:"customid: ".$customIdValue."'";
+         $pdf = ($pdf == false)?NULL:"'extra: pdf',";
+         $email = ($email == false)?NULL:"'email: ".$emailAddress."',";
+         $customId = ($customId == false)?NULL:"customid: ".$customIdValue."',";
         //Se terminan las condicionales para determinar los headers que se envian.
 
         $delimiter = '-------------' . uniqid();
@@ -27,8 +27,10 @@ class StampRequestV4{
             $data .= $file['content'] . "\r\n";
         }
         $data .= "--" . $delimiter . "--\r\n";
-        
-        $curl  = curl_init($url.$path.$version.($isB64?'/b64':''));
+
+        $curl  = curl_init($url.$path.$version.($isb64?'/b64':''));
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
         if(isset($proxy)){
@@ -38,10 +40,8 @@ class StampRequestV4{
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
-            'Authorization: Bearer '.$token.','
-            .$customid.','
-            .$pdf.','
-            .$email.''
+            'Authorization: Bearer '.$token,
+            $customId.$pdf.$email
             ));  
         curl_setopt($curl , CURLOPT_POSTFIELDS, $data);
 
@@ -60,4 +60,3 @@ class StampRequestV4{
         }
     }
 }
-?>
