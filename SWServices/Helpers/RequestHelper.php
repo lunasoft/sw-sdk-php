@@ -4,12 +4,14 @@ namespace SWServices\Helpers;
 use Exception;
 
 class RequestHelper extends ResponseHelper {
+    /**
+     * Internal method for make a Post Request with a Json Body, It supports a custom Content-Type.
+     */
     protected static function PostJson($url, $path, $token, $data, $contentType = "application/json"){
         $curl  = curl_init($url . $path);
         curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl , CURLOPT_POST, true);
        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
-       
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: ' . $contentType,
             'Content-Length: ' . strlen($data),
