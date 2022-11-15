@@ -23,6 +23,8 @@
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFService.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFRequest.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFHelper.php';
+    require_once dirname(__FILE__) . '/SWServices/Stamp/StampHelper.php';
+
     
     
 ?>
