@@ -16,10 +16,10 @@ class ResendService extends ResendRequest {
     /**
      * Servicio que realiza el reenvio de correo de un UUID previamente timbrado.
      * @param string $uuid Folio del comprobante.
-     * @param string $email Correo o listado de correos delimitados por comas (Max. 5). 
+     * @param array $email Array de correos en formato string. (Max. 5).
      */
     public static function ResendEmail($uuid, $email){
-        return ResendRequest::PostResendEmail($uuid, $email);
+        return ResendRequest::postResendEmail($uuid, $email);
     }
 }
 ?>
