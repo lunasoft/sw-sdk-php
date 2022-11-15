@@ -22,7 +22,7 @@ class ResendRequest extends Services {
             return HttpRequest::PostJson(Services::get_urlApi(), '/comprobante/resendemail', Services::get_token(), $data);
         }
         catch(Exception $e){
-            return Response::ToErrorResponse($e->getMessage(), $e->getTraceAsString());
+            return Response::HandleException($e);
         }
     }
     private static function ValidateParams($uuid, $email){
