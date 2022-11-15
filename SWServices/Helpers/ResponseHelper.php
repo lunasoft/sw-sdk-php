@@ -13,5 +13,8 @@ class ResponseHelper {
         );
         return json_decode($response);
     }
+    protected static function HandleException($ex){
+        return ResponseHelper::ToErrorResponse($ex->getMessage(), $ex->getTraceAsString());
+    }
 }
 ?>
