@@ -2,7 +2,7 @@
     "name": "lunasoft/sw-sdk-php",
     "description": "PHP Library for SW Services",
     "type": "library",
-    "version": "1.0.3.1",
+    "version": "1.0.4.1",
     "homepage": "https://github.com/lunasoft/sw-sdk-php",
     "license": "MIT",
     "authors": [

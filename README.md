@@ -1325,3 +1325,49 @@ use SWServices\PDF\PDFService as pdfService;
     $result = $pdfService::GeneratePDF($xml, $logo, $templateId, $extras, false);
     var_dump($result);
 ```
+
+## Servicio Reenvío
+
+Servicio de reenvio de email, recibe el uuid del comprobante previamente timbrado y el/los correos a los que se les hará el reenvío.
+
+### Crear una instancia
+
+* Usuario y contraseña:
+```php
+$params = array(
+    "urlApi" => "https://api.test.sw.com.mx",
+    "url" => "https://services.test.sw.com.mx",
+    "user"=>"user@mail.com",
+    "password"=> "password"
+);
+$resend = ResendService::Set($params);
+```
+
+* Token:
+```php
+$params = array(
+    "urlApi" => "https://api.test.sw.com.mx",
+    "token" => "T2lYQ0t4L0RHVkR..."
+);
+$resend = ResendService::Set($params);
+```
+
+### Reenvío Email
+
+* Un correo:
+
+```php
+$emails = array(
+    "user@mail.com"
+);
+$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
+```
+
+* Multiples correos (Max 5):
+```php
+$emails = array(
+    "user@mail.com",
+    "userB@mail.com"
+);
+$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
+```

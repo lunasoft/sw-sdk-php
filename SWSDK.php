@@ -23,6 +23,8 @@
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFService.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFRequest.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFHelper.php';
-    
-    
+    require_once dirname(__FILE__) . '/SWServices/Resend/ResendService.php';
+    require_once dirname(__FILE__) . '/SWServices/Resend/ResendRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/Helpers/RequestHelper.php';
+    require_once dirname(__FILE__) . '/SWServices/Helpers/ResponseHelper.php';
 ?>
