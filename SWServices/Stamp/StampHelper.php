@@ -18,6 +18,12 @@ class StampHelper
         if (!empty($params['xml'])) {
             self::$xml = $params['xml'];
         }
+        if (!empty($params['customId'])) {
+            self::$xml = $params['customId'];
+        }
+        if (!empty($params['email'])) {
+            self::$xml = $params['email'];
+        }
     }
     public static function get_xml($isB64)
     {
@@ -46,7 +52,7 @@ class StampHelper
     {
         try {
             if ($customId != NULL || $customId != "") {
-                return self::validate_customid(self::$customId);
+                return $customId;
             }
         } catch (Exception $e) {
             echo 'customId viene vacio', $e->getMessage();
