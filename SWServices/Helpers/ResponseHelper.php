@@ -3,7 +3,7 @@
 namespace SWServices\Helpers;
 
 class ResponseHelper { 
-    protected static function ToErrorResponse($message, $messageDetail = ""){
+    protected static function toErrorResponse($message, $messageDetail = ""){
         $response = json_encode(array_merge(
             array(
                 "status"=> "error",
@@ -13,7 +13,7 @@ class ResponseHelper {
         );
         return json_decode($response);
     }
-    protected static function HandleException($ex){
+    protected static function handleException($ex){
         return ResponseHelper::ToErrorResponse($ex->getMessage(), $ex->getTraceAsString());
     }
 }
