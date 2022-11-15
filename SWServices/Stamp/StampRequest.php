@@ -52,7 +52,7 @@ class StampRequest{
     }
     public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $pdf, $email){ //Modificar para que no acepte los true
         //Agregar condicionales para los headers que se reciben.
-         $pdf = ($pdf == NULL|| $pdf == "")?NULL:"'extra: pdf',";
+         $pdf = ($pdf == false|| $pdf == "" || $pdf == NULL)?NULL:"'extra: pdf',";
          $email = ($email == NULL || $email == "")?NULL:"'email: ".$email."',";
          $customId = ($customId == NULL || $customId == "")?NULL:"customid: ".$customId."',";
         //Se terminan las condicionales para determinar los headers que se envian.
