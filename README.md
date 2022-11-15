@@ -1357,10 +1357,17 @@ $resend = ResendService::Set($params);
 * Un correo:
 
 ```php
-$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212","user@mail.com");
+$emails = array(
+    "user@mail.com"
+);
+$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
 ```
 
 * Multiples correos (Max 5):
 ```php
-$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212","userA@mail.com,userB@mail.com,userC@mail.com");
+$emails = array(
+    "user@mail.com",
+    "userB@mail.com"
+);
+$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
 ```
