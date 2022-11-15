@@ -88,8 +88,8 @@ El servicio de Autenticación es utilizado principalmente para obtener el **toke
 	use SWServices\Authentication\AuthenticationService  as Authentication;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
-        "user"=>"pruebas_ut@sw.com.mx",
-        "password"=> "$Wpass12345"
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
     );
     try
     {
@@ -124,8 +124,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"pruebas_ut@sw.com.mx",
-            "password"=> "$Wpass12345"
+            "user"=>"cuentaUsuario",
+            "password"=> "contraseña"
             );
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
@@ -198,8 +198,8 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"pruebas_ut@sw.com.mx",
-            "password"=> "$Wpass12345"
+            "user"=>"cuentaUsuario",
+            "password"=> "contraseña"
             );
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
@@ -304,8 +304,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"pruebas_ut@sw.com.mx",
-            "password"=> "$Wpass12345"
+            "user"=>"cuentaUsuario",
+            "password"=> "contraseña"
             );
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
@@ -412,8 +412,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
         $params = array(
             "url"=>"http://services.test.sw.com.mx",
-            "user"=>"pruebas_ut@sw.com.mx",
-            "password"=> "$Wpass12345"
+            "user"=>"cuentaUsuario",
+            "password"=> "contraseña"
             );
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
@@ -551,7 +551,7 @@ use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
 $resultadoIssue = EmisionTimbrado::EmisionTimbradoV1($xml);
@@ -567,7 +567,7 @@ use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
 $resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
@@ -583,7 +583,7 @@ use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
 $resultadoIssue = EmisionTimbrado::EmisionTimbradoV3($xml);
@@ -599,7 +599,7 @@ use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $xml = file_get_contents('Tests/Resources/file.xml');
 EmisionTimbrado::Set($params);
 $resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
@@ -619,7 +619,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
 $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
@@ -635,7 +635,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
 $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
@@ -651,7 +651,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 jsonEmisionTimbrado::Set($params);
 $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
@@ -667,7 +667,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
 "user"=>"usuario@demo.com",
-"password"=> "$Wpass12345"
+"password"=> "contraseña"
 $json = file_get_contents("Tests/Resources/cfdi.json");
 JsonEmisionTimbrado::Set($params);
 $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV4($json);
@@ -1033,8 +1033,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $rfc = "LAN7008173R5";
 cancelationService::Set($params);
@@ -1054,8 +1054,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
 $keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
@@ -1076,8 +1076,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
 $password = "12345678a";
@@ -1131,8 +1131,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $xml = file_get_contents('Tests\Resources\fileAcceptReject.xml');
 cancelationService::Set($params);
@@ -1150,8 +1150,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $rfc = "LAN7008173R5";
 $uuid = "6ab07bef-4446-43ea-a3fd-04a804309457";
@@ -1173,8 +1173,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
 
@@ -1195,8 +1195,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
 $rfc = "LAN7008173R5";
@@ -1245,8 +1245,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
@@ -1265,8 +1265,8 @@ require_once 'SWSDK.php';
 use SWServices\Cancelation\CancelationService as cancelationService;
 $params = array(
 "url"=>"http://services.test.sw.com.mx",
-"user"=>"pruebas_ut@sw.com.mx",
-"password"=> "$Wpass12345"
+"user"=>"cuentaUsuario",
+"password"=> "contraseña"
 );
 $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
