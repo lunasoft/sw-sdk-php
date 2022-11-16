@@ -37,4 +37,41 @@ class RequestHelper extends ResponseHelper
             }
         }
     }
+    /**
+     * Internal method for make a simple Get Request.
+     */
+    protected static function get($url, $path, $token, $proxy)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url . $path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "UTF-8",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "Content-length: 0",
+                "Authorization: bearer " . $token,
+            ),
+        ));
+        if (isset($proxy)) {
+            curl_setopt($curl, CURLOPT_PROXY, $proxy);
+        }
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            return ResponseHelper::toErrorResponse("cURL Error #:" . $err);
+        } else {
+            if ($httpcode < 500) {
+                return json_decode($response);
+            } else {
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
+            }
+        }
+    }
 }
