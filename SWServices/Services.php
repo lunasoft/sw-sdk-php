@@ -1,9 +1,10 @@
 <?php
 namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
+use SWServices\Helpers\RequestHelper as Request;
 use Exception;
 
-    class Services {
+    class Services extends Request{
         private static $_token = null;
         private static $_user = null;
         private static $_password = null;
@@ -16,8 +17,9 @@ use Exception;
         public function __construct($params) {
             if(isset($params['url'])){
                 self::$_url = $params['url'];
-            }
-            else{
+            } else if(isset($params['urlApi'])){
+                self::$_urlApi = $params['urlApi'];
+            } else{
                 throw new Exception('URL debe especificarse');
             }
             if(isset($params['urlApi'])){
