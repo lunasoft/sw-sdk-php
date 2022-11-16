@@ -23,15 +23,9 @@
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFService.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFRequest.php';
     require_once dirname(__FILE__) . '/SWServices/PDF/PDFHelper.php';
-<<<<<<< HEAD
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampHelper.php';
-
-    
-    
-=======
     require_once dirname(__FILE__) . '/SWServices/Resend/ResendService.php';
     require_once dirname(__FILE__) . '/SWServices/Resend/ResendRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Helpers/RequestHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Helpers/ResponseHelper.php';
->>>>>>> cf1131e9dfac2a076dbde007b5dcf115ac9a0204
-?>
+
