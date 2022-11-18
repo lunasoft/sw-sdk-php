@@ -12,19 +12,6 @@ class StampHelper
     private static $customId = null;
     private static $email = null;
 
-
-    public function __construct($params)
-    {
-        if (!empty($params['xml'])) {
-            self::$xml = $params['xml'];
-        }
-        if (!empty($params['customId'])) {
-            self::$xml = $params['customId'];
-        }
-        if (!empty($params['email'])) {
-            self::$xml = $params['email'];
-        }
-    }
     public static function get_xml($isB64)
     {
         try {
@@ -61,14 +48,21 @@ class StampHelper
     }
     public static function validate_email($email)
     {
-        try {
-            if ((sizeof($email) < 5) && (sizeof($email) > 0)) {
-                foreach ($email as &$valor) {
+        try { //Revisar funcionalidad del helper solo falta este cambio para concretar el ejercicio
+            if ((count(array($email)) <= 5) && (count(array($email)) > 0)) {
+                $i = 0;
+                foreach ((array) $email as $valor) {
                     $valor = (filter_var($valor, FILTER_VALIDATE_EMAIL));
-                    if ($valor == true) {
-                        return $email;
+                    if ($valor == false) {
+                        $i++;
                     }
                 }
+            }
+            if ($i >= 1) {
+                echo "Error";
+                var_dump($email);
+            } else {
+                return $email;
             }
         } catch (Exception $e) {
             echo 'recepcion de email invalido', $e->getMessage();
