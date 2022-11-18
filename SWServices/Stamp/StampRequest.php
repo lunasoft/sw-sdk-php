@@ -50,12 +50,12 @@ class StampRequest{
                 throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
-    public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $pdf, $email){ //Modificar para que no acepte los true
-        //Agregar condicionales para los headers que se reciben.
-         $pdf = ($pdf == false|| $pdf == "" || $pdf == NULL)?NULL:"'extra: pdf',";
-         $email = ($email == NULL || $email == "")?NULL:"'email: ".$email."',";
-         $customId = ($customId == NULL || $customId == "")?NULL:"customid: ".$customId."',";
-        //Se terminan las condicionales para determinar los headers que se envian.
+    public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $pdf, $email){ 
+        //Esto genera el string junto con la variable que se recibe para generar CURLOPT_HTTPHEADER
+         $pdf = ($pdf == false)?NULL:"'extra: pdf',";
+         $email = implode(',', (array) $email);
+         $email = ($email == NULL)?NULL:"'email: ".$email."'";
+         $customId = "customid: ".$customId."',"; 
 
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
@@ -87,7 +87,7 @@ class StampRequest{
         curl_setopt($curl , CURLOPT_HTTPHEADER , array(
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
             'Content-Length: ' . strlen($data),
-            'Authorization: Bearer '.$token,
+            'Authorization: Bearer '.$token.'',
             $customId.$pdf.$email
             ));  
         curl_setopt($curl , CURLOPT_POSTFIELDS, $data);
