@@ -50,15 +50,14 @@ class StampHelper
     {
         try { //Revisar funcionalidad del helper solo falta este cambio para concretar el ejercicio
             if ((count(array($email)) <= 5) && (count(array($email)) > 0)) {
-                $i = 0;
                 foreach ((array) $email as $valor) {
                     $valor = (filter_var($valor, FILTER_VALIDATE_EMAIL));
                     if ($valor == false) {
-                        $i++;
+                        $eResult = false;
                     }
                 }
             }
-            if ($i >= 1) {
+            if ($eResult == false) {
                 echo "Error";
                 var_dump($email);
             } else {
