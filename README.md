@@ -1272,11 +1272,8 @@ $rfc = "LAN7008173R5";
 $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
 cancelationService::Set($params);
 $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
-<<<<<<< HEAD
 var_dump($consultaRelacionados);
-=======
-var_dump($consultaRelacionados);
-```
+
 ## Servicio PDF ##
 
 ### Generar PDF ###
@@ -1328,8 +1325,7 @@ use SWServices\PDF\PDFService as pdfService;
     $result = $pdfService::GeneratePDF($xml, $logo, $templateId, $extras, false);
     var_dump($result);
 ```
-<<<<<<< HEAD
->>>>>>> 55afa79068c7f864ebd195c0faa86a66f1ffc364
+
 =======
 
 ## Servicio Reenvío
@@ -1377,4 +1373,3 @@ $emails = array(
 );
 $result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
 ```
->>>>>>> cf1131e9dfac2a076dbde007b5dcf115ac9a0204
