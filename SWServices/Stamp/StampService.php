@@ -71,41 +71,41 @@ class StampService extends Services {
         $helper = new StampHelper($params);
         return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), $pdf, NULL);
     }
-    public static function stampV4CustomIdEmailV1($xml, $customId, $pdf = false, $email, $isb64 = false){
+    public static function stampV4CustomIdEmailV1($xml, $customId, $email, $isb64 = false){
         $params = array(
             "xml" => $xml,
             "customId" => $customId,
             "email" => $email
         );  
         $helper = new StampHelper($params);
-        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), $pdf, $helper::validate_email($email));
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), true, $helper::validate_email($email));
     }
-    public static function stampV4CustomIdEmailV2($xml, $customId, $pdf = false, $email, $isb64 = false){
+    public static function stampV4CustomIdEmailV2($xml, $customId, $email, $isb64 = false){
         $params = array(
             "xml" => $xml,
             "customId" => $customId,
             "email" => $email
         );  
         $helper = new StampHelper($params);
-        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), $pdf, $helper::validate_email($email));
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), true, $helper::validate_email($email));
     }
-    public static function stampV4CustomIdEmailV3($xml, $customId, $pdf = false, $email, $isb64 = false){
+    public static function stampV4CustomIdEmailV3($xml, $customId, $email, $isb64 = false){
         $params = array(
             "xml" => $xml,
             "customId" => $customId,
             "email" => $email
         );  
         $helper = new StampHelper($params);
-        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), $pdf, $helper::validate_email($email));
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), true, $helper::validate_email($email));
     }
-    public static function stampV4CustomIdEmailV4($xml, $customId, $pdf = false, $email, $isb64 = false){
+    public static function stampV4CustomIdEmailV4($xml, $customId, $email, $isb64 = false){
         $params = array(
             "xml" => $xml,
             "customId" => $customId,
             "email" => $email
         );  
         $helper = new StampHelper($params);
-        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), $pdf, $helper::validate_email($email));
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), true, $helper::validate_email($email));
     }
 }
 
