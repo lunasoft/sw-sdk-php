@@ -27,4 +27,6 @@
     require_once dirname(__FILE__) . '/SWServices/Resend/ResendRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Helpers/RequestHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Helpers/ResponseHelper.php';
+    require_once dirname(__FILE__) . '/SWServices/Stamp/StampHelper.php';
+
 ?>
