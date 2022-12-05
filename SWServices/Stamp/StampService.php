@@ -107,6 +107,76 @@ class StampService extends Services {
         $helper = new StampHelper($params);
         return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/stamp/', $helper::validate_customid($customId), true, $helper::validate_email($email));
     }
+    //Timbrado V4 Issue 
+
+    public static function stampV4CustomIdIssuePdfV1($xml, $customId, $pdf = false ,$isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), $pdf, NULL);
+    }
+    public static function stampV4CustomIdIssuePdfV2($xml, $customId, $pdf = false, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), $pdf, NULL);
+    }
+    public static function stampV4CustomIssueIdPdfV3($xml, $customId, $pdf = false, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), $pdf, NULL);
+    }
+    public static function stampV4CustomIssueIdPdfV4($xml, $customId, $pdf = false, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), $pdf, NULL);
+    }
+    public static function stampV4CustomIdIssueEmailV1($xml, $customId, $email, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId,
+            "email" => $email
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), true, $helper::validate_email($email));
+    }
+    public static function stampV4CustomIdIssueEmailV2($xml, $customId, $email, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId,
+            "email" => $email
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), true, $helper::validate_email($email));
+    }
+    public static function stampV4CustomIdIssueEmailV3($xml, $customId, $email, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId,
+            "email" => $email
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), true, $helper::validate_email($email));
+    }
+    public static function stampV4CustomIdIssueEmailV4($xml, $customId, $email, $isb64 = false){
+        $params = array(
+            "xml" => $xml,
+            "customId" => $customId,
+            "email" => $email
+        );  
+        $helper = new StampHelper($params);
+        return stampRequest::sendReqV4(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/v4/cfdi33/issue/', $helper::validate_customid($customId), true, $helper::validate_email($email));
+    }
 }
 
 ?>
