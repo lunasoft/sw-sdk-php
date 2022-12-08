@@ -28,5 +28,8 @@
     require_once dirname(__FILE__) . '/SWServices/Helpers/RequestHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Helpers/ResponseHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampHelper.php';
+    require_once dirname(__FILE__) . '/SWServices/Storage/StorageRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/Storage/StorageService.php';
+    require_once dirname(__FILE__) . '/SWServices/Storage/StorageResponse.php';
 
 ?>

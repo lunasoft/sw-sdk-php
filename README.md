@@ -1373,3 +1373,83 @@ $emails = array(
 );
 $result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
 ```
+
+## Servicio Reenvío
+
+Servicio que consulta y obtiene un xml a partir de su UUID. El servicio responde con un arreglo el cual contiene distintos datos de la factura a consultar como urlxml, url acuse cancelación, datos generales de la factura.
+
+### Crear una instancia
+
+* Usuario y contraseña:
+```php
+$params = array(
+    "urlApi" => "https://api.test.sw.com.mx",
+    "url" => "https://services.test.sw.com.mx",
+    "user"=>"user@mail.com",
+    "password"=> "password"
+);
+$resend = ResendService::Set($params);
+```
+
+* Token:
+```php
+$params = array(
+    "urlApi" => "https://api.test.sw.com.mx",
+    "token" => "T2lYQ0t4L0RHVkR..."
+);
+$resend = ResendService::Set($params);
+```
+
+### Recuperar xml por UUID
+
+* Todos los datos:
+
+```php
+try {
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "urlApi" => "https://api.test.sw.com.mx",
+            "user" => "pruebas_ut@sw.com",
+            "password" => "Pass1234567"
+        );
+        $pdfService = storage::Set($params);
+        $result = $pdfService::getXml($uuid);
+        var_dump($result::getdata());
+    } catch (Exception $e) {
+        echo 'Error en la solicitud', $e->getMessage();
+    }
+```
+
+* Solo xml:
+```php
+try {
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "urlApi" => "https://api.test.sw.com.mx",
+            "user" => "pruebas_ut@sw.com",
+            "password" => "Pass1234567"
+        );
+        $pdfService = storage::Set($params);
+        $result = $pdfService::getXml($uuid);
+        var_dump($result::getXml());
+    } catch (Exception $e) {
+        echo 'Error en la solicitud', $e->getMessage();
+    }
+```
+
+* Solo acuse cancelación:
+```php
+try {
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "urlApi" => "https://api.test.sw.com.mx",
+            "user" => "pruebas_ut@sw.com",
+            "password" => "Pass1234567"
+        );
+        $pdfService = storage::Set($params);
+        $result = $pdfService::getXml($uuid);
+        var_dump($result::getUrlCancelacion());
+    } catch (Exception $e) {
+        echo 'Error en la solicitud', $e->getMessage();
+    }
+```
