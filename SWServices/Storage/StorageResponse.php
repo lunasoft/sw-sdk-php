@@ -2,12 +2,10 @@
 
 namespace SWServices\Storage;
 
-use Exception;
 use SWServices\Services;
-
 class StorageResponse extends Services
 {
-    private static $data2;
+    private static $datos;
     private static $xml;
     private static $codigoCancelacion;
     private static $statusSAT;
@@ -64,9 +62,8 @@ class StorageResponse extends Services
      */
     public function __construct($data)
     {
-
         if (isset($data->data->records[0])) {
-            self::$data2 = $data->data;
+            self::$datos = $data->data;
             self::$xml = $data->data->records[0]->urlXml;
             self::$codigoCancelacion = $data->data->records[0]->codigoCancelacion;
             self::$statusSAT = $data->data->records[0]->statusSAT;
@@ -125,23 +122,13 @@ class StorageResponse extends Services
             self::ValidateCredentials();
             echo ("UUID inválido o no pertenece a la cuenta. \n");
         }
-
-
-
-
-
-
     }
     /**
      * Getters.
      */
     public static function getData()
     {
-        return self::$data2;
-    }
-    public static function setData($data)
-    {
-        self::$data2 = $data;
+        return self::$datos;
     }
     public static function getXml()
     {
@@ -149,12 +136,7 @@ class StorageResponse extends Services
     }
     public static function getPdf()
     {
-        if (isset(self::$urlPDF)) {
-            return self::$urlPDF;
-        } else {
-            return self::$urlPDF = null;
-        }
-
+        return self::$urlPDF;
     }
     public static function getCodigoCancelacion()
     {
@@ -172,7 +154,6 @@ class StorageResponse extends Services
     {
         return self::$hasAddenda;
     }
-
     public static function getAddenda()
     {
         return self::$addenda;
@@ -361,7 +342,6 @@ class StorageResponse extends Services
     {
         return self::$status;
     }
-
     private static function ValidateCredentials()
     {
         Services::get_token();

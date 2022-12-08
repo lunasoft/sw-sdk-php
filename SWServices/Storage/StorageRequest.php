@@ -22,8 +22,5 @@ class StorageRequest extends Services
         } catch (Exception $e) {
             return Response::handleException($e);
         }
-
     }
-
-
 }
