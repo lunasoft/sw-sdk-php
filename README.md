@@ -360,6 +360,236 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     "cfdi":"<?xml version=\"1.0\" encoding=\"utf-8\"?><cfdi:Comprobante xsi:schemaLocation=\"http://www.sat.gob.mx/cfd/3 http://www.sat.gob.mx/sitio_internet/cfd/3/cfdv33.xsd http:/...",
    "status":"success"}
 ```
+
+
+**Timbrar XML Issue V4 CustomId**
+**stampV4CustomIdPdfV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdPdfV1($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdPdfV1($xml, $customId));
+
+?>
+```
+
+
+**stampV4CustomIdPdfV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdPdfV2($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdPdfV2($xml, $customId));
+
+?>
+```
+
+**stampV4CustomIdPdfV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdPdfV3($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdPdfV3($xml, $customId));
+
+?>
+```
+
+**stampV4CustomIdPdfV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdPdfV3($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdPdfV3($xml, $customId));
+
+?>
+```
+
+**Timbrar XML Issue V4 CustomId**
+**stampV4CustomIdEmailV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = array("correo@correo.com.mx", "correo@correo.com.mx");
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdEmailV1($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdEmailV1($xml, $customId));
+
+?>
+```
+
+
+**stampV4CustomIdEmailV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = array("correo@correo.com.mx", "correo@correo.com.mx");
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdEmailV2($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdEmailV2($xml, $customId));
+
+?>
+```
+
+**stampV4CustomIdEmailV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = array("correo@correo.com.mx", "correo@correo.com.mx");
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdEmailV3($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdEmailV3($xml, $customId));
+
+?>
+```
+
+**stampV4CustomIdEmailV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\Stamp\StampService as StampService;
+    use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = array("correo@correo.com.mx", "correo@correo.com.mx");
+    $resultSpect = "success";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $xml = file_get_contents('./file.xml');
+
+    $stamp = EmisionTimbrado::Set($params);
+    $result = $stamp::stampV4CustomIdEmailV4($xml, $customId); 
+    var_dump($stamp::stampV4CustomIdEmailV4($xml, $customId));
+
+?>
+
+
+```
+
+
+
 **Timbrar XML en formato base64 utilizando token/credenciales**<br>
 Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere decir que se puede enviar el xml previamente sellado en formato base64, y la libreria le respondera la misma estructura de respuesta que se usa en v3 normal con el cfdi en base64 tambien.
 ```php
