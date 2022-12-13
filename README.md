@@ -363,7 +363,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
 
 **Timbrar XML Issue V4 CustomId**
-**stampV4CustomIdPdfV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -384,14 +384,14 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdPdfV1($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdPdfV1($xml, $customId));
+    $result = $stamp::issueV4CustomIdPdfV1($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdPdfV1($xml, $customId));
 
 ?>
 ```
 
 
-**stampV4CustomIdPdfV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -412,13 +412,13 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdPdfV2($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdPdfV2($xml, $customId));
+    $result = $stamp::issueV4CustomIdPdfV2($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdPdfV2($xml, $customId));
 
 ?>
 ```
 
-**stampV4CustomIdPdfV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -439,13 +439,13 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdPdfV3($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdPdfV3($xml, $customId));
+    $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdPdfV3($xml, $customId));
 
 ?>
 ```
 
-**stampV4CustomIdPdfV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -466,14 +466,14 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdPdfV3($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdPdfV3($xml, $customId));
+    $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdPdfV3($xml, $customId));
 
 ?>
 ```
 
 **Timbrar XML Issue V4 CustomId**
-**stampV4CustomIdEmailV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -495,14 +495,14 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdEmailV1($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdEmailV1($xml, $customId));
+    $result = $stamp::issueV4CustomIdEmailV1($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdEmailV1($xml, $customId));
 
 ?>
 ```
 
 
-**stampV4CustomIdEmailV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -524,13 +524,13 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdEmailV2($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdEmailV2($xml, $customId));
+    $result = $stamp::issueV4CustomIdEmailV2($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdEmailV2($xml, $customId));
 
 ?>
 ```
 
-**stampV4CustomIdEmailV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -552,13 +552,13 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdEmailV3($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdEmailV3($xml, $customId));
+    $result = $stamp::issueV4CustomIdEmailV3($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdEmailV3($xml, $customId));
 
 ?>
 ```
 
-**stampV4CustomIdEmailV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -580,8 +580,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     $xml = file_get_contents('./file.xml');
 
     $stamp = EmisionTimbrado::Set($params);
-    $result = $stamp::stampV4CustomIdEmailV4($xml, $customId); 
-    var_dump($stamp::stampV4CustomIdEmailV4($xml, $customId));
+    $result = $stamp::issueV4CustomIdEmailV4($xml, $customId); 
+    var_dump($stamp::issueV4CustomIdEmailV4($xml, $customId));
 
 ?>
 
