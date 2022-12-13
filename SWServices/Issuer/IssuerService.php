@@ -144,7 +144,7 @@ class EmisionTimbrado extends Services
     /**
      * 
      * Servicio que consume el timbrado V4 que envia un customId, un correo electronico o un arreglo de maximo 5 correos, que genera el pdf y lo adjunta al mismo envio del correo
-     * ademas regresa con la version V2 de respuesta que regresa el TFD(Timbre Fiscal Digital)
+     * ademas regresa con la version V2 de respuesta que regresa el TFD(Timbre Fiscal Digital) y el CFDI timbrado.
      * 
      * @param string xml $xml documento a timbrar.
      * @param string $customId dato para determinar dato unico.
@@ -163,7 +163,7 @@ class EmisionTimbrado extends Services
     /**
      * 
      * Servicio que consume el timbrado V4 que envia un customId, un correo electronico o un arreglo de maximo 5 correos, que genera el pdf y lo adjunta al mismo envio del correo
-     * ademas regresa con la version V3 de respuesta que regresa el TFD(Timbre Fiscal Digital)
+     * ademas regresa con la version V3 de respuesta que regresa el CFDI timbrado.
      * 
      * @param string xml $xml documento a timbrar.
      * @param string $customId dato para determinar dato unico.
@@ -182,7 +182,7 @@ class EmisionTimbrado extends Services
     /**
      * 
      * Servicio que consume el timbrado V4 que envia un customId, un correo electronico o un arreglo de maximo 5 correos, que genera el pdf y lo adjunta al mismo envio del correo
-     * ademas regresa con la version V4 de respuesta que regresa el TFD(Timbre Fiscal Digital)
+     * ademas regresa con la version V4 de respuesta que regresa todos los datos del timbrado
      * 
      * @param string xml $xml documento a timbrar.
      * @param string $customId dato para determinar dato unico.
