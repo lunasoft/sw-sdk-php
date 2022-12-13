@@ -359,7 +359,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = EmisionTimbrado::Set($params);
-			$result = $stamp::stampV4CustomIdEmailV1($xml, $customId, $pdf);
+			$result = $stamp::issueV4CustomIdEmailV1($xml, $customId, $pdf);
 			var_dump($result);
 			echo "-------------------";
 			if($result->status == "error" && strpos($result->message, '307') !== false) {
@@ -383,7 +383,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = EmisionTimbrado::Set($params);
-			$result = $stamp::stampV4CustomIdEmailV1($xml, $customId, $pdf ,$email);
+			$result = $stamp::issueV4CustomIdEmailV1($xml, $customId, $pdf ,$email);
 			var_dump($result);
 			echo "-------------------";
 			if($result->status == "error" && strpos($result->message, '307') !== false) {
@@ -405,7 +405,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = EmisionTimbrado::Set($params);
-			$result = $stamp::stampV4CustomIdEmailV1($xml, $customId, $pdf);
+			$result = $stamp::issueV4CustomIdEmailV1($xml, $customId, $pdf);
 			var_dump($result);
 			echo "-------------------";
 			if($result->status == "error" && strpos($result->message, '307') !== false) {
@@ -429,7 +429,7 @@ class StampTests extends TestCase{
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
 			$stamp = EmisionTimbrado::Set($params);
-			$result = $stamp::stampV4CustomIdEmailV1($xml, $customId, $pdf ,$email);
+			$result = $stamp::issueV4CustomIdEmailV1($xml, $customId, $pdf ,$email);
 			var_dump($result);
 			echo "-------------------";
 			if($result->status == "error" && strpos($result->message, '307') !== false) {
