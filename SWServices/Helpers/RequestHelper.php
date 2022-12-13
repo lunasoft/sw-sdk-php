@@ -37,4 +37,32 @@ class RequestHelper extends ResponseHelper
             }
         }
     }
+    /**
+     *Método interno para construir un request POST con parámetros en path.
+     */
+    protected static function PostPath($url, $path, $token, $proxy){
+        $curl  = curl_init($url . $path);
+        curl_setopt($curl , CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl , CURLOPT_HTTPGET, true);
+        (isset($proxy))?curl_setopt($curl , CURLOPT_PROXY, $proxy):"";
+        
+        curl_setopt($curl , CURLOPT_HTTPHEADER , array(
+            'Authorization: Bearer '.$token
+            ));  
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl );
+        curl_close($curl);
+
+        if ($err) {
+            return ResponseHelper::toErrorResponse("cURL Error #:" . $err);
+        } else {
+            if ($httpcode < 500) {
+                return json_decode($response);
+            } else {
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
+            }
+        }
+    }
 }
