@@ -45,7 +45,7 @@ class PdfService extends Services
      * Servicio para generar o regenerar un PDF de un xml previamente timbrado y podrá guardar o remplazar 
      * el archivo PDF para ser visualizado en el ADT.
      * @param string $uuid Folio fiscal del comprobante.
-     * @param string $extras Datos adicionales al xml.
+     * @param string $extra Datos adicionales al xml.
      * @return HttpRequest
      */
     public static function RegeneratePDF($uuid, $extra=null){
