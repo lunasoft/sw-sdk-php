@@ -1557,6 +1557,54 @@ use SWServices\PDF\PDFService as pdfService;
 ```
 
 =======
+### Regenerar PDF ###
+El servicio podrá generar o regenerar un PDF de un CFDI previamente timbrado y podrá guardar o remplazar el archivo PDF para ser visualizado posteriormente desde el portal ADT.
+
+La función recibe los siguientes parámetros:
+* Folio fiscal del comprobante(uuid)
+* Extras (datos adicionales a los contenidos en el xml)
+
+Ejemplo de uso
+```php
+require_once 'SWSDK.php';
+
+use SWServices\PDF\PDFService as pdfService;
+
+    $uuid = "604729a6-a1d9-4969-b35f-e7d04c7ad75c";
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    $pdfService = pdfService::Set($params);
+    $result = $pdfService::RegeneratePDF($uuid);
+```
+Con datos adicionales
+```php
+require_once 'SWSDK.php';
+
+use SWServices\PDF\PDFService as pdfService;
+    //Si se cuentan con distintos templateId, 
+    //es necesario especificarlo
+    $extras =  array(
+        "extras"=>array(
+            "EDIRECCION1"=>"STERNO PRODUCTS 2483 Harbor Avenue Memphis, TN 38113"
+        ),
+        "templateId"=>"extradata"
+    );
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    $pdfService = pdfService::Set($params);
+    $result = $pdfService::RegeneratePDF($uuid,$extras);
+```
+
+=======
+
 
 ## Servicio Reenvío
 

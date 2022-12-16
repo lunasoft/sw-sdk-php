@@ -1,14 +1,16 @@
 <?php
 
 namespace SWServices\PDF;
+
 use Exception;
+
+
 /*Clase para las funciones de ayuda
 para los servicios PDF*/
+
 class PdfHelper
 {
     private static $xml = null;
-    private static $_response = null;
-    private static $_urlApi = null;
 
 
     public function __construct($params)
@@ -17,32 +19,39 @@ class PdfHelper
             self::$xml = $params['xml'];
         }
     }
-    public static function get_xml($isB64)
+    public static function getXml($isB64)
     {
         try {
 
             if ($isB64 == false) {
-                return self::validate_xml(self::$xml);
-
+                return self::validateXml(self::$xml);
             } else {
-                return self::validate_xml(base64_decode(self::$xml));
+                return self::validateXml(base64_decode(self::$xml));
             }
-
         } catch (Exception $e) {
-            echo 'xml no válido', $e->getMessage();
+            echo 'xml vacio o no es válido.', $e->getMessage();
             exit();
         }
-
-
     }
-    public static function validate_xml($xml){
-        if(!empty($xml)){
+    private static function validateXml($xml)
+    {
+        if (!empty($xml)) {
             return $xml;
-        }else{
-            echo 'si responde con el resultado';
-            exit();
-             
+        } else {
+            throw new Exception();
         }
     }
-
+    /**
+     * Función para validar uuid null.
+     * @param string $uuid Folio del comprobante.
+     * @return bool
+     */
+    public static function validateUuid($uuid)
+    {
+        if (!empty($uuid)) {
+            return true;
+        } else {
+            throw new Exception("UUID vacío o es inválido");
+        }
+    }
 };
