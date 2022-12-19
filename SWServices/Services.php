@@ -1,13 +1,15 @@
 <?php
 namespace SWServices;
 use SWServices\Authentication\AuthenticationService as Authentication;
+use SWServices\Helpers\RequestHelper as Request;
 use Exception;
 
-    class Services {
+    class Services extends Request{
         private static $_token = null;
         private static $_user = null;
         private static $_password = null;
         private static $_url = null;
+        private static $_urlApi = null;
         private static $_expirationDate = null;
         private static $_proxy = null;
         private static $_timeSession = "PT2H";
@@ -15,9 +17,13 @@ use Exception;
         public function __construct($params) {
             if(isset($params['url'])){
                 self::$_url = $params['url'];
-            }
-            else{
+            } else if(isset($params['urlApi'])){
+                self::$_urlApi = $params['urlApi'];
+            } else{
                 throw new Exception('URL debe especificarse');
+            }
+            if(isset($params['urlApi'])){
+                self::$_urlApi = $params['urlApi'];
             }
             if(!isset($params['user']) && !isset($params['password']) && !isset($params['token'])){
                 throw new Exception('Datos de autenticación deben especificarse');
@@ -66,6 +72,9 @@ use Exception;
 
         public static function get_url(){
             return  self::$_url;
+        }
+        public static function get_urlApi(){
+        return self::$_urlApi;
         }
         public static function get_user(){
             return  self::$_user;
