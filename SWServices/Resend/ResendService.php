@@ -1,6 +1,7 @@
 <?php
 
 namespace SWServices\Resend;
+require_once 'SWServices/Resend/ResendRequest.php';
 
 class ResendService extends ResendRequest {
     public function __construct($params)
