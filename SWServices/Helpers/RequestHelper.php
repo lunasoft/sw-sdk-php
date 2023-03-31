@@ -1,7 +1,7 @@
 <?php
 
 namespace SWServices\Helpers;
-
+require_once 'SWServices/Helpers/ResponseHelper.php';
 use Exception;
 
 class RequestHelper extends ResponseHelper
