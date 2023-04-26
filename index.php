@@ -161,7 +161,7 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
         $re = "LSO1306189R5";
         $rr = "LSO1306189R5";
         $tt = 1.16;
-        $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+        $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
         $sello="bb2k2g==";
 
     
@@ -180,11 +180,11 @@ catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
     
-echo "\n\n--------------- Consulta consulta Relacionados ------------------\n\n";      
+echo "\n\n--------------- Consulta Relacionados ------------------\n\n";      
 try {
-    $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+    $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
     CancelationService::Set($params);
-    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuidV);
+    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
     var_dump($cfdiRelacionados);
 }
 catch(Exception $e){
@@ -195,7 +195,7 @@ echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n
 try { 
     $accion = "Aceptacion";
     CancelationService::Set($params);
-    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
+    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
     var_dump($aceptarRechazar);
 }
 catch(Exception $e){
