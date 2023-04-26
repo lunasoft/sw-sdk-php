@@ -23,11 +23,12 @@ class SatQueryRequest{
             set_time_limit(0);
             $soap = curl_exec($ch);
             $err = curl_error($ch);
+            $http_status = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else{
-            return SatQueryRequest::response(SatQueryRequest::xml2array($soap));
+            return SatQueryRequest::response(SatQueryRequest::xml2array($soap), $http_status);
         }
     }
     
@@ -54,15 +55,16 @@ class SatQueryRequest{
     }
     
     public static function xml2array($xml){
-        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", str_replace("a:","", str_replace("i:","",'<?xml version="1.0" encoding="utf-8"?>'.$xml))))),TRUE);
+        return json_decode(json_encode(simplexml_load_string(str_replace("s:", "", str_replace("a:","", str_replace("i:","",'<?xml version="1.0" encoding="utf-8"?>'.$xml))))), TRUE);
     }
     
-    public static function response($data){
+    public static function response($data, $http_status){
         $obj = (object)[];
         $obj->CodigoEstatus = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["CodigoEstatus"];
         $obj->Estado = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["Estado"];
         $obj->EsCancelable = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EsCancelable"];
         $obj->EstatusCancelacion = $data["Body"]["ConsultaResponse"]["ConsultaResult"]["EstatusCancelacion"];
+        $obj->Status = $http_status;
         return $obj;
     }
 }
