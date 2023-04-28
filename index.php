@@ -46,7 +46,7 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     
 echo "\n\n--------------- Emisión Timbrado ------------------\n\n";
 try {
@@ -81,7 +81,7 @@ catch(Exception $e){
    
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";     
 try {
-    $json = file_get_contents("Tests/Resources/cfdi33_json_pagos.json");    
+    $json = file_get_contents("Test/Resources/cfdi33_json_pagos.json");    
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::JsonEmisionTimbradoV4($json);
     
@@ -205,8 +205,8 @@ try {
     $isActive = true;
     $type = "stamp";
     $password = "12345678a";
-    $b64Cer = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
-    $b64Key = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
+    $b64Cer = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
+    $b64Key = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
     CsdService::Set($params);
     $response = CsdService::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
     echo $response;
