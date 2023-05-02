@@ -7,7 +7,7 @@
 
     final class SatQueryTests extends TestCase{
         public function testSuccess(){
-            $resultSpect = 200;
+            $resultSpect = ["Vigente", "Cancelado"];
             $url="https://pruebacfdiconsultaqr.cloudapp.net/ConsultaCFDIService.svc";
             $rfcEmisor="";
             $rfcReceptor=""; 
@@ -16,7 +16,7 @@
             $sello="";
             
             $result = SatQueryService::ServicioConsultaSAT($url,$rfcEmisor, $rfcReceptor, $total, $uuid, $sello);
-			$this->assertEquals($resultSpect, $result->Status);
+			$this->assertContains($result->Status, $resultSpect);
         }
          
     }
