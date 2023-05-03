@@ -819,7 +819,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
         "password"=> "contraseña"
     );
 
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV1($xml);
     echo $resultadoIssue;
@@ -836,7 +836,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
         "password"=> "contraseña"
     );
 
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
     echo $result;
@@ -853,7 +853,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
         "password"=> "contraseña"
     );
 
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV3($xml);
     echo $result;
@@ -870,7 +870,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
         "password"=> "contraseña"
     );
 
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
     echo $result;
@@ -891,7 +891,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
         "password"=> "contraseña"
     );
 
-    $json = file_get_contents("Tests/Resources/cfdi.json");
+    $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
     echo $resultadoJson;
@@ -908,7 +908,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
         "password"=> "contraseña"
     );
 
-    $json = file_get_contents("Tests/Resources/cfdi.json");
+    $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
     echo $resultadoJson;
@@ -925,7 +925,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
         "password"=> "contraseña"
     );
 
-    $json = file_get_contents("Tests/Resources/cfdi.json");
+    $json = file_get_contents("Test/Resources/cfdi.json");
     jsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
     echo $resultadoJson;
@@ -942,7 +942,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
         "password"=> "contraseña"
     );
 
-    $json = file_get_contents("Tests/Resources/cfdi.json");
+    $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV4($json);
     echo $resultadoJson;
@@ -1031,7 +1031,7 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML 
 		"url"=>"http://services.test.sw.com.mx/",	
 		"token"=>" "				
 	);
-            $xml=file_get_contents("../Tests/Resources/CancelationResources/cancelByXml.xml");
+            $xml=file_get_contents("../Test/Resources/CancelationResources/cancelByXml.xml");
 		    try {
 		        $cancelationService = CancelationService::Set($params);
 		        $result = $cancelationService::CancelationByXML($xml);
@@ -1332,8 +1332,8 @@ Ejemplo de uso
         "password"=> "contraseña"
     );
 
-    $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
-    $keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
+    $cerB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
+    $keyB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
     $password = "12345678a";
     $rfc = "LAN7008173R5";
     $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
@@ -1355,7 +1355,7 @@ Ejemplo de uso
         "password"=> "contraseña"
     );
 
-    $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
+    $pfxB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
     $password = "12345678a";
     $rfc = "LAN7008173R5";
     $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
@@ -1411,7 +1411,7 @@ Ejemplo de uso
         "password"=> "contraseña"
     );
 
-    $xml = file_get_contents('Tests\Resources\fileAcceptReject.xml');
+    $xml = file_get_contents('Test\Resources\fileAcceptReject.xml');
     cancelationService::Set($params);
     $aceptarRechazar = cancelationService::AceptarRechazarCancelacionXML($xml);
     echo $aceptarRechazar;
@@ -1455,8 +1455,8 @@ Ejemplo de uso
         "password"=> "contraseña"
     );
 
-    $cerB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
-    $keyB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
+    $cerB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
+    $keyB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
     cancelationService::Set($params);
@@ -1477,7 +1477,7 @@ Ejemplo de uso
         "password"=> "contraseña"
     );
     
-    $pfxB64 = base64_encode(file_get_contents('Tests\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
+    $pfxB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
     cancelationService::Set($params);
@@ -1530,7 +1530,7 @@ Ejemplo de uso
 
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-    $xml = file_get_contents('Tests\Resources\fileRelations.xml');
+    $xml = file_get_contents('Test\Resources\fileRelations.xml');
     cancelationService::Set($params);
     $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosXML($xml);
     echo $consultaRelacionados;
