@@ -135,7 +135,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV1($xml);
-        echo $result;
+        var_dump($result);
 
     }
     catch(Exception $e){
@@ -172,7 +172,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV1($xml);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -219,7 +219,7 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV2($xml);
-        echo $result;
+        var_dump($result);
 
     }
     catch(Exception $e){
@@ -257,7 +257,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV2($xml);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -298,7 +298,7 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
         StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
         $result = StampService::StampV2($xml,true);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -338,7 +338,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV3($xml);
-        echo $result;
+        var_dump($result);
 
     }
     catch(Exception $e){
@@ -375,7 +375,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV3($xml);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -419,7 +419,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV1($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -447,7 +447,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV2($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -474,8 +474,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
-    echo $result;
-
+    var_dump($result);
 ?>
 ```
 
@@ -501,7 +500,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -530,7 +529,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV1($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -559,7 +558,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV2($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -587,7 +586,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV3($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -615,7 +614,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV4($xml, $customId); 
-    echo $result;
+    var_dump($result);
 
 ?>
 ```
@@ -641,7 +640,7 @@ Si se desea, se puede usar la version 3 en la modalidad base64, esto quiere deci
         StampService::Set($params);
         //Se agrega un segundo parametro de tipo boolean para activar la modalidad base64
         $result = StampService::StampV3($xml,true);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -683,7 +682,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents('./file.xml');
         StampService::Set($params);
         $result = StampService::StampV4($xml);
-        echo $result;
+        var_dump($result);
 
     }
     catch(Exception $e){
@@ -728,7 +727,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         $xml = file_get_contents("./file.xml");
         StampService::Set($params);
         $result = StampService::StampV4($xml);
-        echo $result;
+        var_dump($result);
     }
     catch(Exception $e)
     {
@@ -822,7 +821,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV1($xml);
-    echo $resultadoIssue;
+    var_dump($resultadoIssue);
 ```
 ### Emisión timbrado V2 ###
 Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
@@ -839,7 +838,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
     $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
-    echo $result;
+    var_dump($result);
 ```
 ### Emisión timbrado V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
@@ -856,7 +855,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV3($xml);
-    echo $result;
+    var_dump($result);
 ```
 ### Emisión timbrado V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
@@ -873,7 +872,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
     $xml = file_get_contents('Test/Resources/file.xml');
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
-    echo $result;
+    var_dump($result);
 ```
 
 ## Emisión Timbrado JSON ##
@@ -894,7 +893,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
-    echo $resultadoJson;
+    var_dump($resultadoJson);
 ```
 ### Emisión timbrado JSON V2 ###
 Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
@@ -911,7 +910,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
     $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
-    echo $resultadoJson;
+    var_dump($resultadoJson);
 ```
 ### Emisión timbrado JSON V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
@@ -928,7 +927,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     $json = file_get_contents("Test/Resources/cfdi.json");
     jsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
-    echo $resultadoJson;
+    var_dump($resultadoJson);
 ```
 ### Emisión timbrado JSON V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
@@ -945,7 +944,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
     $json = file_get_contents("Test/Resources/cfdi.json");
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV4($json);
-    echo $resultadoJson;
+    var_dump($resultadoJson);
 ```
 
 ## Cancelación CFDI 3.3 ##
@@ -1233,7 +1232,7 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
     try {
         AccountBalanceService::Set($params);
         $result = AccountBalanceService::GetAccountBalance();
-        echo $result;
+        var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
@@ -1295,7 +1294,7 @@ Ejemplo de uso
     $uuid = "6ab07bef-4446-43ea-a3fd-04a804309457";
     $sello = "zNDhfw=";
     $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
-    echo $consultaCfdi;
+    var_dump($consultaCfdi);
 ```
 ## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
 Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
@@ -1313,7 +1312,7 @@ Ejemplo de uso
     $rfc = "LAN7008173R5";
     cancelationService::Set($params);
     $consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
-    echo $consultaPendientes;
+    var_dump($consultaPendientes);
 ```
 
 ## Aceptar/Rechazar Cancelación ##
@@ -1339,7 +1338,7 @@ Ejemplo de uso
     $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
     cancelationService::Set($params);
     $aceptarRechazar = cancelationService::AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids);
-    echo $aceptarRechazar;
+    var_dump($aceptarRechazar);
 ```
 
 ### Aceptar/Rechazar con PFX ###
@@ -1361,7 +1360,7 @@ Ejemplo de uso
     $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
     cancelationService::Set($params);
     $aceptarRechazar = cancelationService::AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids);
-    echo $aceptarRechazar;
+    var_dump($aceptarRechazar);
 ```
 
 ### Aceptar/Rechazar con XML ###
@@ -1414,7 +1413,7 @@ Ejemplo de uso
     $xml = file_get_contents('Test\Resources\fileAcceptReject.xml');
     cancelationService::Set($params);
     $aceptarRechazar = cancelationService::AceptarRechazarCancelacionXML($xml);
-    echo $aceptarRechazar;
+    var_dump($aceptarRechazar);
 ```
 
 ### Aceptar/Rechazar con UUID ###
@@ -1436,7 +1435,7 @@ Ejemplo de uso
     $accion = "Rechazo";
     cancelationService::Set($params);
     $aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
-    echo $aceptarRechazar;
+    var_dump($aceptarRechazar);
 ```
 
 ## Consulta documentos relacionados ##
@@ -1461,7 +1460,7 @@ Ejemplo de uso
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
     cancelationService::Set($params);
     $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
-    echo $consultaRelacionados;
+    var_dump($consultaRelacionados);
 ```
 
 ### Documentos relacionados con PFX ###
@@ -1482,7 +1481,7 @@ Ejemplo de uso
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
     cancelationService::Set($params);
     $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
-    echo $consultaRelacionados;
+    var_dump($consultaRelacionados);
 ```
 
 ### Documentos relacionados con XML ###
@@ -1533,7 +1532,7 @@ Ejemplo de uso
     $xml = file_get_contents('Test\Resources\fileRelations.xml');
     cancelationService::Set($params);
     $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosXML($xml);
-    echo $consultaRelacionados;
+    var_dump($consultaRelacionados);
 ```
 
 ### Documentos relacionados con UUID ###
@@ -1586,7 +1585,7 @@ use SWServices\PDF\PDFService as pdfService;
     );
     $pdfService = pdfService::Set($params);
     $result = $pdfService::GeneratePDF($xml, $logo, $templateId, null, false);
-    echo $result;
+    var_dump($result);
 ```
 Plantilla con datos adicionales
 ```php
@@ -1632,7 +1631,7 @@ use SWServices\PDF\PDFService as pdfService;
     );
     $pdfService = pdfService::Set($params);
     $result = $pdfService::RegeneratePDF($uuid);
-    echo $result;
+    var_dump($result);
 ```
 Con datos adicionales
 ```php
@@ -1655,7 +1654,7 @@ use SWServices\PDF\PDFService as pdfService;
     );
     $pdfService = pdfService::Set($params);
     $result = $pdfService::RegeneratePDF($uuid,$extras);
-    echo $result;
+    var_dump($result);
     
 ```
 
