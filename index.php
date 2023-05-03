@@ -46,7 +46,7 @@ try {
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-    $xml = file_get_contents('Tests/Resources/file.xml');
+    $xml = file_get_contents('Test/Resources/file.xml');
     
 echo "\n\n--------------- Emisión Timbrado ------------------\n\n";
 try {
@@ -81,7 +81,7 @@ catch(Exception $e){
    
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";     
 try {
-    $json = file_get_contents("Tests/Resources/cfdi33_json_pagos.json");    
+    $json = file_get_contents("Test/Resources/cfdi33_json_pagos.json");    
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::JsonEmisionTimbradoV4($json);
     
@@ -104,9 +104,9 @@ catch(Exception $e){
 }
       
 // Parametros   
-    $cerB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
-    $keyB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key'));
-    $pfxB64 = base64_encode(file_get_contents('Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.pfx'));
+    $cerB64 = base64_encode(file_get_contents('Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer'));
+    $keyB64 = base64_encode(file_get_contents('Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key'));
+    $pfxB64 = base64_encode(file_get_contents('Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.pfx'));
    
     $password = "12345678a";
     $uuid = "551b9f77-1045-431d-a7a7-c8c19b3306fc";
@@ -161,30 +161,28 @@ echo "\n\n--------------- Consulta Status CFDI SAT ------------------\n\n";
         $re = "LSO1306189R5";
         $rr = "LSO1306189R5";
         $tt = 1.16;
-        $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+        $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
         $sello="bb2k2g==";
 
-    
-       $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
-      
-       var_dump($consultaCfdi);
+        $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
+        var_dump($consultaCfdi);
        
 echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";         
 try {       
     $rfc = "LAN7008173R5";
     CancelationService::Set($params);
     $consultaPendientes = CancelationService::PendientesPorCancelar($rfc);
-    var_dump($consultaPendientes);    
+    var_dump($consultaPendientes);   
 }
 catch(Exception $e){
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
     
-echo "\n\n--------------- Consulta consulta Relacionados ------------------\n\n";      
+echo "\n\n--------------- Consulta Relacionados ------------------\n\n";      
 try {
-    $uuidV = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
+    $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
     CancelationService::Set($params);
-    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuidV);
+    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
     var_dump($cfdiRelacionados);
 }
 catch(Exception $e){
@@ -195,7 +193,7 @@ echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n
 try { 
     $accion = "Aceptacion";
     CancelationService::Set($params);
-    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuidV, $accion);
+    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
     var_dump($aceptarRechazar);
 }
 catch(Exception $e){
@@ -207,8 +205,8 @@ try {
     $isActive = true;
     $type = "stamp";
     $password = "12345678a";
-    $b64Cer = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
-    $b64Key = base64_encode(file_get_contents("Tests\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
+    $b64Cer = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
+    $b64Key = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
     CsdService::Set($params);
     $response = CsdService::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
     var_dump($response);

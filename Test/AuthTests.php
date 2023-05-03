@@ -16,7 +16,7 @@
             $result = $authenticate::Token();
             $result->status;
                   
-            $this->assert($result->status, "success");
+            $this->assertEquals($result->status, "success");
         }
         public function testError(){
             $this->expectException(Exception::class);

@@ -445,20 +445,20 @@ class StampTests extends TestCase{
 	final Class GenerateXML {
 
 
-		public $cadenaOriginal = "./Tests/Resources/cadenaOriginal.txt";
+		public $cadenaOriginal = "./Test/Resources/cadenaOriginal.txt";
 		
 		function __construct() {
 			date_default_timezone_set('America/Mexico_City');
-			$xml = simplexml_load_file('./Tests/Resources/file.xml'); //leemos el xml base
+			$xml = simplexml_load_file('./Test/Resources/file.xml'); //leemos el xml base
 			$xml["Fecha"] = date("Y-m-d\TH:i:s");
-			$xml->asXML('./Tests/Resources/fileTest.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
+			$xml->asXML('./Test/Resources/fileTest.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
 
-			$xml = file_get_contents('./Tests/Resources/fileTest.xml');
+			$xml = file_get_contents('./Test/Resources/fileTest.xml');
 
-			$xmlFile="./Tests/Resources/fileTest.xml";
+			$xmlFile="./Test/Resources/fileTest.xml";
 		 
 		    // Ruta al archivo XSLT
-		    $xslFile = "./Tests/Resources/cert_pruebas/cadenaoriginal_3_3.xslt"; 
+		    $xslFile = "./Test/Resources/cert_pruebas/cadenaoriginal_3_3.xslt"; 
 		 
 		    // Crear un objeto DOMDocument para cargar el CFDI
 		    $xml = new DOMDocument("1.0","UTF-8"); 
@@ -475,43 +475,43 @@ class StampTests extends TestCase{
 		    $proc->importStyleSheet($xsl);
 		    // Generar la cadena original y asignarla a una variable
 		    $cadenaOriginal = $proc->transformToXML($xml);
-		    file_put_contents("./Tests/Resources/cadenaOriginal.txt", $cadenaOriginal); //escribimos la cadena original en un archivo
+		    file_put_contents("./Test/Resources/cadenaOriginal.txt", $cadenaOriginal); //escribimos la cadena original en un archivo
 		} 
 
 		public function createXML() {
 			date_default_timezone_set('America/Mexico_City');
-			$xml = simplexml_load_file('./Tests/Resources/fileTest.xml'); //leemos el xml base
+			$xml = simplexml_load_file('./Test/Resources/fileTest.xml'); //leemos el xml base
 			$date = date("Y-m-d\TH:i:s");
 			$xml["Fecha"] = $date;
-			$xml->asXML('./Tests/Resources/fileTest.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
+			$xml->asXML('./Test/Resources/fileTest.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
 
-			$cadenaOriginal = file_get_contents('./Tests/Resources/cadenaOriginal.txt');
+			$cadenaOriginal = file_get_contents('./Test/Resources/cadenaOriginal.txt');
 
 			$cadenaOriginal = preg_replace('/\d{4}-\d{2}-\d{2}\T\d{2}:\d{2}:\d{2}/', $date, $cadenaOriginal); //reemplazamos la fecha en la cadena original para tener la cadena original nueva
 
-			file_put_contents("./Tests/Resources/cadenaOriginal.txt", $cadenaOriginal); //escribimos la cadena original en un archivo
+			file_put_contents("./Test/Resources/cadenaOriginal.txt", $cadenaOriginal); //escribimos la cadena original en un archivo
 
 
 			$params = array(
-			    "cadenaOriginal"=> "./Tests/Resources/cadenaOriginal.txt",
-			    "archivoKeyPem"=> "./Tests/Resources/cert_pruebas/AAA010101AAA.key.pem",
-			    "archivoCerPem"=> "./Tests/Resources/cert_pruebas/AAA010101AAA.cer.pem"
+			    "cadenaOriginal"=> "./Test/Resources/cadenaOriginal.txt",
+			    "archivoKeyPem"=> "./Test/Resources/cert_pruebas/AAA010101AAA.key.pem",
+			    "archivoCerPem"=> "./Test/Resources/cert_pruebas/AAA010101AAA.cer.pem"
 		    );
 
 		    try {
 		        $result = Sellar::ObtenerSello($params);
 		        if($result->status=="success"){
-		        	$xml = simplexml_load_file('./Tests/Resources/fileTest.xml');
+		        	$xml = simplexml_load_file('./Test/Resources/fileTest.xml');
 		        	$xml["Sello"] = $result->sello;
-		        	$xml->asXML('./Tests/Resources/fileTest.xml');
+		        	$xml->asXML('./Test/Resources/fileTest.xml');
 		        	sleep(2);
-		        	return "./Tests/Resources/fileTest.xml";
+		        	return "./Test/Resources/fileTest.xml";
 		        }
 		    } catch(Exception $e) {
 		        echo 'Caught exception: ',  $e->getMessage(), "\n";
 		    }
 
-		    return '/Tests/Resources/file.xml';
+		    return '/Test/Resources/file.xml';
 		}
     }
     

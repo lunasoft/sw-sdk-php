@@ -97,7 +97,7 @@ try {
 				"url"=>"http://services.test.sw.com.mx/",	
 				"token"=>" "				
 			);
-            $xml=file_get_contents("../Tests/Resources/CancelationResources/cancelByXml.xml");
+            $xml=file_get_contents("../Test/Resources/CancelationResources/cancelByXml.xml");
 		    try {
 		        $cancelationService = CancelationService::Set($params);
 		        $result = $cancelationService::CancelationByXML($xml);
