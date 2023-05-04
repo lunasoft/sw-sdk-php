@@ -9,9 +9,9 @@
     	public function testSign(){
     		$resultSpect = "success";
     		$params = array(
-			    "cadenaOriginal"=> "./Tests/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/cadenaoriginal.txt",
-			    "archivoKeyPem"=> "./Tests/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/resultado.key.pem",
-			    "archivoCerPem"=> "./Tests/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/resultado.cer.pem"
+			    "cadenaOriginal"=> "./Test/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/cadenaOriginal.txt",
+			    "archivoKeyPem"=> "./Test/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/resultado.key.pem",
+			    "archivoCerPem"=> "./Test/Resources/SignResources/CSD_PAC_CFDI_PRUEBAS/resultado.cer.pem"
 		    );
 
     		$result = Sello::obtenerSello($params);
