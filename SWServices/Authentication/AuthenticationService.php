@@ -2,7 +2,6 @@
 
 namespace SWServices\Authentication;
 
-
 use SWServices\Services as Services;
 use SWServices\Authentication\AuthRequest as AR;
 use Exception;
@@ -22,7 +21,6 @@ class AuthenticationService extends Services{
         
     }
     
-
     public static function Token(){
         return AR::sendReq(Services::get_url(), Services::get_password(), Services::get_user(), Services::get_proxy());
     }
