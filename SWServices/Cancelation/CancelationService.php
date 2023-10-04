@@ -33,7 +33,7 @@ class CancelationService extends Services
             $password,
             Services::get_proxy(),
             '/cfdi33/cancel/csd',
-            $foliosustitucion
+            $foliosustitucion ?? null
         );
     }
 
@@ -48,11 +48,11 @@ class CancelationService extends Services
             $motivo,
             Services::get_proxy(),
             '/cfdi33/cancel/',
-            $foliosustitucion,
-            $action
+            $foliosustitucion ?? null,
+            $action ?? null
         );
     }
-    
+
     public static function CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $password, $foliosustitucion = null)
     {
         return CancelationRequest::sendReqPFX(
@@ -65,7 +65,7 @@ class CancelationService extends Services
             $password,
             Services::get_proxy(),
             '/cfdi33/cancel/pfx',
-            $foliosustitucion
+            $foliosustitucion ?? null
         );
     }
     public static function CancelationByXML($xml)

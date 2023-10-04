@@ -17,7 +17,7 @@ class CancelationRequest
             "b64Cer" => $cerB64,
             "b64Key" => $keyB64,
             "password" => $password,
-            "foliosustitucion" => $foliosustitucion
+            "foliosustitucion" => $foliosustitucion ?? null
         ]);
 
         $curl = curl_init($url . $service);
@@ -53,8 +53,8 @@ class CancelationRequest
             "rfc" => $rfc,
             "uuid" => $uuid,
             "motivo" => $motivo,
-            "foliosustitucion" => $foliosustitucion,
-            "action" => $action
+            "foliosustitucion" => $foliosustitucion ?? null,
+            "action" => $action ?? null
         ]);
 
         $curl = curl_init($url . $service . $rfc . '/' . $uuid . '/' . $motivo . '/' . $foliosustitucion . '/' . $action);
@@ -92,7 +92,7 @@ class CancelationRequest
             "motivo" => $motivo,
             "b64Pfx" => $pfxB64,
             "password" => $password,
-            "foliosustitucion" => $foliosustitucion
+            "foliosustitucion" => $foliosustitucion ?? null
         ]);
 
         $curl = curl_init($url . $service);
