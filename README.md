@@ -947,7 +947,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
     var_dump($resultadoJson);
 ```
 
-## Cancelación CFDI 3.3 ##
+## Cancelación CFDI ##
 
 ### Cancelación por CSD ###
 Se deben incluir los siguientes datos:
@@ -958,16 +958,16 @@ Se deben incluir los siguientes datos:
 * RFC emisor 
 * UUID
 * Motivo
-* Folio Sustitución
+* Folio Sustitución (sólo cuando Motivo=01)
 
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
-Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
 
 Paso 2: Enviar datos necesarios
 
-Se envían los datos necesarios para la cancelación y por supuesto el token de acceso anteriormente generado.
+Se envían los datos necesarios para la cancelación en la instancia del metodo de cancelacion
 
 Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán enviarse en formato base64** para que podamos procesarlos en nuestro servidor.
 ```php
@@ -978,7 +978,7 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
     $rfc="";
     $password="";
     $uuid=" ";
-    $motivo="02";
+    $motivo="01";
     $foliosustitucion=" ";
     $b64Cer="MIIFuzCCA6OgAwIBAgIU.........";
     $b64Key="MIIFDjBABgkqhkiG9w0B.........";
@@ -988,18 +988,12 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
     $params = array(
         "url"=>$url,  
         "token"=>$token,
-        "uuid"=>$uuid,
-        "password"=>$password,
-        "rfc"=>$rfc,
-        "motivo"=>$motivo,
-        "cerB64"=>$b64Cer,
-        "keyB64"=>$b64Key
     );
     
     try {
         header('Content-type: application/json');
         $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByCSD();
+        $result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, $b64Cer, $b64Key, $password,$foliosustitucion);
         echo json_encode($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -1014,11 +1008,11 @@ Como su nombre lo indica, este servicio recibe únicamente el XML sellado con lo
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
-Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
 
 Paso 2: Enviar datos necesarios
 
-Se envían los datos necesarios para la cancelación, que únicamente es el XML y el token obtenido previamente.
+Se envían los datos necesarios para la cancelación, que únicamente es el XML.
 
 ```php
 <?php 
@@ -1051,11 +1045,11 @@ Se deben incluir los siguientes datos:
 * RFC emisor 
 * UUID
 * Motivo
-* Folio Sustitución
+* Folio Sustitución (sólo cuando Motivo=01)
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
-Primeramente se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea,  se puede usar el token infinito.
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
 
 Paso 2: Enviar datos necesarios
 
@@ -1077,19 +1071,13 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
 
     $params = array(
         "url"=>$url,  
-        "token"=>$token,
-        "uuid"=>$uuid,
-        "password"=>$password,
-        "rfc"=>$rfc,
-        "motivo"=>$motivo,
-        "foliosustitucion"=>$foliosustitucion,
-        "pfxB64"=>$b64Pfx,
+        "token"=>$token
     );
 
     try {
         header('Content-type: application/json');
         $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByPFX();
+        $result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $passwordPfx,$foliosustitucion);
         echo json_encode($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -1105,7 +1093,7 @@ Se deben incluir los siguientes datos:
 * RFC emisor 
 * UUID
 * Motivo
-* Folio Sustitución
+* Folio Sustitución (sólo cuando Motivo=01)
 
 Paso 1: Obtener token de acceso, o en su defecto usar token infinito
 
@@ -1126,17 +1114,13 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
     $foliosustitucion=" ";
     $params = array(
         "url"=>"http://services.test.sw.com.mx",  
-        "token"=>" ",  
-        "rfc"=>$rfc,
-        "uuid"=>$uuid,
-        "motivo"=>$motivo,
-        "foliosustitucion"=>$foliosustitucion
+        "token"=>" "
     );
     
     try {
         header('Content-type: application/json');
         $cancelationService = CancelationService::Set($params);
-        $result = $cancelationService::CancelationByUUID();
+        $result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo,$foliosustitucion);
         echo json_encode($result);
     } catch(Exception $e) {
         header('Content-type: text/plain');
@@ -1188,7 +1172,7 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 | 202 |  Folio Fiscal Previamente cancelado | Se considera solicitud de cancelación previamente enviada. Estatus Cancelado ante el SAT. |
 | 203 | Folio Fiscal No corresponde al emisor.  |  |
 | 204 | Folio Fiscal No Aplicable a Cancelación. |  |
-| 205 | Folio Fiscal No Aplicable a Cancelación.  | El sat da una prorroga de 48 hrs para que el comprobante aparezca con estatus Vigente posterior al envió por parte del Proveedor de Certificación de CFDI. Puede que algunos comprobantes no aparezcan al | 204 | Folio Fiscal No Aplicable a Cancelación. |  |momento, es necesario esperar por lo menos 48 hrs. |
+| 205 | Folio Fiscal No Existe.  | El sat da una prorroga de 48 hrs para que el comprobante aparezca con estatus Vigente posterior al envió por parte del Proveedor de Certificación de CFDI. Puede que algunos comprobantes no aparezcan al | 204 | Folio Fiscal No Aplicable a Cancelación. |  |momento, es necesario esperar por lo menos 48 hrs. |
 | 206 | UUID no corresponde a un CFDI del Sector Primario. |  |
 | 207 | No se especificó el motivo de cancelación o el motivo no es valido. |  |
 | 208 | Folio Sustitución invalido. |  |
@@ -1202,7 +1186,10 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 | 304 | Certificado Revocado o Caduco. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
 | 305 | Certificado Inválido. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
 | 309 | Certificado Inválido. | El certificado puede ser inválido por múltiples razones como son el tipo, la vigencia, etc. |
-| 310 | CSD Inválido. |  |
+| 310 | CSD Inválido. |
+| 311 | Motivo Inválido. | Clave de motivo de cancelación no válida |
+| 312 | UUID no relacionado | UUID no relacionado de acuerdo a la clave de motivo de cancelación | |
+
 
 ## Consultar Saldo CFDI 3.3 ##
 
