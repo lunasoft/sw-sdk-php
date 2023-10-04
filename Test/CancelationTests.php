@@ -26,7 +26,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, $cerB64, $keyB64, $password);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -48,7 +48,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, null, $keyB64, $password);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -67,7 +67,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByXML($xml);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -84,7 +84,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByXML(null);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -109,7 +109,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -131,7 +131,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, null, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -153,7 +153,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -173,7 +173,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, null, $motivo);
 			$this->assertEquals($resultSpect, $result->status);
-			echo ($result);
+			var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
