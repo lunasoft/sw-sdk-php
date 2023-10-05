@@ -9,17 +9,14 @@ use Exception;
 
 class CancelationService extends Services
 {
-
     public function __construct($params)
     {
         parent::__construct($params);
     }
-
     public static function Set($params)
     {
         return new CancelationService($params);
     }
-
     public static function CancelationByCSD($rfc, $uuid, $motivo, $cerB64, $keyB64, $password, $foliosustitucion = null)
     {
         return CancelationRequest::sendReqCSD(
@@ -36,9 +33,7 @@ class CancelationService extends Services
             $foliosustitucion ?? null
         );
     }
-
-
-    public static function CancelationByUUID($rfc, $uuid, $motivo, $foliosustitucion = null, $action = null)
+    public static function CancelationByUUID($rfc, $uuid, $motivo, $foliosustitucion = null)
     {
         return CancelationRequest::sendReqUUID(
             Services::get_url(),
@@ -49,10 +44,8 @@ class CancelationService extends Services
             Services::get_proxy(),
             '/cfdi33/cancel/',
             $foliosustitucion ?? null,
-            $action ?? null
         );
     }
-
     public static function CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $password, $foliosustitucion = null)
     {
         return CancelationRequest::sendReqPFX(
@@ -78,32 +71,28 @@ class CancelationService extends Services
             '/cfdi33/cancel/xml'
         );
     }
-
-    public static function AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids)
+    public static function AceptarRechazarCancelacionPFX($rfc, $uuids, $pfxB64, $password)
     {
         return cancelationRequest::sendReqPFX(
             Services::get_url(),
             Services::get_token(),
             $rfc,
-            null,
-            null,
             cancelationHandler::uuidsReq($uuids),
+            null,
             $pfxB64,
             $password,
             Services::get_proxy(),
             '/acceptreject/pfx'
         );
     }
-
-    public static function AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids)
+    public static function AceptarRechazarCancelacionCSD($rfc, $uuids, $cerB64, $keyB64, $password)
     {
         return cancelationRequest::sendReqCSD(
             Services::get_url(),
             Services::get_token(),
             $rfc,
-            null,
-            null,
             cancelationHandler::uuidsReq($uuids),
+            null,
             $cerB64,
             $keyB64,
             $password,
@@ -111,7 +100,6 @@ class CancelationService extends Services
             '/acceptreject/csd'
         );
     }
-
     public static function AceptarRechazarCancelacionUUID($rfc, $uuid, $accion)
     {
         return cancelationRequest::sendReqUUID(
@@ -120,13 +108,12 @@ class CancelationService extends Services
             $rfc,
             $uuid,
             null,
-            null,
             Services::get_proxy(),
             '/acceptreject/',
+            null,
             $accion
         );
     }
-
     public static function AceptarRechazarCancelacionXML($xml)
     {
         return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/acceptreject/xml');
@@ -145,12 +132,10 @@ class CancelationService extends Services
             $rfc,
             $uuid,
             null,
-            null,
             Services::get_proxy(),
             '/relations/'
         );
     }
-
     public static function ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid)
     {
         return cancelationRequest::sendReqCSD(
@@ -167,7 +152,6 @@ class CancelationService extends Services
             '/relations/csd'
         );
     }
-
     public static function ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid)
     {
         return cancelationRequest::sendReqPFX(
@@ -183,7 +167,6 @@ class CancelationService extends Services
             '/relations/pfx'
         );
     }
-
     public static function ConsultarCFDIRelacionadosXML($xml)
     {
         return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/relations/xml');

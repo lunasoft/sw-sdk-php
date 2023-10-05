@@ -103,7 +103,6 @@ final class CancelationTests extends TestCase
 			"url" => "http://services.test.sw.com.mx/",
 			"token" => $token
 		);
-
 		try {
 
 			$cancelationService = CancelationService::Set($params);
@@ -127,7 +126,6 @@ final class CancelationTests extends TestCase
 			"token" => $token
 		);
 		try {
-
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, null, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
@@ -148,7 +146,6 @@ final class CancelationTests extends TestCase
 			"url" => "http://services.test.sw.com.mx",
 			"token" => $token
 		);
-
 		try {
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo);
@@ -168,7 +165,6 @@ final class CancelationTests extends TestCase
 			"url" => "http://services.test.sw.com.mx",
 			"token" => $token
 		);
-
 		try {
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, null, $motivo);
