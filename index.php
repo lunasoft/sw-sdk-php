@@ -17,7 +17,7 @@ header('Content-type: text/plain');
 
 $params = array(
     "url" => "http://services.test.sw.com.mx",
-    "user" => "cuentasw@sw.com.mx",
+    "user" => "cuentatest@sw.com.mx",
     "password" => "12345678"
 );
 
@@ -187,8 +187,8 @@ try {
     $isActive = true;
     $type = "stamp";
     $password = "12345678a";
-    $b64Cer = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.cer"));
-    $b64Key = base64_encode(file_get_contents("Test\Resources\SignResources\CSD_PAC_CFDI_PRUEBAS\CSD_Prueba_CFDI_LAN8507268IA.key"));
+    $b64Cer = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
+    $b64Key = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
     CsdService::Set($params);
     $response = CsdService::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
     var_dump($response);
