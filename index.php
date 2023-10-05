@@ -17,7 +17,7 @@ header('Content-type: text/plain');
 
 $params = array(
     "url" => "http://services.test.sw.com.mx",
-    "user" => "cuentatest@sw.com.mx",
+    "user" => "cuentaTest@sw.com.mx",
     "password" => "12345678"
 );
 
@@ -154,7 +154,7 @@ var_dump($consultaCfdi);
 
 echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";
 try {
-    $rfc = "LAN7008173R5";
+    $rfc = "EKU9003173C9";
     CancelationService::Set($params);
     $consultaPendientes = CancelationService::PendientesPorCancelar($rfc);
     var_dump($consultaPendientes);
@@ -217,7 +217,7 @@ try {
 echo "\n\n--------------- Lista certificados por Rfc ------------------\n\n";
 try {
     CsdService::Set($params);
-    $response = CsdService::GetListCsdByRfc('LAN7008173R5');
+    $response = CsdService::GetListCsdByRfc('EKU9003173C9');
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -236,7 +236,7 @@ try {
 echo "\n\n--------------- Buscar certificado activo por rfc y tipo ------------------\n\n";
 try {
     CsdService::Set($params);
-    $response = CsdService::InfoActiveCsd('LAN7008173R5', 'stamp');
+    $response = CsdService::InfoActiveCsd('EKU9003173C9', 'stamp');
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";

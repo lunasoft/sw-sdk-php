@@ -42,7 +42,7 @@ class CancelationRequest
             }
         }
     }
-    public static function sendReqUUID($url, $token, $rfc, $uuid, $motivo,  $proxy, $service, $foliosustitucion = null, $action = null)
+    public static function sendReqUUID($url, $token, $rfc, $uuid, $motivo, $proxy, $service, $foliosustitucion = null, $action = null)
     {
         $data = json_encode([
             "rfc" => $rfc,
