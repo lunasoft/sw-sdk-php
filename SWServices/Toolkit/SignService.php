@@ -20,7 +20,7 @@ use XSLTProcessor;
 			self::_existsFile($archivoKeyPem);
 			$cadena_original = file_get_contents($cadena_original);
 		    $pkeyid = openssl_get_privatekey(file_get_contents($archivoKeyPem));
-    		openssl_sign($cadena_original, $crypttext, $pkeyid, sha256WithRSAEncryption);
+    		openssl_sign($cadena_original, $crypttext, $pkeyid, OPENSSL_ALGO_SHA256);
     		openssl_free_key($pkeyid);
     		$sello = base64_encode($crypttext);
 
@@ -34,7 +34,7 @@ use XSLTProcessor;
 
 	    private static function _verifySeal($cadena_original, $encryptData, $cerPem) {
 	    	$pubkeyid = openssl_pkey_get_public(file_get_contents($cerPem));
-			$ok = openssl_verify($cadena_original, $encryptData, $pubkeyid, sha256WithRSAEncryption);
+			$ok = openssl_verify($cadena_original, $encryptData, $pubkeyid, OPENSSL_ALGO_SHA256);
 			openssl_free_key($pubkeyid);
 			return $ok == 1;
 	    }
