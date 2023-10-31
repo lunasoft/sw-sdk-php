@@ -26,7 +26,6 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, $cerB64, $keyB64, $password);
 			$this->assertEquals($resultSpect, $result->status);
-			//var_dump($result);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
