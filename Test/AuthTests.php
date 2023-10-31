@@ -9,8 +9,8 @@
         public function testSuccess(){
             $params = array(
                 "url"=>"http://services.test.sw.com.mx",
-                "user"=>"demo",
-                "password"=> "123456789"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $authenticate = AuthenticationService::auth($params);
             $result = $authenticate::Token();
@@ -19,14 +19,17 @@
             $this->assertEquals($result->status, "success");
         }
         public function testError(){
-            $this->expectException(Exception::class);
-            AuthenticationService::auth('');
-            
+            $params = array(
+                "url"=>"http://services.test.sw.com.mx",
+                "user"=>getenv('SDKTEST_USER'),
+                "password"=> ""
+            );
+            $authenticate = AuthenticationService::auth($params);
+            $result = $authenticate::Token();
+            $result->status;
+                  
+            $this->assertEquals($result->status, "error");
         }
          
     }
-
-
-
-
 ?>
