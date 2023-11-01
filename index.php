@@ -12,13 +12,14 @@ use SWServices\SatQuery\SatQueryService as SatQueryService;
 use SWServices\Csd\CsdService as CsdService;
 use SWServices\Services;
 
+
 header('Content-type: text/plain');
 
 
 $params = array(
     "url" => "http://services.test.sw.com.mx",
-    "user" => "cuentaTest@sw.com.mx",
-    "password" => "12345678"
+    "user" => getenv('SDKTEST_USER'),
+    "password" => getenv('SDKTEST_PASSWORD')
 );
 
 echo "\n\n------------Token---------------------\n\n";
@@ -43,10 +44,10 @@ try {
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-$xml = file_get_contents('Test/Resources/file.xml');
 
 echo "\n\n--------------- Emisión Timbrado ------------------\n\n";
 try {
+    $xml = fechaXML("Test/Resources/cfdi40_test.xml");
     EmisionTimbrado::Set($params);
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV4($xml);
     var_dump($resultadoIssue);
@@ -56,8 +57,9 @@ try {
 
 echo "\n\n--------------- Timbrado ------------------\n\n";
 try {
+    $xmlSellado = file_get_contents('Test/Resources/cfdi40_sellado.xml');
     StampService::Set($params);
-    $resultadoStamp = StampService::StampV4($xml);
+    $resultadoStamp = StampService::StampV4($xmlSellado);
     var_dump($resultadoStamp);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -75,7 +77,7 @@ try {
 
 echo "\n\n-------------- Emisión Timbrado por JSON -------------------\n\n";
 try {
-    $json = file_get_contents("Test/Resources/cfdi33_json_pagos.json");
+    $json = file_get_contents(fechaJSON("Test/Resources/cfdi40_json.json"));
     JsonEmisionTimbrado::Set($params);
     $resultadoJson = JsonEmisionTimbrado::JsonEmisionTimbradoV4($json);
 
@@ -249,4 +251,24 @@ try {
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+/*--------------------------------Fin Funciones-----------------------------------------------------------------------------------------------------------------------*/
+
+function fechaJSON($path) {
+    $contenidoJSON = file_get_contents($path);
+    $data = json_decode($contenidoJSON, true);
+    // Actualiza el atributo "fecha" con la fecha actual
+    $data['fecha'] = date('Y-m-d H:i:s');
+    $nuevoContenidoJSON = json_encode($data);
+    file_put_contents($path, $nuevoContenidoJSON);
+
+    return "Test/Resources/cfdi40_json.json";
+}
+function fechaXML($path) {
+    $xml = simplexml_load_file($path); //leemos el xml base
+	$date = date("Y-m-d\TH:i:s");
+    $xml["Fecha"] = $date;
+	$xml->asXML($path);
+
+    return $xml->asXML();;
 }

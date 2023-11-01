@@ -12,14 +12,13 @@ final class ResendTest extends TestCase
         try {
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
-                "token"=> "T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB3YVZxTHdOdHAwVXY2NTdJb1hkREtXTzE3dk9pMmdMdkFDR2xFWFVPUXpTUm9mTG1ySXdZbFNja3FRa0RlYURqbzdzdlI2UUx1WGJiKzViUWY2dnZGbFloUDJ6RjhFTGF4M1BySnJ4cHF0YjUvbmRyWWpjTkVLN3ppd3RxL0dJPQ.T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbFlVcU92YUJTZWlHU3pER1kySnlXRTF4alNUS0ZWcUlVS0NhelhqaXdnWTRncklVSWVvZlFZMWNyUjVxYUFxMWFxcStUL1IzdGpHRTJqdS9Zakw2UGRZbFlVYmJVSkxXa1NZNzN5VUlSUzlJaTYvbi9wczBSRnZGK1NUNUVoM1FNNXZJRUg1Qkx1dXJ1Z09EcHYyQnE4V1dnOHpkczFLdm5MZytxalNBeHdRbmFvb2VhTksrVzhyTTFXU09NbzZVeXMyQ2Q4VC9ncUlqWGZaMFhXSkdmcjJIWlB2Z2RmeFJGNzRkdXh2UHlvdnVhbGN6cGFsRWhSY3BOOWxPc0h4Z2ZJRjBjZEl5WEsvZW0vb0ZxZEJjUGtpRFlWYi9zRDZwZVJFRks0QUpRNkplZ2N4UzVEME40d2RhUHA4c1VUQWJiY1Jvc3NSVFcrRzVyTHNOTWovZlJHQmV6c0lmclE1TXV3aVY3UERtQUo3SjdpTzhuc1R1SGt1R0s0UHUvc3hEZWRtK3U0NExEYUdUVWIxL3NKRE1XY1RlTnNMaENoSFUvVGhaclk2WmNPR2JjUlpib1RPUTN5QUxiU0VEY0NpYmJDcDZHY3pGd0ZJMXcxTEExTnBPdzM.VZBKM8Odz5VdIyhQPZyRaJK1iVLmot-oMf0h69NU4vk"
+                "token"=> getenv('SDKTEST_TOKEN')
             );
             $emails = array(
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
-			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
+			$result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
 			$this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
@@ -35,15 +34,14 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
-			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
+			$result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
 			$this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
@@ -58,8 +56,8 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "test@mail.com",
@@ -69,8 +67,7 @@ final class ResendTest extends TestCase
                 "test@mail.com"
             );
             $resend = ResendService::Set($params);
-			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
+			$result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
 			$this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
@@ -85,8 +82,8 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "test@mail.com",
@@ -98,7 +95,6 @@ final class ResendTest extends TestCase
             );
             $resend = ResendService::Set($params);
 			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
 			$this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
@@ -112,15 +108,14 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
 			$result = $resend::ResendEmail("00000000-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
 			$this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "Message viene vacio.");
@@ -134,15 +129,14 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
 			$result = $resend::ResendEmail(null, $emails);
-            var_dump($result);
 			$this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
@@ -156,8 +150,8 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $emails = array(
                 "pruebas_ut@sw.com.mx",
@@ -165,7 +159,6 @@ final class ResendTest extends TestCase
             );
             $resend = ResendService::Set($params);
 			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
-            var_dump($result);
 			$this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
@@ -179,12 +172,11 @@ final class ResendTest extends TestCase
             $params = array(
                 "urlApi" => "https://api.test.sw.com.mx",
                 "url" => "https://services.test.sw.com.mx",
-                "user"=>"pruebas_ut@sw.com.mx",
-                "password"=> "\$Wpass12345"
+                "user"=> getenv('SDKTEST_USER'),
+                "password"=> getenv('SDKTEST_PASSWORD')
             );
             $resend = ResendService::Set($params);
 			$result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", null);
-            var_dump($result);
 			$this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
