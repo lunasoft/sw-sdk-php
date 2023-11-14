@@ -31,5 +31,7 @@
     require_once dirname(__FILE__) . '/SWServices/Storage/StorageRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Storage/StorageService.php';
     require_once dirname(__FILE__) . '/SWServices/Storage/StorageResponse.php';
-
+    require_once dirname(__FILE__) . '/SWServices/AcceptReject/AcceptRejectRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/AcceptReject/AcceptRejectService.php';
+    
 ?>
