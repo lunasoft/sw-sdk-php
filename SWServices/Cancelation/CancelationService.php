@@ -71,53 +71,6 @@ class CancelationService extends Services
             '/cfdi33/cancel/xml'
         );
     }
-    public static function AceptarRechazarCancelacionPFX($rfc, $uuids, $pfxB64, $password)
-    {
-        return cancelationRequest::sendReqPFX(
-            Services::get_url(),
-            Services::get_token(),
-            $rfc,
-            cancelationHandler::uuidsReq($uuids),
-            null,
-            $pfxB64,
-            $password,
-            Services::get_proxy(),
-            '/acceptreject/pfx'
-        );
-    }
-    public static function AceptarRechazarCancelacionCSD($rfc, $uuids, $cerB64, $keyB64, $password)
-    {
-        return cancelationRequest::sendReqCSD(
-            Services::get_url(),
-            Services::get_token(),
-            $rfc,
-            cancelationHandler::uuidsReq($uuids),
-            null,
-            $cerB64,
-            $keyB64,
-            $password,
-            Services::get_proxy(),
-            '/acceptreject/csd'
-        );
-    }
-    public static function AceptarRechazarCancelacionUUID($rfc, $uuid, $accion)
-    {
-        return cancelationRequest::sendReqUUID(
-            Services::get_url(),
-            Services::get_token(),
-            $rfc,
-            $uuid,
-            null,
-            Services::get_proxy(),
-            '/acceptreject/',
-            null,
-            $accion
-        );
-    }
-    public static function AceptarRechazarCancelacionXML($xml)
-    {
-        return cancelationRequest::sendReqXML(Services::get_url(), Services::get_token(), $xml, Services::get_proxy(), '/acceptreject/xml');
-    }
 
     public static function PendientesPorCancelar($rfc)
     {
