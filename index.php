@@ -10,6 +10,7 @@ use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\SatQueryService as SatQueryService;
 use SWServices\Csd\CsdService as CsdService;
+use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 use SWServices\Services;
 
 
@@ -174,11 +175,50 @@ try {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
-echo "\n\n--------------- Aceptar o rechazar Cancelación ------------------\n\n";
+echo "\n\n--------------- Aceptar o rechazar Cancelación UUID------------------\n\n";
+
 try {
-    $accion = "Aceptacion";
-    CancelationService::Set($params);
-    $aceptarRechazar = CancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
+    $acceptReject = AcceptRejectService::Set($params);
+    $uuidAcceptReject = "dcbddeb9-a208-42be-ae5b-0390a929fe48";
+    $action = "Aceptacion";
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionUUID($rfc, $uuidAcceptReject, $action);
+    var_dump($aceptarRechazar);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Aceptar o rechazar Cancelación CSD------------------\n\n";
+
+try {
+    AcceptRejectService::Set($params);
+    $list = [
+        ['uuid' => 'd056c249-a85d-45f3-a0f0-961afd29df8f', 'action' => 'Aceptacion']
+    ];
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionCSD($rfc, $list, $cerB64, $keyB64, $password);
+    var_dump($aceptarRechazar);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Aceptar o rechazar Cancelación PFX------------------\n\n";
+
+try {
+    AcceptRejectService::Set($params);
+    $list = [
+        ['uuid' => 'd056c249-a85d-45f3-a0f0-961afd29df8f', 'action' => 'Aceptacion']
+    ];
+    $aceptarRechazar = AcceptRejectService::AceptarRechazarCancelacionPFX($rfc, $list, $pfxB64, $passwordPfx);
+    var_dump($aceptarRechazar);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Aceptar o rechazar Cancelación XML------------------\n\n";
+
+try {
+    AcceptRejectService::Set($params);
+    $xmlAcceptReject = file_get_contents('Test\Resources\acceptReject_xml.xml');
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionXML($xmlAcceptReject);
     var_dump($aceptarRechazar);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
