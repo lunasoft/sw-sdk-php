@@ -1118,6 +1118,7 @@ Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitu
 </details>
 
 ## Aceptar/Rechazar Cancelación ##
+
 **Aceptar/Rechazar** es el servicio mediante el cual el receptor puede aceptar o rechazar un UUID que obtiene de su lista de pendientes. El método tiene varias maneras de ser consumido, por CSD, PFX, sólo UUID y por XML.
 
 <details>
@@ -1125,25 +1126,37 @@ Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitu
 Aceptar / Rechazar por CSD
 </summary>
 
-Está modalidad recibe como parámetros el RFC del Receptor, Certificado y llave privada [En base64], contraseña de Llave privada y una lista de UUID con su respectiva respuesta.
+<br> Método mediante el cual el receptor podrá manifestar la aceptación o rechazo de la solicitud de cancelación mediante CSD.
 
-Ejemplo de uso
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Usuario y contraseña ó token
+* Certificado del receptor en Base64
+* Llave(key) del receptor en Base64
+* RFC del emisor
+* Contraseña del certificado
+* Arreglo de objetos donde se especifican los UUID y acción a realizar
+
+**Ejemplo de consumo de la librería para la aceptacion/rechazo de la solicitud por CSD mediante usuario y contraseña**
+
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
+
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
-
-    $cerB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.cer'));
-    $keyB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
+    $cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
+    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
     $password = "12345678a";
-    $rfc = "LAN7008173R5";
-    $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
-    cancelationService::Set($params);
-    $aceptarRechazar = cancelationService::AceptarRechazarCancelacionCSD($rfc, $cerB64, $keyB64, $password, $uuids);
+    $rfc = "EKU9003173C9";
+    $list = [
+        ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
+    ];
+    $acceptReject = AcceptRejectService::Set($params);
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionCSD($rfc, $list, $cerB64, $keyB64, $password);
     var_dump($aceptarRechazar);
 ```
 </details>
@@ -1153,24 +1166,37 @@ Ejemplo de uso
 Aceptar / Rechazar por PFX
 </summary>
 
-Está modalidad recibe como parámetros el RFC del Receptor, PFX [En base64], contraseña de Llave privada y una lista de UUID con su respectiva respuesta.
+<br> Método mediante el cual el receptor podrá manifestar la aceptación o rechazo de la solicitud de cancelación mediante PFX.
 
-Ejemplo de uso
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Usuario y contraseña ó token
+* Archivo Pfx en Base64
+* Contraseña del certificado
+* RFC del emisor
+* Arreglo de objetos donde se especifican los UUID y acción a realizar
+
+**Ejemplo de consumo de la librería para la aceptación/rechazo de la solicitud por PFX mediante usuario y contraseña**
+
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
+
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
 
-    $pfxB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
-    $password = "12345678a";
-    $rfc = "LAN7008173R5";
-    $uuids[0]=array("6ab07bef-4446-43ea-a3fd-04a804309457","Rechazo");
-    cancelationService::Set($params);
-    $aceptarRechazar = cancelationService::AceptarRechazarCancelacionPFX($rfc, $pfxB64, $password, $uuids);
+    $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+    $passwordPfx = "swpass";
+    $rfc = "EKU9003173C9";
+    $list = [
+        ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
+    ];
+            
+    $acceptReject = AcceptRejectService::Set($params);
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionPFX($rfc, $list, $pfxB64, $passwordPfx);
     var_dump($aceptarRechazar);
 ```
 </details>
@@ -1180,54 +1206,63 @@ Ejemplo de uso
 Aceptar / Rechazar por XML
 </summary>
 
-Está modalidad recibe como parámetros el XML de Aceptación/Rechazo, dentro del cual ya vienen especificados los UUID y su correspondiente respuesta.
+<br>Método mediante el cual el receptor podrá manifestar la aceptación o rechazo de la solicitud de cancelación mediante XML.
 
-XML a envíar
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Usuario y contraseña ó token
+* XML con datos requeridos para la aceptación/rechazo de la cancelación
+
+**Ejemplo de XML**
+
 ```xml
-<SolicitudAceptacionRechazo Fecha="2018-09-20T14:48:09" RfcPacEnviaSolicitud="AAA010101AAA" RfcReceptor="LAN7008173R5" xmlns="http://cancelacfd.sat.gob.mx" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<Folios>
-		<UUID>FD74D156-B9B0-44A5-9906-E08182E8363E</UUID>
-		<Respuesta>Aceptacion</Respuesta>
-	</Folios>
-	<Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
-		<SignedInfo>
-			<CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315"/>
-			<SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1"/>
-			<Reference URI="">
-				<Transforms>
-					<Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature"/>
-				</Transforms>
-				<DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1"/>
-				<DigestValue>QlfpYnalZKv6WAv33vZwMME7noA=</DigestValue>
-			</Reference>
-		</SignedInfo>
-		<SignatureValue>dwhdSsuP64IFJMuR0sogqxpcQqlN9zq4tBXK6KHGTPMlC/xSXEi30L5SD6ogeCHpu3G2NzaXrE6wRxc8kRLOuSy/LxVEPUJi5HgYnfJMBWSq/EVccf2DD6JY4ihAtgdko7E26liY3RcqczfF9ujh98FC3eu9i1IJCJ9isIZYPqTvthwOtKEQVFvSfeA0wE7aVz1z1wBVur0wnIFHz13//SUHRgHMWrJ9m5pLuH5zVv+MU80dmmrNQ7EXz3krCDj7JMh6/I1ftgYsJMsUzwhcYgy7v9FTGrz3tkn/j8Gq1dWWYcqTtqHUcQtSpdCLgw6d9KojpUsqN5WVVb+HFe2uCA==</SignatureValue>
-		<KeyInfo>
-			<X509Data>
-				<X509IssuerSerial>
-					<X509IssuerName>OID.1.2.840.113549.1.9.2=Responsable: ACDMA, OID.2.5.4.45=SAT970701NN3, L=Coyoacán, S=Distrito Federal, C=MX, PostalCode=06300, STREET=&quot;Av. Hidalgo 77, Col. Guerrero&quot;, E=asisnet@pruebas.sat.gob.mx, OU=Administración de Seguridad de la Información, O=Servicio de Administración Tributaria, CN=A.C. 2 de pruebas(4096)</X509IssuerName>
-					<X509SerialNumber>286524172099382162235533054548081509963388170549</X509SerialNumber>
-				</X509IssuerSerial>
-				<X509Certificate>MIIFxTCCA62gAwIBAgIUMjAwMDEwMDAwMDAzMDAwMjI4MTUwDQYJKoZIhvcNAQELBQAwggFmMSAwHgYDVQQDDBdBLkMuIDIgZGUgcHJ1ZWJhcyg0MDk2KTEvMC0GA1UECgwmU2VydmljaW8gZGUgQWRtaW5pc3RyYWNpw7NuIFRyaWJ1dGFyaWExODA2BgNVBAsML0FkbWluaXN0cmFjacOzbiBkZSBTZWd1cmlkYWQgZGUgbGEgSW5mb3JtYWNpw7NuMSkwJwYJKoZIhvcNAQkBFhphc2lzbmV0QHBydWViYXMuc2F0LmdvYi5teDEmMCQGA1UECQwdQXYuIEhpZGFsZ28gNzcsIENvbC4gR3VlcnJlcm8xDjAMBgNVBBEMBTA2MzAwMQswCQYDVQQGEwJNWDEZMBcGA1UECAwQRGlzdHJpdG8gRmVkZXJhbDESMBAGA1UEBwwJQ295b2Fjw6FuMRUwEwYDVQQtEwxTQVQ5NzA3MDFOTjMxITAfBgkqhkiG9w0BCQIMElJlc3BvbnNhYmxlOiBBQ0RNQTAeFw0xNjEwMjUyMTUyMTFaFw0yMDEwMjUyMTUyMTFaMIGxMRowGAYDVQQDExFDSU5ERU1FWCBTQSBERSBDVjEaMBgGA1UEKRMRQ0lOREVNRVggU0EgREUgQ1YxGjAYBgNVBAoTEUNJTkRFTUVYIFNBIERFIENWMSUwIwYDVQQtExxMQU43MDA4MTczUjUgLyBGVUFCNzcwMTE3QlhBMR4wHAYDVQQFExUgLyBGVUFCNzcwMTE3TURGUk5OMDkxFDASBgNVBAsUC1BydWViYV9DRkRJMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgvvCiCFDFVaYX7xdVRhp/38ULWto/LKDSZy1yrXKpaqFXqERJWF78YHKf3N5GBoXgzwFPuDX+5kvY5wtYNxx/Owu2shNZqFFh6EKsysQMeP5rz6kE1gFYenaPEUP9zj+h0bL3xR5aqoTsqGF24mKBLoiaK44pXBzGzgsxZishVJVM6XbzNJVonEUNbI25DhgWAd86f2aU3BmOH2K1RZx41dtTT56UsszJls4tPFODr/caWuZEuUvLp1M3nj7Dyu88mhD2f+1fA/g7kzcU/1tcpFXF/rIy93APvkU72jwvkrnprzs+SnG81+/F16ahuGsb2EZ88dKHwqxEkwzhMyTbQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAJ/xkL8I+fpilZP+9aO8n93+20XxVomLJjeSL+Ng2ErL2GgatpLuN5JknFBkZAhxVIgMaTS23zzk1RLtRaYvH83lBH5E+M+kEjFGp14Fne1iV2Pm3vL4jeLmzHgY1Kf5HmeVrrp4PU7WQg16VpyHaJ/eonPNiEBUjcyQ1iFfkzJmnSJvDGtfQK2TiEolDJApYv0OWdm4is9Bsfi9j6lI9/T6MNZ+/LM2L/t72Vau4r7m94JDEzaO3A0wHAtQ97fjBfBiO5M8AEISAV7eZidIl3iaJJHkQbBYiiW2gikreUZKPUX0HmlnIqqQcBJhWKRu6Nqk6aZBTETLLpGrvF9OArV1JSsbdw/ZH+P88RAt5em5/gjwwtFlNHyiKG5w+UFpaZOK3gZP0su0sa6dlPeQ9EL4JlFkGqQCgSQ+NOsXqaOavgoP5VLykLwuGnwIUnuhBTVeDbzpgrg9LuF5dYp/zs+Y9ScJqe5VMAagLSYTShNtN8luV7LvxF9pgWwZdcM7lUwqJmUddCiZqdngg3vzTactMToG16gZA4CWnMgbU4E+r541+FNMpgAZNvs2CiW/eApfaaQojsZEAHDsDv4L5n3M1CC7fYjE/d61aSng1LaO6T1mh+dEfPvLzp7zyzz+UgWMhi5Cs4pcXx1eic5r7uxPoBwcCTt3YI1jKVVnV7/w=</X509Certificate>
-			</X509Data>
-		</KeyInfo>
-	</Signature>
+<SolicitudAceptacionRechazo xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" Fecha="2023-11-13T17:00:44" RfcPacEnviaSolicitud="LSO1306189R5" RfcReceptor="EKU9003173C9"
+    xmlns="http://cancelacfd.sat.gob.mx">
+    <Folios>
+        <UUID>dcbddeb9-a208-42be-ae5b-0390a929fe48</UUID>
+        <Respuesta>Aceptacion</Respuesta>
+    </Folios>
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+        <SignedInfo>
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+            <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+            <Reference URI="">
+                <Transforms>
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                </Transforms>
+                <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                <DigestValue>jMSiI7taWgjRDm0zzJF2hmayhWZcEAPQRwXkDhzsXAw=</DigestValue>
+            </Reference>
+        </SignedInfo>
+        <SignatureValue>sRpjcm/c/Prxdp7+JsatvgmwCDl7YwYXMpOdU9Oh3CCzUPyYEM0wwEzQApFnRrr4/DDuYTF/ajaQ2fL9hjhYqm21eR+1W5AWQHCLJ7Pc6BnqCIj/xIGhRoHGMZNnb9ZvT7kEt0P2clG4T5u4rGfL3p31mQaJLxKPYm/BR2zhzQuE33lyv3AnQA8LbpqDoMi/ZW2SSjRgFNhs1JUI6EQQmwLRZ7KU+LjhKDGFBgFJ9RQZgJOXSyRoTToJHLktlcvzvS45HLUJDus5g8B/4mOGy9tafPGtddrzi9BV/XbadFdAF5LXFq6ng7jX3EavBX1/B9u4SIJzEE9YD8pqqcD6Xw==</SignatureValue>
+        <KeyInfo>
+            <X509Data>
+                <X509IssuerSerial>
+                    <X509IssuerName>OID.1.2.840.113549.1.9.2=responsable: ACDMA-SAT, OID.2.5.4.45=2.5.4.45, L=COYOACAN, S=CIUDAD DE MEXICO, C=MX, PostalCode=06370, STREET=3ra cerrada de caliz, E=oscar.martinez@sat.gob.mx, OU=SAT-IES Authority, O=SERVICIO DE ADMINISTRACION TRIBUTARIA, CN=AC UAT</X509IssuerName>
+                    <X509SerialNumber>292233162870206001759766198462772978647764840758</X509SerialNumber>
+                </X509IssuerSerial>
+                <X509Certificate>MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=</X509Certificate>
+            </X509Data>
+        </KeyInfo>
+    </Signature>
 </SolicitudAceptacionRechazo>
 ```
 
-Ejemplo de uso
+**Ejemplo de consumo de la librería para la aceptación/rechazo de la solicitud por XML mediante usuario y contraseña**
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
+
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
+    $xml = file_get_contents('Test\Resources\acceptReject_xml.xml');
 
-    $xml = file_get_contents('Test\Resources\fileAcceptReject.xml');
-    cancelationService::Set($params);
-    $aceptarRechazar = cancelationService::AceptarRechazarCancelacionXML($xml);
+    $acceptReject = AcceptRejectService::Set($params);
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionXML($xml);
     var_dump($aceptarRechazar);
 ```
 </details>
@@ -1237,24 +1272,34 @@ Ejemplo de uso
 Aceptar / Rechazar por UUID
 </summary>
 
-Está modalidad recibe como parámetros el RFC del Receptor, el UUID, así como su acción a tomar.
-Es importante decir que los certificados correspondientes al RFC deben estar en el administrador de timbres.
+<br>Método mediante el cual el receptor podrá manifestar la aceptación o rechazo de la solicitud de cancelación mediante UUID.
 
-Ejemplo de uso
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Usuario y contraseña ó token
+* RFC del receptor
+* UUID de la factura que se requiere aceptar/rechazar
+* Acción que se requiera realizar Aceptación/Rechazo
+
+:pushpin: ***NOTA:*** El usuario deberá tener sus certificados en el administrador de timbres para la utilización de este método.
+
+**Ejemplo de consumo de la librería para la aceptación/rechazo de la solicitud por UUID mediante usuario y contraseña**
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
+
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
 
-    $rfc = "LAN7008173R5";
-    $uuid = "6ab07bef-4446-43ea-a3fd-04a804309457";
-    $accion = "Rechazo";
-    cancelationService::Set($params);
-    $aceptarRechazar = cancelationService::AceptarRechazarCancelacionUUID($rfc, $uuid, $accion);
+    $rfc = "EKU9003173C9";
+    $uuid = "dcbddeb9-a208-42be-ae5b-0390a929fe48";
+    $action = "Rechazo";
+
+    $acceptReject = AcceptRejectService::Set($params);
+    $aceptarRechazar = $acceptReject::AceptarRechazarCancelacionUUID($rfc, $uuid, $action);
     var_dump($aceptarRechazar);
 ```
 </details>
