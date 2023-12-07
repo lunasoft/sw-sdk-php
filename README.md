@@ -16,18 +16,14 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 - [Implementación](#Implementación)
 ---
 
-Estado Actual
------
-
-[![Build Status](https://travis-ci.org/lunasoft/sw-sdk-php.svg?branch=master)](http://travis-ci.org/example/example)
-
 ### Compatibilidad
--------------
+
 * CFDI 4.0
 * PHP 5.6 ó en su versión PHP 7
+------------
 
 ### Dependencias
-------------
+
 * [PHPUnit](https://phpunit.de/) Para las pruebas Unitarias
 * [Composer](https://getcomposer.org/) Para descargar nuestro SDK
 
@@ -36,10 +32,11 @@ Estado Actual
 ### Documentación
 * [Inicio Rápido](https://developers.sw.com.mx/knowledge-base/conoce-el-proceso-de-integracion-en-solo-7-pasos/)
 * [Documentacion Oficial Servicios](http://developers.sw.com.mx)
+
 ---
 
 ### Instalación
----------
+
 Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP ya sea la **5.6** o la version **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
 
 #### Instalar Composer #####
@@ -87,7 +84,6 @@ Se puede hacer uso de las clases mediante la implementacion manual haciendo uso 
 ----------------
 
 ### Implementación 
----
 
 La librería cuenta con dos servicios principales los que son la Autenticacion y el Timbrado de CFDI (XML).
 
@@ -723,6 +719,17 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
     var_dump($resultadoJson);
 ```
 </details>
+
+:pushpin: ***NOTA:*** Existen varias versiones de respuesta, las cuales son las siguientes:
+
+| Version |                         Respuesta                             | 
+|---------|---------------------------------------------------------------|
+|  V1     | Devuelve el timbre fiscal digital                             | 
+|  V2     | Devuelve el timbre fiscal digital y el CFDI timbrado          | 
+|  V3     | Devuelve el CFDI timbrado                                     | 
+|  V4     | Devuelve todos los datos del timbrado                         |
+
+Para mayor referencia de estas versiones de respuesta, favor de visitar el siguiente [link](https://developers.sw.com.mx/knowledge-base/versiones-de-respuesta-timbrado/).
 
 ## Cancelación CFDI ##
 
@@ -1614,6 +1621,169 @@ $emails = array(
 $result = $resend::ResendEmail("506aecd4-fc5f-4581-a0e1-9b185967b212", $emails);
 ```
 </details>
+
+## Certificados ##
+Servicio para gestionar los certificados CSD de tu cuenta, será posible cargar, consultar y eliminar los certificados.
+Para administrar los certificados de manera gráfica, puede hacerlo desde el [Administrador de timbres](https://portal.sw.com.mx/).
+
+<details>
+<summary>
+Consultar Certificados
+</summary>
+
+Método para consultar todos los certificados cargados en la cuenta.
+
+Este método recibe los siguientes parametros:
+* Url Servicios SW(cuando se añaden usuario y contraseña)
+* Token
+
+**Ejemplo de consumo de la librería para la consulta de certificados mediante usuario y contraseña**
+```php
+<?php
+    require_once 'SWSDK.php';
+    use SWServices\Csd\CsdService as CsdService;
+
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    CsdService::Set($params);
+    $response = CsdService::GetListCsd();
+    var_dump($response);
+?>
+```
+</details>
+
+<details>
+<summary>
+Consultar Certificado Por RFC
+</summary>
+
+Método para obtener un certificado cargado enviando como parámetro el RFC de certificado.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Token
+* RFC del certificado a obtener
+
+**Ejemplo de consumo de la librería para la consulta de certificados por RFC del Certificado mediante usuario y contraseña**
+```php
+<?php
+    require_once 'SWSDK.php';
+    use SWServices\Csd\CsdService as CsdService;
+
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    CsdService::Set($params);
+    $response = CsdService::GetListCsdByRfc('EKU9003173C9');
+    var_dump($response);
+?>
+```
+</details>
+
+<details>
+<summary>
+Consultar Certificado Por NoCertificado
+</summary>
+
+Método para obtener un certificado cargado enviando como parámetro el número de certificado.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Token
+* Número de certificado a obtener
+
+**Ejemplo de consumo de la librería para la consulta de certificados por Número de Certificado mediante usuario y contraseña**
+```php
+<?php
+    require_once 'SWSDK.php';
+    use SWServices\Csd\CsdService as CsdService;
+
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    CsdService::Set($params);
+    $response = CsdService::InfoCsd('20001000000300022816');
+    var_dump($response);
+?>
+```
+</details>
+
+<details>
+<summary>
+Cargar Certificado
+</summary>
+
+Método para cargar un certificado en la cuenta.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Token
+* CSD en Base64
+* Key en Base64
+* Contraseña del certificado
+* Tipo de certificado (Default = “stamp”) 
+* Estado del certificado (Default = “true”) 
+
+**Ejemplo de consumo de la libreria para la carga de certificado mediante usuario y contraseña**
+```php
+<?php
+    require_once 'SWSDK.php';
+    use SWServices\Csd\CsdService as CsdService;
+    
+    $b64Cer = base64_encode(file_get_contents('EKU9003173C9.cer'));
+    $b64Key = base64_encode(file_get_contents('EKU9003173C9.key'));
+    $password = "12345678a";
+    $type = "stamp";
+    $isActive = true;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    CsdService::Set($params);
+    $response = CsdService::UploadCsd($isActive, $type, $b64Cer, $b64Key, $password);
+    var_dump($response);
+?>
+```
+</details>
+
+<details>
+<summary>
+Eliminar Certificado
+</summary>
+
+Método para eliminar un certificado de la cuenta.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW
+* Token
+* Número de certificado a eliminar
+
+**Ejemplo de consumo de la libreria para eliminar un certificado mediante usuario y contraseña**
+```php
+<?php
+    require_once 'SWSDK.php';
+    use SWServices\Csd\CsdService as CsdService;
+
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "user" => "usuario",
+        "password" => "contraseña"
+    );
+    CsdService::Set($params);
+    $response = CsdService::DisableCsd('20001000000300022763');
+    var_dump($response);
+?>
+```
+</details>
+
 
 ## TimbradoV4 ##
 
