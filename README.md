@@ -1634,8 +1634,8 @@ Consultar Certificados
 Método para consultar todos los certificados cargados en la cuenta.
 
 Este método recibe los siguientes parametros:
-* Url Servicios SW(cuando se añaden usuario y contraseña)
-* Token
+* Url Servicios SW
+* Usuario y contraseña
 
 **Ejemplo de consumo de la librería para la consulta de certificados mediante usuario y contraseña**
 ```php
@@ -1664,7 +1664,7 @@ Método para obtener un certificado cargado enviando como parámetro el RFC de c
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW
-* Token
+* Usuario y contraseña
 * RFC del certificado a obtener
 
 **Ejemplo de consumo de la librería para la consulta de certificados por RFC del Certificado mediante usuario y contraseña**
@@ -1694,7 +1694,7 @@ Método para obtener un certificado cargado enviando como parámetro el número 
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW
-* Token
+* Usuario y contraseña
 * Número de certificado a obtener
 
 **Ejemplo de consumo de la librería para la consulta de certificados por Número de Certificado mediante usuario y contraseña**
@@ -1724,7 +1724,7 @@ Método para cargar un certificado en la cuenta.
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW
-* Token
+* Usuario y contraseña
 * CSD en Base64
 * Key en Base64
 * Contraseña del certificado
@@ -1763,7 +1763,7 @@ Método para eliminar un certificado de la cuenta.
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW
-* Token
+* Usuario y contraseña
 * Número de certificado a eliminar
 
 **Ejemplo de consumo de la libreria para eliminar un certificado mediante usuario y contraseña**
