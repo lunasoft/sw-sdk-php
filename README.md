@@ -1101,28 +1101,6 @@ Ejemplo de uso
 ```
 </details>
 
-## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
-Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
-
-
-<details>
-  <summary>Ejemplo de uso</summary>
-
-```php
-    require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "user"=>"cuentaUsuario",
-        "password"=> "contraseña"
-    );
-
-    $rfc = "LAN7008173R5";
-    cancelationService::Set($params);
-    $consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
-    var_dump($consultaPendientes);
-```
-</details>
 
 ## Aceptar/Rechazar Cancelación ##
 
@@ -1311,8 +1289,60 @@ Este método recibe los siguientes parámetros:
 ```
 </details>
 
+## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
+Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
+
+<details>
+<summary>
+Pendientes por cancelar con RFC
+</summary>
+
+Está modalidad recibe como parámetro el RFC del Receptor.
+
+Ejemplo de uso
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Pendings\PendingsService as pendingsService;
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    
+    $rfc = "LAN7008173R5";
+    pendingsService::Set($params);
+    $consultaRelacionados = relationsService::PendientesPorCancelar($rfc);
+    var_dump($consultaRelacionados);
+```
+</details>
+
 ## Consulta documentos relacionados ##
 Este servicio nos permite conocer las facturas que se encuentren relacionadas a un UUID. El método tiene varias maneras de ser consumido, por CSD, PFX, sólo UUID y por XML.
+
+<details>
+<summary>
+Documentos relacionados con UUID
+</summary>
+
+Está modalidad recibe como parámetros el RFC del Receptor y el UUID a consultar.
+
+Ejemplo de uso
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Relations\RelationsService as relationsService;
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    
+    $rfc = "LAN7008173R5";
+    $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
+    var_dump($consultaRelacionados);
+```
+</details>
 
 <details>
 <summary>
@@ -1324,7 +1354,7 @@ Está modalidad recibe como parámetros el RFC del Receptor, Certificado y Llave
 Ejemplo de uso
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\Relations\RelationsService as relationsService;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
@@ -1335,8 +1365,8 @@ Ejemplo de uso
     $keyB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-    cancelationService::Set($params);
-    $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
     var_dump($consultaRelacionados);
 ```
 </details>
@@ -1351,7 +1381,7 @@ Está modalidad recibe como parámetros el RFC del Receptor, PFX [En base64], co
 Ejemplo de uso
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\Relations\RelationsService as relationsService;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
@@ -1361,8 +1391,8 @@ Ejemplo de uso
     $pfxB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-    cancelationService::Set($params);
-    $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
     var_dump($consultaRelacionados);
 ```
 </details>
