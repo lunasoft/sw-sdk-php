@@ -30,7 +30,7 @@ class RelationsService extends Services
             '/relations/'
         );
     }
-    public static function ConsultarCFDIRelacionadosCSD($service, $token, $uuid, $password, $rfc, $cerB64, $keyB64)
+    public static function ConsultarCFDIRelacionadosCSD($token, $uuid, $password, $rfc, $cerB64, $keyB64)
     {
         try {
             $url = Services::get_url();
@@ -40,7 +40,7 @@ class RelationsService extends Services
     
             return relationsRequest::sendReqCSDRelations(
                 $url,
-                $service,
+                '/relations/csd',
                 $token,
                 $uuid,
                 $password,
@@ -53,7 +53,7 @@ class RelationsService extends Services
         }
     }
 
-    public static function ConsultarCFDIRelacionadosPFX($service, $token, $uuid, $password, $rfc, $pfxB64)
+    public static function ConsultarCFDIRelacionadosPFX($token, $uuid, $password, $rfc, $pfxB64)
     {
         try {
             $url = Services::get_url();
@@ -63,7 +63,7 @@ class RelationsService extends Services
     
             return relationsRequest::sendReqPFXRelations(
                 $url,
-                $service,
+                '/relations/pfx',
                 $token,
                 $uuid,
                 $password,
