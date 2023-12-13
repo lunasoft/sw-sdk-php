@@ -314,46 +314,6 @@ try {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
-echo "\n\n--------------- Relacionados por UUID------------------\n\n";
-try {
-    RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosUUID('EKU9003173C9','cfc771b4-7d90-459e-ab06-afd2b3c59c10');
-    var_dump($response);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
-echo "\n\n--------------- Relacionados por CSD------------------\n\n";
-try {
-    $service = "/relations/csd";
-    RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosCSD($service, $token, $uuid, $password, $rfc, $cerB64, $keyB64);
-    var_dump($response);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
-
-echo "\n\n--------------- Relacionados por PFX------------------\n\n";
-try {
-    $service = "/relations/pfx";
-    RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosPFX($service, $token, $uuid, $password, $rfc, $pfxB64);
-    var_dump($response);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
-echo "\n\n--------------- Pendientes por Cancelar------------------\n\n";
-
-try {
-    PendingsService::Set($params);
-    $response = PendingsService::PendientesPorCancelar($rfc);
-    var_dump($response);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
 /*--------------------------------Fin Funciones-----------------------------------------------------------------------------------------------------------------------*/
 
 function fechaJSON($path) {
