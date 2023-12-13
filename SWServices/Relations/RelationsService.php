@@ -20,29 +20,38 @@ class RelationsService extends Services
 
     public static function ConsultarCFDIRelacionadosUUID($rfc, $uuid)
     {
-        return relationsRequest::sendReqUUID(
-            Services::get_url(),
-            Services::get_token(),
-            $rfc,
-            $uuid,
-            null,
-            Services::get_proxy(),
-            '/relations/'
-        );
+        try {
+            $url = Services::get_url();
+            $token = Services::get_token();
+
+            $formattedUuid = relationsHandler::uuidReq($uuid);
+
+            return relationsRequest::sendReqUUID(
+                $url,
+                $token,
+                $rfc,
+                $uuid,
+                null,
+                Services::get_proxy(),
+                '/relations/'
+            );
+        } catch (Exception $e) {
+            return ['error' => 'Ocurrió un error durante la solicitud: ' . $e->getMessage()];
+        }
     }
-    public static function ConsultarCFDIRelacionadosCSD($token, $uuid, $password, $rfc, $cerB64, $keyB64)
+    public static function ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, $cerB64, $keyB64)
     {
         try {
             $url = Services::get_url();
             $token = Services::get_token();
-    
+
             $formattedUuid = relationsHandler::uuidReq($uuid);
-    
+
             return relationsRequest::sendReqCSDRelations(
                 $url,
                 '/relations/csd',
                 $token,
-                $uuid,
+                $formattedUuid,
                 $password,
                 $rfc,
                 $cerB64,
@@ -53,19 +62,19 @@ class RelationsService extends Services
         }
     }
 
-    public static function ConsultarCFDIRelacionadosPFX($token, $uuid, $password, $rfc, $pfxB64)
+    public static function ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, $pfxB64)
     {
         try {
             $url = Services::get_url();
             $token = Services::get_token();
-    
+
             $formattedUuid = relationsHandler::uuidReq($uuid);
-    
+
             return relationsRequest::sendReqPFXRelations(
                 $url,
                 '/relations/pfx',
                 $token,
-                $uuid,
+                $formattedUuid,
                 $password,
                 $rfc,
                 $pfxB64

@@ -65,7 +65,7 @@ final class RelationsTests extends TestCase
 		);
 		try {
 			$relationsService = RelationsService::Set($params);
-			$result = $relationsService::ConsultarCFDIRelacionadosCSD($service, $token, $uuid, $password, $rfc, $cerB64, $keyB64);
+			$result = $relationsService::ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, $cerB64, $keyB64);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data);
 		} catch (Exception $e) {
@@ -89,7 +89,7 @@ final class RelationsTests extends TestCase
 		);
 		try {
 			$relationsService = RelationsService::Set($params);
-			$result = $relationsService::ConsultarCFDIRelacionadosCSD($service, $token, $uuid, $password, $rfc, "cerNull", $keyB64);
+			$result = $relationsService::ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, "cerNull", $keyB64);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data);
 		} catch (Exception $e) {
@@ -112,7 +112,7 @@ final class RelationsTests extends TestCase
 		);
 		try {
 			$relationsService = RelationsService::Set($params);
-			$result = $relationsService::ConsultarCFDIRelacionadosPFX($service, $token, $uuid, $password, $rfc, $pfxB64);
+			$result = $relationsService::ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, $pfxB64);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data);
 		} catch (Exception $e) {
@@ -134,7 +134,7 @@ final class RelationsTests extends TestCase
 		);
 		try {
 			$relationsService = RelationsService::Set($params);
-			$result = $relationsService::ConsultarCFDIRelacionadosPFX($service, $token, $uuid, $password, $rfc, "pfxNull");
+			$result = $relationsService::ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, "pfxNull");
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data);
 		} catch (Exception $e) {

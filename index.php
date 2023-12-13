@@ -286,7 +286,7 @@ try {
 echo "\n\n--------------- Relacionados por CSD------------------\n\n";
 try {
     RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosCSD($token, $uuid, $password, $rfc, $cerB64, $keyB64);
+    $response = RelationsService::ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, $cerB64, $keyB64);
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -296,7 +296,7 @@ try {
 echo "\n\n--------------- Relacionados por PFX------------------\n\n";
 try {
     RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosPFX($token, $uuid, $password, $rfc, $pfxB64);
+    $response = RelationsService::ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, $pfxB64);
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
