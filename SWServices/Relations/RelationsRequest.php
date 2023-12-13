@@ -7,9 +7,9 @@ use Exception;
 
 class RelationsRequest
 {
-    public static function sendReqCSDRelations($urlBase, $service, $token, $uuid, $password, $rfc, $cerB64, $keyB64)
+    public static function sendReqCSDRelations($url, $service, $token, $uuid, $password, $rfc, $cerB64, $keyB64)
     {
-        $url = $urlBase . $service;
+        $url = $url . $service;
         $curl = curl_init();
 
         $data = array(
