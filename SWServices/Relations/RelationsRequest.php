@@ -2,7 +2,6 @@
 
 namespace SWServices\Relations;
 
-use SWServices\Relations\relationsHandler as RelationsHandler;
 use Exception;
 
 class RelationsRequest

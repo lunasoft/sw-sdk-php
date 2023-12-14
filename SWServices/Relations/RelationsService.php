@@ -3,7 +3,6 @@
 namespace SWServices\Relations;
 
 use SWServices\Relations\RelationsRequest as relationsRequest;
-use SWServices\Relations\RelationsHandler as relationsHandler;
 use SWServices\Services as Services;
 use Exception;
 
@@ -24,8 +23,6 @@ class RelationsService extends Services
             $url = Services::get_url();
             $token = Services::get_token();
 
-            $formattedUuid = relationsHandler::uuidReq($uuid);
-
             return relationsRequest::sendReqUUID(
                 $url,
                 $token,
@@ -45,13 +42,11 @@ class RelationsService extends Services
             $url = Services::get_url();
             $token = Services::get_token();
 
-            $formattedUuid = relationsHandler::uuidReq($uuid);
-
             return relationsRequest::sendReqCSDRelations(
                 $url,
                 '/relations/csd',
                 $token,
-                $formattedUuid,
+                $uuid,
                 $password,
                 $rfc,
                 $cerB64,
@@ -68,13 +63,11 @@ class RelationsService extends Services
             $url = Services::get_url();
             $token = Services::get_token();
 
-            $formattedUuid = relationsHandler::uuidReq($uuid);
-
             return relationsRequest::sendReqPFXRelations(
                 $url,
                 '/relations/pfx',
                 $token,
-                $formattedUuid,
+                $uuid,
                 $password,
                 $rfc,
                 $pfxB64

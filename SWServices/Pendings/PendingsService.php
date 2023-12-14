@@ -3,7 +3,6 @@
 namespace SWServices\Pendings;
 
 use SWServices\Pendings\PendingsRequest as PendingsRequest;
-use SWServices\Pendings\PendingsHandler as PendingsHandler;
 use SWServices\Services as Services;
 use Exception;
 
