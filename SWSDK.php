@@ -9,6 +9,10 @@
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationService.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationHandler.php';
+    require_once dirname(__FILE__) . '/SWServices/Relations/RelationsService.php';
+    require_once dirname(__FILE__) . '/SWServices/Relations/RelationsRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/Pendings/PendingsService.php';
+    require_once dirname(__FILE__) . '/SWServices/Pendings/PendingsRequest.php';
     require_once dirname(__FILE__) . '/SWServices/AccountBalance/AccountBalanceRequest.php';
     require_once dirname(__FILE__) . '/SWServices/AccountBalance/AccountBalanceService.php';
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateRequest.php';

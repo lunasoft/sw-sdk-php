@@ -11,9 +11,10 @@ use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\SatQueryService as SatQueryService;
 use SWServices\Csd\CsdService as CsdService;
 use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
+use SWServices\Relations\RelationsService as RelationsService;
+use SWServices\Pendings\PendingsService as PendingsService;
 use SWServices\Services;
-
-
+ 
 header('Content-type: text/plain');
 
 
@@ -155,26 +156,6 @@ $sello = "bb2k2g==";
 $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
 var_dump($consultaCfdi);
 
-echo "\n\n--------------- Consulta Pendientes por Cancelar ------------------\n\n";
-try {
-    $rfc = "EKU9003173C9";
-    CancelationService::Set($params);
-    $consultaPendientes = CancelationService::PendientesPorCancelar($rfc);
-    var_dump($consultaPendientes);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
-echo "\n\n--------------- Consulta Relacionados ------------------\n\n";
-try {
-    $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
-    CancelationService::Set($params);
-    $cfdiRelacionados = CancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
-    var_dump($cfdiRelacionados);
-} catch (Exception $e) {
-    echo 'Caught exception: ',  $e->getMessage(), "\n";
-}
-
 echo "\n\n--------------- Aceptar o rechazar Cancelación UUID------------------\n\n";
 
 try {
@@ -292,6 +273,45 @@ try {
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
+
+echo "\n\n--------------- Relacionados por UUID------------------\n\n";
+try {
+    RelationsService::Set($params);
+    $response = RelationsService::ConsultarCFDIRelacionadosUUID('EKU9003173C9','cfc771b4-7d90-459e-ab06-afd2b3c59c10');
+    var_dump($response);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Relacionados por CSD------------------\n\n";
+try {
+    RelationsService::Set($params);
+    $response = RelationsService::ConsultarCFDIRelacionadosCSD('cfc771b4-7d90-459e-ab06-afd2b3c59c10', $password, 'EKU9003173C9', $cerB64, $keyB64);
+    var_dump($response);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+
+echo "\n\n--------------- Relacionados por PFX------------------\n\n";
+try {
+    RelationsService::Set($params);
+    $response = RelationsService::ConsultarCFDIRelacionadosPFX('cfc771b4-7d90-459e-ab06-afd2b3c59c10', $password, 'EKU9003173C9', $pfxB64);
+    var_dump($response);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Pendientes por Cancelar------------------\n\n";
+
+try {
+    PendingsService::Set($params);
+    $response = PendingsService::PendientesPorCancelar($rfc);
+    var_dump($response);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
 /*--------------------------------Fin Funciones-----------------------------------------------------------------------------------------------------------------------*/
 
 function fechaJSON($path) {
