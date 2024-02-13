@@ -91,14 +91,15 @@
         public function testIssueJsonV4CustomIdPdfFail() {
             $resultSpect = "error";
             $customId = NULL;
+            $pdf = false;
             $params = array(
                 "url"=>"http://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
             JsonEmisionTimbrado::Set($params);
-            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV1($json, $customId);
-            $this->assertEquals($resultSpect, $result->status);
+            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+            $this->assertTrue($resultSpect == $result->status);
         }
 
         public function testIssueJsonV4CustomIdEmailFail() {
@@ -112,7 +113,7 @@
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
             JsonEmisionTimbrado::Set($params);
             $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
-            $this->assertEquals($resultSpect, $result->status);
+            $this->assertTrue($resultSpect == $result->status);
         }
     }
 
