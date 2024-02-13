@@ -106,7 +106,7 @@ class JsonEmisionTimbrado extends Services
      * 
      */
 
-    public static function jsonIssueV4CustomIdEmailV1($json, $customId, $email = false){
+    public static function jsonIssueV4CustomIdEmailV1($json, $customId, $email){
         $helper = new jsonIssuerHelper();
         return  jsonIssuerRequest::sendReqJsonV4(Services::get_url(), Services::get_token(), $json, "v1", $helper::validate_customid($customId), false, $helper::validate_email($email), "/v4/cfdi33/issue/json/",  Services::get_proxy());
     }
@@ -121,7 +121,7 @@ class JsonEmisionTimbrado extends Services
      * @return jsonIssuerRequest
      */
 
-    public static function jsonIssueV4CustomIdEmailV2($json, $customId, $email = false){
+    public static function jsonIssueV4CustomIdEmailV2($json, $customId, $email){
         $helper = new jsonIssuerHelper();
         return  jsonIssuerRequest::sendReqJsonV4(Services::get_url(), Services::get_token(), $json, "v2", $helper::validate_customid($customId), false, $helper::validate_email($email), "/v4/cfdi33/issue/json/",  Services::get_proxy());
     }
@@ -136,7 +136,7 @@ class JsonEmisionTimbrado extends Services
      * @return jsonIssuerRequest
      */
 
-    public static function jsonIssueV4CustomIdEmailV3($json, $customId, $email = false){
+    public static function jsonIssueV4CustomIdEmailV3($json, $customId, $email){
         $helper = new jsonIssuerHelper();
         return  jsonIssuerRequest::sendReqJsonV4(Services::get_url(), Services::get_token(), $json, "v3", $helper::validate_customid($customId), false, $helper::validate_email($email), "/v4/cfdi33/issue/json/",  Services::get_proxy());
     }
@@ -151,7 +151,7 @@ class JsonEmisionTimbrado extends Services
      * @return jsonIssuerRequest
      */
 
-    public static function jsonIssueV4CustomIdEmailV4($json, $customId, $email = false){
+    public static function jsonIssueV4CustomIdEmailV4($json, $customId, $email){
         $helper = new jsonIssuerHelper();
         return  jsonIssuerRequest::sendReqJsonV4(Services::get_url(), Services::get_token(), $json, "v4", $helper::validate_customid($customId), false, $helper::validate_email($email), "/v4/cfdi33/issue/json/",  Services::get_proxy());
     }
