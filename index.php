@@ -6,6 +6,7 @@ use SWServices\Stamp\StampService as StampService;
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 use SWServices\Validation\ValidarXML as ValidarXML;
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\SatQueryService as SatQueryService;
@@ -107,8 +108,8 @@ try {
     $customId = "Serie-".$prefixOne."-".$prefixTwo;
     $pdf = false;
     $json = file_get_contents(fechaJSON("Test/Resources/cfdi40_json.json"));
-    JsonEmisionTimbrado::Set($params);
-    $resultadoJson = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
+    JsonEmisionTimbradoV4::Set($params);
+    $resultadoJson = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
     $resultadoJson->status == "success"
         ?
         print_r($resultadoJson->data->cadenaOriginalSAT) .

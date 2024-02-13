@@ -1957,7 +1957,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -1968,7 +1968,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -1982,7 +1983,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -1993,7 +1994,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV2($json, $customId, $pdf);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV2($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -2007,7 +2009,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2018,7 +2020,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV3($json, $customId, $pdf);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV3($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -2032,7 +2035,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2043,7 +2046,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -2186,7 +2190,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2197,7 +2201,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
     var_dump($result);
 
 ?>
@@ -2211,7 +2216,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2222,7 +2227,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV2($json, $customId, $email);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV2($json, $customId, $email);
     var_dump($result);
 
 ?>
@@ -2236,7 +2242,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2247,7 +2253,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV3($json, $customId, $email);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV3s($json, $customId, $email);
     var_dump($result);
 
 ?>
@@ -2261,7 +2268,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
@@ -2272,7 +2279,8 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
         "token" => "T2lYQ0t4L0R...."
     );
     $json = file_get_contents("Test/Resources/cfdi40_json.json");
-    $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV4($json, $customId, $email);
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV4($json, $customId, $email);
     var_dump($result);
 
 ?>

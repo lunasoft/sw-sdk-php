@@ -19,6 +19,7 @@
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateXMLService.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerRequest.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerService.php';
+    require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerV4Service.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Toolkit/SignService.php';
     require_once dirname(__FILE__) . '/SWServices/SatQuery/SatQueryRequest.php';

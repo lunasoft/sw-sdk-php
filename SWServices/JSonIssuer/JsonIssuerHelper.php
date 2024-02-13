@@ -18,11 +18,11 @@ class JsonIssuerHelper
     public static function validate_customid($customId)
     {
         try {
-            if ($customId != NULL || $customId != "") {
+            if (!empty($customId) && (strlen($customId) <= 100)) {
                 return $customId;
             }
         } catch (Exception $e) {
-            echo 'CustomId viene vacio', $e->getMessage();
+            echo 'CustomId viene vacío o es mayor a 100 caracteres', $e->getMessage();
             exit();
         }
     }

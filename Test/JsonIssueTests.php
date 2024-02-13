@@ -5,6 +5,7 @@
 
     use PHPUnit\Framework\TestCase;
     use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 
     final class JsonIssueTests extends TestCase {
         protected static $generateJson;
@@ -61,8 +62,8 @@
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
-            JsonEmisionTimbrado::Set($params);
-            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+            JsonEmisionTimbradoV4::Set($params);
+            $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
             if($result->status == "error" && strpos($result->message, '307') !== false) {
                 $result->status = "success";
             }
@@ -80,8 +81,8 @@
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
-            JsonEmisionTimbrado::Set($params);
-            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
+            JsonEmisionTimbradoV4::Set($params);
+            $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
             if($result->status == "error" && strpos($result->message, '307') !== false) {
                 $result->status = "success";
             }
@@ -97,8 +98,8 @@
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
-            JsonEmisionTimbrado::Set($params);
-            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+            JsonEmisionTimbradoV4::Set($params);
+            $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
             $this->assertTrue($resultSpect == $result->status);
         }
 
@@ -111,8 +112,8 @@
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
-            JsonEmisionTimbrado::Set($params);
-            $result = JsonEmisionTimbrado::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
+            JsonEmisionTimbradoV4::Set($params);
+            $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
             $this->assertTrue($resultSpect == $result->status);
         }
     }
