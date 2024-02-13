@@ -1918,7 +1918,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 
 **issueV4CustomIdPdfV4** 
 
-Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2029,7 +2029,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String** y el par
 
 **sonIssueV4CustomIdPdfV3** 
 
-Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2091,7 +2091,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 
 **issueV4CustomIdEmailV2** 
 
-Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2121,7 +2121,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 
 **issueV4CustomIdEmailV3** 
 
-Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2151,7 +2151,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 
 **issueV4CustomIdEmailV4** 
 
-Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
