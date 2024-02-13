@@ -2184,7 +2184,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 
 **jsonIssueV4CustomIdEmailV1** 
 
-Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2210,7 +2210,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 
 **jsonIssueV4CustomIdEmailV2** 
 
-Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2236,7 +2236,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 
 **jsonIssueV4CustomIdEmailV3** 
 
-Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2262,7 +2262,7 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa
 
 **jsonIssueV4CustomIdEmailV4** 
 
-Recibe un **JSON**, se pasa un parametro customId en formato **String**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve todos los datos del timbrado, en caso contrario lanza una excepción.
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
