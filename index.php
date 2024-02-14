@@ -6,6 +6,7 @@ use SWServices\Stamp\StampService as StampService;
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 use SWServices\Validation\ValidarXML as ValidarXML;
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
+use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 use SWServices\SatQuery\SatQueryService as SatQueryService;
@@ -94,6 +95,31 @@ try {
         print_r($resultadoJson->data->fechaTimbrado) .
         print_r($resultadoJson->data->qrCode) .
         print_r($resultadoJson->data->cfdi) :
+        print_r($resultadoJson->message) .
+        print_r($resultadoJson->messageDetail);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n---------------- Emisión Timbrado JSON V4 -----------------\n\n";
+try {
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-".$prefixOne."-".$prefixTwo;
+    $pdf = false;
+    $json = file_get_contents(fechaJSON("Test/Resources/cfdi40_json.json"));
+    JsonEmisionTimbradoV4::Set($params);
+    $resultadoJson = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
+    $resultadoJson->status == "success"
+        ?
+        print_r($resultadoJson->data->cadenaOriginalSAT) .
+        print_r($resultadoJson->data->noCertificadoSAT) .
+        print_r($resultadoJson->data->noCertificadoCFDI) .
+        print_r($resultadoJson->data->uuid) .
+        print_r($resultadoJson->data->selloSAT) .
+        print_r($resultadoJson->data->selloCFDI) .
+        print_r($resultadoJson->data->fechaTimbrado) .
+        print_r($resultadoJson->data->qrCode) :
         print_r($resultadoJson->message) .
         print_r($resultadoJson->messageDetail);
 } catch (Exception $e) {

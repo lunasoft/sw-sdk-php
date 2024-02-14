@@ -87,7 +87,7 @@ Se puede hacer uso de las clases mediante la implementacion manual haciendo uso 
 
 La librería cuenta con dos servicios principales los que son la Autenticacion y el Timbrado de CFDI (XML).
 
-#### Nueva funcionalidad para el soporte con servidores Proxy ####
+#### Soporte con servidores Proxy ####
 Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
     $params = array(
@@ -96,6 +96,12 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
     );
 ```
 ## Autenticación ###
+
+<details>
+<summary>
+Autenticación 
+</summary>
+
 El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que estan en este ejemplo para el ambiente de **Pruebas**.
 
 **Obtener Token**
@@ -132,6 +138,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
   "status": "success"
 }
 ```
+
+</details>
 
 ## Timbrado ##
 
@@ -570,7 +578,7 @@ Emisión Timbrado
 
 **Emisión Timbrado** Recibe el contenido de un **XML** en formato **String**, posteriormente si la factura y el token son correctos, genera el sellado, y devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
-### Emisión timbrado V1 ###
+### Emisión Timbrado V1 ###
 Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
@@ -588,7 +596,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     var_dump($resultadoIssue);
 ```
 
-### Emisión timbrado V2 ###
+### Emisión Timbrado V2 ###
 Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 
 **Ejemplo de uso**
@@ -605,7 +613,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
     var_dump($result);
 ```
-### Emisión timbrado V3 ###
+### Emisión Timbrado V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
 
 **Ejemplo de uso**
@@ -623,7 +631,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     var_dump($result);
 ```
 
-### Emisión timbrado V4 ###
+### Emisión Timbrado V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
 
 **Ejemplo de uso**
@@ -650,7 +658,7 @@ Emisión Timbrado JSON
 ## Emisión Timbrado JSON ##
 **Emisión Timbrado JSON** Recibe el contenido de un **JSON** en formato **String**, posteriormente si el JSON y el token son correctos, genera el armado y sellado del XML, posteriormente devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario mostrará error al ser enviado a timbrar.
 
-### Emisión timbrado JSON V1 ###
+### Emisión Timbrado JSON V1 ###
 Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
@@ -667,7 +675,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V2 ###
+### Emisión Timbrado JSON V2 ###
 Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
 
 **Ejemplo de uso**
@@ -684,7 +692,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V3 ###
+### Emisión Timbrado JSON V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
 
 **Ejemplo de uso**
@@ -701,7 +709,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V4 ###
+### Emisión Timbrado JSON V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
 
 **Ejemplo de uso**
@@ -1000,7 +1008,7 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 ## Consultar Saldo ##
 
 <details>
-<summary>Ejemplos</summary>
+<summary>Consultar Saldo</summary>
 
 Este servicio recibe el token y genera los elementos que componen la consulta de saldos:
 
@@ -1076,7 +1084,7 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 ```
 </details>
 
-## Consulta Estatus ##
+## Consulta Estatus SAT ##
 
 <details>
 <summary>
@@ -1819,11 +1827,12 @@ Este método recibe los siguientes parámetros:
 
 ### **CustomId - Pdf** ###
 
-</details>
 <details>
 <summary>Emisión Timbrado (IssueV4)</summary>
 
-**issueV4CustomIdPdfV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV1** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1850,7 +1859,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV2** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1877,7 +1888,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV3** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1903,7 +1916,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV4** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1925,6 +1940,114 @@ Este método recibe los siguientes parámetros:
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
+    var_dump($result);
+
+?>
+```
+</details>
+
+<details>
+<summary>Emisión Timbrado JSON (IssueV4)</summary>
+
+**jsonIssueV4CustomIdPdfV1** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdPdfV2** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV2($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdPdfV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV3($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**sonIssueV4CustomIdPdfV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -1933,7 +2056,6 @@ Este método recibe los siguientes parámetros:
 
 ### **CustomId - Email** ###
 
-</details>
 <details>
 <summary>Emisión Timbrado (IssueV4)</summary>
 
@@ -1967,7 +2089,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV2** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1995,7 +2119,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV3** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2023,7 +2149,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV4** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2047,6 +2175,114 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV4($xml, $customId); 
     var_dump($result);
+?>
+```
+</details>
+
+<details>
+<summary>Emisión Timbrado JSON (IssueV4)</summary>
+
+**jsonIssueV4CustomIdEmailV1** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV2** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV2($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV3s($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV4** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve todos los datos del timbrado, en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV4($json, $customId, $email);
+    var_dump($result);
+
 ?>
 ```
 </details>
