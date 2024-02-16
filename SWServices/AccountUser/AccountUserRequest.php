@@ -18,8 +18,8 @@ class AccountUserRequest{
 
     public static function sendReqServicesUser($idUser, $data, $action)
     {
-        $path ='/management/api/users/' . $idUser;
-        return HttpRequest::sendRequest(Services::get_urlApi(), $action, $path,Services::get_token(), $data, Services::get_proxy());
+        $path = '/management/api/users' . ($idUser ? "/$idUser" : "");
+        return HttpRequest::sendRequest(Services::get_urlApi(), $action, $path, Services::get_token(), $data, Services::get_proxy());
     }
 
 }
