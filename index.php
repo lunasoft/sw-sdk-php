@@ -202,7 +202,7 @@ try{
 echo "\n\n--------------- Consulta Usuario por token ------------------\n\n";
 try{
     $accountUser = AccountUserService::Set($paramUser);
-    $ResponseUser = $accountUser::GetUserByToken();
+    $ResponseUser = $accountUser::GetUser();
     var_dump($ResponseUser);
 } catch(Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -211,7 +211,7 @@ try{
 echo "\n\n--------------- Consulta Usuario por ID ------------------\n\n";
 try{
     $accountUser = AccountUserService::Set($paramUser);
-    $idUser ="eee19973-df42-46ae-a42b-937e5745346e";
+    $idUser ="09c3d776-e776-4e8c-91a4-00566ae237ee";
     $ResponseUser = $accountUser::GetUserById($idUser);
     var_dump($ResponseUser);
 } catch(Exception $e) {
