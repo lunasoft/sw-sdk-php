@@ -15,14 +15,15 @@ use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 use SWServices\Relations\RelationsService as RelationsService;
 use SWServices\Pendings\PendingsService as PendingsService;
 use SWServices\Services;
- 
+
 header('Content-type: text/plain');
 
 
 $params = array(
     "url" => "http://services.test.sw.com.mx",
-    "user" => getenv('SDKTEST_USER'),
-    "password" => getenv('SDKTEST_PASSWORD')
+    "urlApi" => "http://api.test.sw.com.mx",
+    "user" => "pruebas_ut@sw.com.mx",
+    "password" => "SWpass12345"
 );
 
 echo "\n\n------------Token---------------------\n\n";
@@ -39,7 +40,7 @@ try {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
 
-echo "\n\n------------ Account Balance ---------------------\n\n";
+echo "\n\n------------ Obtener Saldo por Token---------------------\n\n";
 try {
     AccountBalanceService::Set($params);
     $accResponse = AccountBalanceService::GetAccountBalance();
@@ -47,7 +48,30 @@ try {
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
-
+echo "\n\n------------ Obtener Saldo por Id User---------------------\n\n";
+try {
+    AccountBalanceService::Set($params);
+    $accResponse = AccountBalanceService::GetAccountBalanceById("fafb2ac2-62ca-49f8-91de-14cea73b01eb");
+    var_dump($accResponse);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+echo "\n\n------------ Agregar timbres---------------------\n\n";
+try {
+    AccountBalanceService::Set($params);
+    $accResponse = AccountBalanceService::AddStamps("fafb2ac2-62ca-49f8-91de-14cea73b01eb", 1, "Renovacion de contrato");
+    var_dump($accResponse);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+echo "\n\n------------ Eliminar timbres---------------------\n\n";
+try {
+    AccountBalanceService::Set($params);
+    $accResponse = AccountBalanceService::RemoveStamps("fafb2ac2-62ca-49f8-91de-14cea73b01eb", 1, "Cancelacion de contrato");
+    var_dump($accResponse);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
 echo "\n\n--------------- Emisión Timbrado ------------------\n\n";
 try {
     $xml = fechaXML("Test/Resources/cfdi40_test.xml");
@@ -105,7 +129,7 @@ echo "\n\n---------------- Emisión Timbrado JSON V4 -----------------\n\n";
 try {
     $prefixOne = date('Y-m-d');
     $prefixTwo = rand(0, 555);
-    $customId = "Serie-".$prefixOne."-".$prefixTwo;
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
     $pdf = false;
     $json = file_get_contents(fechaJSON("Test/Resources/cfdi40_json.json"));
     JsonEmisionTimbradoV4::Set($params);
@@ -303,7 +327,7 @@ try {
 echo "\n\n--------------- Relacionados por UUID------------------\n\n";
 try {
     RelationsService::Set($params);
-    $response = RelationsService::ConsultarCFDIRelacionadosUUID('EKU9003173C9','cfc771b4-7d90-459e-ab06-afd2b3c59c10');
+    $response = RelationsService::ConsultarCFDIRelacionadosUUID('EKU9003173C9', 'cfc771b4-7d90-459e-ab06-afd2b3c59c10');
     var_dump($response);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
@@ -340,7 +364,8 @@ try {
 
 /*--------------------------------Fin Funciones-----------------------------------------------------------------------------------------------------------------------*/
 
-function fechaJSON($path) {
+function fechaJSON($path)
+{
     $contenidoJSON = file_get_contents($path);
     $data = json_decode($contenidoJSON, true);
     // Actualiza el atributo "fecha" con la fecha actual
@@ -350,11 +375,12 @@ function fechaJSON($path) {
 
     return "Test/Resources/cfdi40_json.json";
 }
-function fechaXML($path) {
+function fechaXML($path)
+{
     $xml = simplexml_load_file($path); //leemos el xml base
-	$date = date("Y-m-d\TH:i:s");
+    $date = date("Y-m-d\TH:i:s");
     $xml["Fecha"] = $date;
-	$xml->asXML($path);
+    $xml->asXML($path);
 
     return $xml->asXML();;
 }
