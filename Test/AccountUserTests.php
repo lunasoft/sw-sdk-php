@@ -173,6 +173,5 @@
             $this->assertEquals($message, $result->data);
             var_dump($result);
         }
-         
     }
 ?>

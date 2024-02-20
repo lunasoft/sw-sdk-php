@@ -10,6 +10,7 @@ class AccountUserRequest{
         $action = "GET";
         return HttpRequest::sendRequest(Services::get_urlApi(), $action, "/management/api/users", Services::get_token(), null, Services::get_proxy());
     }
+    
     public static function sendReqGetUser($idUser = null) {
         $path = '/management/api/users' . ($idUser ? "/$idUser" : "/info");
         $action = "GET";
@@ -21,7 +22,6 @@ class AccountUserRequest{
         $path = '/management/api/users' . ($idUser ? "/$idUser" : "");
         return HttpRequest::sendRequest(Services::get_urlApi(), $action, $path, Services::get_token(), $data, Services::get_proxy());
     }
-
 }
 
 ?>
