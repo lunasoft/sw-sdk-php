@@ -51,8 +51,8 @@
         public function testCreateUserSuccessToken(){
             $message = "AU1001Usuario ya existe.";
             $data = array(
-                'Email' => "pavidonavido3@gmail.com",
-                'Password' => "galloDeOro13#",
+                'Email' => "pruebas3_test@gmail.com",
+                'Password' => "password#",
                 'Name' => "Valentin Nuño",
                 'RFC' => "XIA190128J61",
                 'Profile' => 3,
