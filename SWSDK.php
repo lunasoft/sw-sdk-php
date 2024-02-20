@@ -15,6 +15,8 @@
     require_once dirname(__FILE__) . '/SWServices/Pendings/PendingsRequest.php';
     require_once dirname(__FILE__) . '/SWServices/AccountBalance/AccountBalanceRequest.php';
     require_once dirname(__FILE__) . '/SWServices/AccountBalance/AccountBalanceService.php';
+    require_once dirname(__FILE__) . '/SWServices/AccountUser/AccountUserRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/AccountUser/AccountUserService.php';
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Validation/ValidateXMLService.php';
     require_once dirname(__FILE__) . '/SWServices/JSonIssuer/JsonIssuerRequest.php';

@@ -1005,6 +1005,272 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 
 </details>
 
+## Usuarios ##
+
+Servicios para trabajar con usuarios, incluye métodos para crear, modificar, obtener y eliminar usuarios.
+
+<details>
+<summary>
+Crear Usuario
+</summary>
+
+<br> Método mediante el cual se puede crear un nuevo usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Un array con los datos necesario para crear el usuario.
+
+Los datos enviados en el data son los siguientes:
+| Dato      | Descripción                              |
+|-----------|------------------------------------------|
+| Email     | Correo del usuario                       |
+| Password  | Contraseña del usuario                   |
+| Name      | Nombre del usuario                       |
+| RFC       | RFC del usuario                          |
+| Profile   | (Default = 3) Tipo de perfil del usuario |
+| Stamps    | Timbres a asignar en la creación         |
+| Unlimited | Especificar si tendrá timbres ilimitados |
+| Active    | (Default = true) Estatus del usuario     |
+
+**Ejemplo de consumo de la librería para crear un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $data = array(
+                'Email' => "correoNuevo@gmail.com",
+                'Password' => "contraseña",
+                'Name' => "Nombre usuario",
+                'RFC' => "RFC",
+                'Profile' => 3,
+                'Stamps' => 1,
+                'Unlimited' => false,
+                'Active' => true
+            );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::CreateUser($data);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Consultar Usuario Por Token</summary>
+
+<br> Método mediante el cual se puede consultar un usuario por su token.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+
+**Ejemplo de consumo de la librería parala consulta de un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetUser();
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
+<details>
+<summary>Consultar Usuario Por Id</summary>
+
+<br> Método mediante el cual se puede consultar un usuario por su Id.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a consultar
+
+**Ejemplo de consumo de la librería parala consulta de un usuario por Id mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetUserById($idUser);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Consultar Usuarios</summary>
+
+<br> Método mediante el cual se puede consultar varios usuarios de una cuenta padre.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+
+**Ejemplo de consumo de la librería parala consulta de varios usuarios de una cuenta mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetAllUser();
+    var_dump($resultUser);
+```
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
+<details>
+<summary>Modificar Usuario</summary>
+
+<br> Método mediante el cual se puede modificar un usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a modificar.
+* Un array con los datos necesario para modificar el usuario.
+
+Los datos enviados en el data son los siguientes:
+| Dato      | Descripción                              |
+|-----------|------------------------------------------|
+| Name      | Nombre del usuario                       |
+| RFC       | RFC del usuario                          |
+| Unlimited | Especificar si tendrá timbres ilimitados |
+
+**Ejemplo de consumo de la librería para modificar un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $data = array(
+                'RFC' => "XAXX010101000",
+                'Name' => "Nuevo NombreUsuario",
+                'Unlimited' => false
+            );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::UpdateUser($idUser, $data);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Eliminar Usuario</summary>
+
+<br> Método mediante el cual se puede eliminar un usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a eliminar.
+
+**Ejemplo de consumo de la librería para eliminar un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::DeleteUser($idUser);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
 ## Consultar Saldo ##
 
 <details>

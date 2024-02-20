@@ -9,6 +9,7 @@ use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
 use SWServices\Cancelation\CancelationService as CancelationService;
 use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+use SWServices\AccountUser\AccountUserService as AccountUserService;
 use SWServices\SatQuery\SatQueryService as SatQueryService;
 use SWServices\Csd\CsdService as CsdService;
 use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
@@ -191,6 +192,43 @@ $uuid = "E0AAE6B3-43CC-4B9C-B229-7E221000E2BB";
 $sello = "bb2k2g==";
 $consultaCfdi = SatQueryService::ServicioConsultaSAT($soapUrl, $re, $rr, $tt, $uuid, $sello);
 var_dump($consultaCfdi);
+
+echo "\n\n--------------- Consulta Usuarios ------------------\n\n";
+$paramUser = array(
+    "url" => "http://services.test.sw.com.mx",
+    "urlApi" => "http://api.test.sw.com.mx",
+    "user" => getenv('SDKTEST_USER'),
+    "password" => getenv('SDKTEST_PASSWORD')
+    );
+
+try{
+    $accountUser = AccountUserService::Set($paramUser);
+    $ResponseUsers = $accountUser::GetAllUser();
+    var_dump($ResponseUsers);
+} catch(Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Consulta Usuario por token ------------------\n\n";
+try{
+    $accountUser = AccountUserService::Set($paramUser);
+    $ResponseUser = $accountUser::GetUser();
+    var_dump($ResponseUser);
+} catch(Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+echo "\n\n--------------- Consulta Usuario por ID ------------------\n\n";
+try{
+    $accountUser = AccountUserService::Set($paramUser);
+    $idUser ="09c3d776-e776-4e8c-91a4-00566ae237ee";
+    $ResponseUser = $accountUser::GetUserById($idUser);
+    var_dump($ResponseUser);
+} catch(Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+
+
 echo "\n\n--------------- Aceptar o rechazar Cancelación UUID------------------\n\n";
 try {
     $acceptReject = AcceptRejectService::Set($params);
