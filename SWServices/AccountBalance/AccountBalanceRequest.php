@@ -9,7 +9,7 @@ class AccountBalanceRequest
     const BALANCE_ENDPOINT = "/account/balance/";
     const MANAGEMENT_BALANCE_ENDPOINT = "/management/api/balance/";
     // Función privada para realizar solicitudes HTTP comunes
-    private static function makeRequest($url, $token, $method = "GET", $data = null, $proxy = null)
+    private static function sendRequest($url, $token, $method = "GET", $data = null, $proxy = null)
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -45,13 +45,13 @@ class AccountBalanceRequest
     public static function getBalanceByTokenRequest($urlService, $token, $proxy = null)
     {
         $url = $urlService . self::BALANCE_ENDPOINT;
-        return self::makeRequest($url, $token, "GET", null, $proxy);
+        return self::sendRequest($url, $token, "GET", null, $proxy);
     }
     // Método para obtener el Balance por UserId
     public static function getBalanceByIdRequest($urlApi, $token, $id, $proxy = null)
     {
         $url = $urlApi . self::MANAGEMENT_BALANCE_ENDPOINT . $id;
-        return self::makeRequest($url, $token, "GET", null, $proxy);
+        return self::sendRequest($url, $token, "GET", null, $proxy);
     }
     // Método para añadir o eliminar timbres a una cuenta
     public static function distributionStampRequest($urlApi, $token, $action, $id, $stamps, $comment = null, $proxy = null)
@@ -59,7 +59,7 @@ class AccountBalanceRequest
         $url = $urlApi . self::MANAGEMENT_BALANCE_ENDPOINT . "$id/$action/$stamps";
         $postData = $comment !== null ? array("Comentario" => $comment) : null;
 
-        return self::makeRequest($url, $token, "POST", $postData, $proxy);
+        return self::sendRequest($url, $token, "POST", $postData, $proxy);
     }
 }
 ?>
