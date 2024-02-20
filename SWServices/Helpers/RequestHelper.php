@@ -66,4 +66,52 @@ class RequestHelper extends ResponseHelper
             }
         }
     }
+    /**
+     * Método interno para construir un Request génerico con datos en el Jsonbody (opcional)
+     */
+    public static function sendRequest($url, $requestMethod, $path, $token, $data = null, $proxy = null)
+    {
+        $curl = curl_init();
+
+        $options = array(
+            CURLOPT_URL => $url . $path,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "UTF-8",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => $requestMethod,
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "authorization: bearer " . $token,
+            ),
+        );
+
+        if ($data !== null) {
+            $options[CURLOPT_POSTFIELDS] = json_encode($data);
+            $options[CURLOPT_HTTPHEADER][] = 'Content-Type: application/json';
+            $options[CURLOPT_HTTPHEADER][] = 'Content-Length: ' . strlen(json_encode($data));
+        }
+
+        if (isset($proxy)) {
+            $options[CURLOPT_PROXY] = $proxy;
+        }
+
+        curl_setopt_array($curl, $options);
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl);
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error #:" . $err);
+        } else {
+            if ($httpcode < 500) {
+                return json_decode($response);
+            } else {
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
+            }
+        }
+    }
 }

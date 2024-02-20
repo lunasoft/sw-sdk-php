@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use SWServices\Pendings\PendingsService as pendingsService;
 use Exception;
 
-final class RelationsTests extends TestCase
+final class PendingsTests extends TestCase
 {
 	/* -------------------------------------------------------Pendientes por cancelar-------------------------------------------------------- */
 	public function testPendings()
