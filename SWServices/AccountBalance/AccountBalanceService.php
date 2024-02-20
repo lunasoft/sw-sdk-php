@@ -1,7 +1,5 @@
 <?php
-
 namespace SWServices\AccountBalance;
-
 use SWServices\AccountBalance\AccountBalanceRequest as accountBalanceRequest;
 use SWServices\Services as Services;
 use Exception;
@@ -12,7 +10,6 @@ class AccountBalanceService extends Services
     {
         parent::__construct($params);
     }
-
     public static function Set($params)
     {
         return new AccountBalanceService($params);
