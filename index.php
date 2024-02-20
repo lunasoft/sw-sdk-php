@@ -22,8 +22,8 @@ header('Content-type: text/plain');
 $params = array(
     "url" => "http://services.test.sw.com.mx",
     "urlApi" => "http://api.test.sw.com.mx",
-    "user" => "pruebas_ut@sw.com.mx",
-    "password" => "SWpass12345"
+    "user"=> getenv('SDKTEST_USER'),
+    "password"=> getenv('SDKTEST_PASSWORD')
 );
 
 echo "\n\n------------Token---------------------\n\n";

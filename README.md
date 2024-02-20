@@ -1104,8 +1104,6 @@ Este servicio recibe el Id User y genera los elementos que componen la consulta 
 
     $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => "user",
-            "password" => "pass",
             "token" => "tokenReplaceForRealToken..."
     );
     try {
@@ -1135,8 +1133,6 @@ Ejemplo de uso:
 
     $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => "user",
-            "password" => "pass",
             "token" => "tokenReplaceForRealToken..."
     );
     try {
@@ -1187,8 +1183,6 @@ Ejemplo de uso:
 
     $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => "user",
-            "password" => "pass",
             "token" => "tokenReplaceForRealToken..."
     );
     try {

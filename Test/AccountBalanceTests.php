@@ -14,8 +14,6 @@ final class AccountBalanceTests extends TestCase
         $resultSpect = "success";
         $params = array(
             "url" => "http://services.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $accountBalance = AccountBalanceService::Set($params);
@@ -37,8 +35,6 @@ final class AccountBalanceTests extends TestCase
     {
         $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $resultSpect = "success";
@@ -62,8 +58,6 @@ final class AccountBalanceTests extends TestCase
         $resultSpect = "success";
         $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $accountBalance = AccountBalanceService::Set($params);
@@ -75,8 +69,6 @@ final class AccountBalanceTests extends TestCase
         $resultSpect = "error";
         $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $accountBalance = AccountBalanceService::Set($params);
@@ -88,8 +80,6 @@ final class AccountBalanceTests extends TestCase
         $resultSpect = "success";
         $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $accountBalance = AccountBalanceService::Set($params);
@@ -101,8 +91,6 @@ final class AccountBalanceTests extends TestCase
         $resultSpect = "error";
         $params = array(
             "urlApi" => "http://api.test.sw.com.mx",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD'),
             "token" => getenv('SDKTEST_TOKEN')
         );
         $accountBalance = AccountBalanceService::Set($params);
