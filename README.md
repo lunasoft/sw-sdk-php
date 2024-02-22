@@ -1274,7 +1274,7 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
 ## Consultar Saldo ##
 
 <details>
-<summary>Consultar Saldo</summary>
+<summary>Consultar Saldo por Token</summary>
 
 Este servicio recibe el token y genera los elementos que componen la consulta de saldos:
 
@@ -1348,6 +1348,140 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
     "status": "error"
 }
 ```
+</details>
+<details>
+<summary>
+Consulta Saldo por Id User
+</summary>
+Este servicio recibe el Id User y genera los elementos que componen la consulta de saldos:
+
+* ID saldo cliente
+* ID cliente usuario
+* Saldo timbres
+* Timbres utilizados
+* Fecha de expiracion
+* Ilimitado
+* Timbres asignados
+
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::GetAccountBalanceById("fafb2ac2-62ca-49f8-91de-15cea73b01fb");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+</details>
+
+<details>
+<summary>Agregar Timbres</summary>
+Este servicio recibe como parametros:
+
+* ID User de la cuenta a abonar
+* Cantidad de timbres a añadir
+* Comentario opcional
+
+Ejemplo de uso:
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::AddStamps("fafb2ac2-62ca-49f8-81de-14cea73b01eb", 100, "Renovacion de contrato");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+### Respuestas de consulta de saldo ###
+El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
+
+>Tipos de respuesta
+>En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
+
+### Respuesta exitosa ###
+```json
+{
+    "data": "100 timbres correctamente agregados al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
+    "status": "success"
+}
+```
+### Respuesta no exitosa ###
+```json
+{
+    "message": "Validation errors",
+    "messageDetail": "Usuario no pertenece al Dealer",
+    "status": "error"
+}
+```
+</details>
+
+<details>
+<summary>Eliminar Timbres</summary>
+Este servicio recibe como parametros:
+
+* ID User de la cuenta
+* Cantidad de timbres a eliminar
+* Comentario opcional
+
+Ejemplo de uso:
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::RemoveStamps("fafb2ac2-62da-49f8-81de-14cea73b01eb", 100, "Cancelación de contrato");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+### Respuestas de consulta de saldo ###
+El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
+
+>Tipos de respuesta
+>En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
+
+### Respuesta exitosa ###
+```json
+{
+    "data": "100 timbres correctamente removidos al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
+    "status": "success"
+}
+```
+### Respuesta no exitosa ###
+```json
+{
+    "message": "AU1006 Saldo insuficiente.",
+    "messageDetail": "",
+    "status": "error"
+}
+```
+</details>
 </details>
 
 ## Consulta Estatus SAT ##
