@@ -6,6 +6,7 @@
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Stamp/StampService.php';
     require_once dirname(__FILE__) . '/SWServices/Issuer/IssuerService.php';
+    require_once dirname(__FILE__) . '/SWServices/Retention/RetentionService.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationService.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationHandler.php';
