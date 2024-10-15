@@ -61,6 +61,40 @@ final class RetencionesTests extends TestCase
         $this->assertNotNull($result->data);
     }
 
+    public function testStampV1_successToken()
+    {
+        $resultSpect = "success";
+        $params = array(
+            "url" => "http://services.test.sw.com.mx",
+            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
+            "token" => getenv('SDKTEST_TOKEN')
+        );
+
+        $xml = file_get_contents(self::$generateXML->createXML());
+        $retention = RetencionesService::Set($params);
+        $result = json_decode($retention::TimbrarRetencionXML($xml));
+
+        $this->assertEquals($resultSpect, $result->status);
+        $this->assertNotNull($result->data);
+    }
+
+    public function testStampV2_successToken()
+    {
+        $resultSpect = "success";
+        $params = array(
+            "url" => "http://services.test.sw.com.mx",
+            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
+            "token" => getenv('SDKTEST_TOKEN')
+        );
+
+        $xml = file_get_contents(self::$generateXML->createXML());
+        $retention = RetencionesService::Set($params);
+        $result = json_decode($retention::TimbrarRetencionXMLV2($xml));
+
+        $this->assertEquals($resultSpect, $result->status);
+        $this->assertNotNull($result->data);
+    }
+
     public function testStampV1_error()
     {
         $resultSpect = "error";

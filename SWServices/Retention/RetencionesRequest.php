@@ -120,7 +120,7 @@ class RetencionesRequest
                 'selloCFDI' => (string)($tfdNode['SelloCFD'] ?? $retencionesNode['Sello']),
                 'fechaTimbrado' => (string)$tfdNode['FechaTimbrado'],
                 'qrCode' => '',
-                'cfdi' => $cfdi,
+                'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1),
             ],
             'status' => 'success',
         ];
