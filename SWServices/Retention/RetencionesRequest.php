@@ -102,6 +102,7 @@ class RetencionesRequest
     private static function buildResponseData(SimpleXMLElement $tfd, SimpleXMLElement $retenciones, string $cfdi)
     {
 
+        $tfdXML = $tfd->asXML();
         $tfdNode = $tfd->xpath('//tfd:TimbreFiscalDigital')[0] ?? null;
         $retencionesNode = $retenciones->xpath('//retenciones:Retenciones')[0] ?? null;
 
@@ -114,13 +115,13 @@ class RetencionesRequest
             'data' => [
                 'cadenaOriginalSAT' => $cadenaOriginal,
                 'noCertificadoSAT' => (string)$tfdNode['NoCertificadoSAT'],
-                'noCertificadoCFDI' => (string)$retencionesNode['NoCertificado'],
+                'noCertificadoCFDI' => (string)$retencionesNode['NoCertificado'] ?? '',
                 'uuid' => (string)$tfdNode['UUID'],
                 'selloSAT' => (string)$tfdNode['SelloSAT'],
-                'selloCFDI' => (string)($tfdNode['SelloCFD'] ?? $retencionesNode['Sello']),
+                'selloCFDI' => (string)$retencionesNode['Sello'] ?? (string)$tfdNode['SelloCFD'],
                 'fechaTimbrado' => (string)$tfdNode['FechaTimbrado'],
                 'qrCode' => '',
-                'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1),
+                'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1) ?? htmlspecialchars($tfdXML, ENT_QUOTES | ENT_XML1),
             ],
             'status' => 'success',
         ];
@@ -135,7 +136,7 @@ class RetencionesRequest
         }
 
         $attributes = [
-            'version' => '||1.1',
+            'version' => '||'. (string)$tfdNode['Version'],
             'uuid' => '|' . (string)$tfdNode['UUID'],
             'fechaTimbrado' => '|' . (string)$tfdNode['FechaTimbrado'],
             'rfcProv' => '|' . (string)$tfdNode['RfcProvCertif'],
