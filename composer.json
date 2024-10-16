@@ -56,5 +56,8 @@
         "require": {
             "guzzlehttp/guzzle": "^7.3"
         }
+    },
+    "require": {
+        "chillerlan/php-qrcode": "^5.0"
     }
 }

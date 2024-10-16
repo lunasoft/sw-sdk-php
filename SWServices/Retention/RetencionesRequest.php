@@ -3,6 +3,10 @@
 namespace SWServices\Retention;
 
 use SWServices\Retention\RetencionesHelper as Response;
+use chillerlan\QRCode\QRCode;
+use chillerlan\QRCode\QROptions;
+use DOMDocument;
+use DOMXPath;
 use SimpleXMLElement;
 use Exception;
 
@@ -14,6 +18,7 @@ class RetencionesRequest
     private const XMLNS_RETENTION = 'http://www.sat.gob.mx/esquemas/retencionpago/2';
     private const TEM_RETENTION_V1 = 'TimbrarRetencionXML';
     private const TEM_RETENTION_V2 = 'TimbrarRetencionXMLV2';
+    private const URL_RETENTION_QR = 'https://prodretencionverificacion.clouda.sat.gob.mx?';
 
     public static function sendSoapReq(string $urlRetention, string $tokenAutenticacion, string $xmlRetencion, string $soapAction)
     {
@@ -110,6 +115,7 @@ class RetencionesRequest
             throw new Exception("Nodo TFD o Retenciones no encontrado en el CFDI.");
         }
         $cadenaOriginal = self::generateOriginalChain($tfd);
+        $qrCode = self::generateQR($cfdi);
 
         return [
             'data' => [
@@ -120,7 +126,7 @@ class RetencionesRequest
                 'selloSAT' => (string)$tfdNode['SelloSAT'],
                 'selloCFDI' => (string)$retencionesNode['Sello'] ?? (string)$tfdNode['SelloCFD'],
                 'fechaTimbrado' => (string)$tfdNode['FechaTimbrado'],
-                'qrCode' => '',
+                'qrCode' => $qrCode,
                 'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1) ?? htmlspecialchars($tfdXML, ENT_QUOTES | ENT_XML1),
             ],
             'status' => 'success',
@@ -136,7 +142,7 @@ class RetencionesRequest
         }
 
         $attributes = [
-            'version' => '||'. (string)$tfdNode['Version'],
+            'version' => '||' . (string)$tfdNode['Version'],
             'uuid' => '|' . (string)$tfdNode['UUID'],
             'fechaTimbrado' => '|' . (string)$tfdNode['FechaTimbrado'],
             'rfcProv' => '|' . (string)$tfdNode['RfcProvCertif'],
@@ -146,5 +152,40 @@ class RetencionesRequest
 
         $cadenaOriginal = implode('', $attributes);
         return $cadenaOriginal;
+    }
+
+    private static function generateQR(string $cfdi)
+    {
+        try {
+            $doc = new DOMDocument();
+            $doc->loadXML($cfdi);
+
+            $xpath = new DOMXPath($doc);
+            $xpath->registerNamespace('cfdi', 'http://www.sat.gob.mx/cfd/4');
+            $xpath->registerNamespace('tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital');
+
+
+            $attributes = [
+                'url' => self::URL_RETENTION_QR,
+                'id' => 'id=' . $xpath->evaluate('string(//tfd:TimbreFiscalDigital/@UUID)'),
+                're' => '&re=' . $xpath->evaluate('string(//retenciones:Emisor/@RfcE)'),
+                'rr' => '&rr=' . $xpath->evaluate('string(//retenciones:Nacional/@RfcR)') ?? '&nr=' . $xpath->evaluate('string(//retenciones:Extranjero/@NumRegIdTribR)'),
+                'tt' => '&tt=' . $xpath->evaluate('string(//retenciones:Totales/@MontoTotRet)'),
+                'fe' => '&fe=' . substr($xpath->evaluate('string(//retenciones:Retenciones/@Certificado)'), -8),
+            ];
+
+            $cadenaQR = implode('', $attributes);
+            $options = new QROptions([
+                'outputType' => QRCode::OUTPUT_IMAGE_PNG,
+                'eccLevel' => QRCode::ECC_L,
+                'scale' => 5,
+            ]);
+
+            $qrcode = (new QRCode($options))->render($cadenaQR);
+            $qr = str_replace("data:image/png;base64,", "", $qrcode);
+            return $qr;
+        } catch (Exception $e) {
+            return '';
+        }
     }
 }
