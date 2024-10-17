@@ -1,5 +1,4 @@
 <?php 
-
 namespace SWServices\Helpers;
 
 class ResponseHelper { 

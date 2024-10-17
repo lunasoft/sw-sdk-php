@@ -87,7 +87,7 @@ Se puede hacer uso de las clases mediante la implementacion manual haciendo uso 
 
 La librería cuenta con dos servicios principales los que son la Autenticacion y el Timbrado de CFDI (XML).
 
-#### Nueva funcionalidad para el soporte con servidores Proxy ####
+#### Soporte con servidores Proxy ####
 Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
     $params = array(
@@ -96,6 +96,12 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
     );
 ```
 ## Autenticación ###
+
+<details>
+<summary>
+Autenticación 
+</summary>
+
 El servicio de Autenticación es utilizado principalmente para obtener el **token** el cual sera utilizado para poder timbrar nuestro CFDI (xml) ya emitido (sellado), para poder utilizar este servicio es necesario que cuente con un **usuario** y **contraseña** para posteriormente obtenga el token, usted puede utilizar los que estan en este ejemplo para el ambiente de **Pruebas**.
 
 **Obtener Token**
@@ -132,6 +138,8 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
   "status": "success"
 }
 ```
+
+</details>
 
 ## Timbrado ##
 
@@ -570,7 +578,7 @@ Emisión Timbrado
 
 **Emisión Timbrado** Recibe el contenido de un **XML** en formato **String**, posteriormente si la factura y el token son correctos, genera el sellado, y devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
-### Emisión timbrado V1 ###
+### Emisión Timbrado V1 ###
 Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
@@ -588,7 +596,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     var_dump($resultadoIssue);
 ```
 
-### Emisión timbrado V2 ###
+### Emisión Timbrado V2 ###
 Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 
 **Ejemplo de uso**
@@ -605,7 +613,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
     $resultadoIssue = EmisionTimbrado::EmisionTimbradoV2($xml);
     var_dump($result);
 ```
-### Emisión timbrado V3 ###
+### Emisión Timbrado V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
 
 **Ejemplo de uso**
@@ -623,7 +631,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     var_dump($result);
 ```
 
-### Emisión timbrado V4 ###
+### Emisión Timbrado V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
 
 **Ejemplo de uso**
@@ -650,7 +658,7 @@ Emisión Timbrado JSON
 ## Emisión Timbrado JSON ##
 **Emisión Timbrado JSON** Recibe el contenido de un **JSON** en formato **String**, posteriormente si el JSON y el token son correctos, genera el armado y sellado del XML, posteriormente devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario mostrará error al ser enviado a timbrar.
 
-### Emisión timbrado JSON V1 ###
+### Emisión Timbrado JSON V1 ###
 Está versión de timbrado regresa únicamente el ***TFD***.
 
 **Ejemplo de uso**
@@ -667,7 +675,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V2 ###
+### Emisión Timbrado JSON V2 ###
 Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
 
 **Ejemplo de uso**
@@ -684,7 +692,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV2($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V3 ###
+### Emisión Timbrado JSON V3 ###
 Está versión de timbrado regresa únicamente el ***CFDI***.
 
 **Ejemplo de uso**
@@ -701,7 +709,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
     $resultadoJson = JsonEmisionTimbrado::jsonEmisionTimbradoV3($json);
     var_dump($resultadoJson);
 ```
-### Emisión timbrado JSON V4 ###
+### Emisión Timbrado JSON V4 ###
 Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCertificadoSat***, ***noCertificadoCFDI***, ***UUID***, ***selloSAT***, ***selloCFDI***, ***fechaTimbrado*** y ***QRCode***.
 
 **Ejemplo de uso**
@@ -730,6 +738,116 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 |  V4     | Devuelve todos los datos del timbrado                         |
 
 Para mayor referencia de estas versiones de respuesta, favor de visitar el siguiente [link](https://developers.sw.com.mx/knowledge-base/versiones-de-respuesta-timbrado/).
+
+## Timbrado Retenciones ###
+
+<details>
+<summary>
+Timbrado Retenciones V1 
+</summary>
+
+Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
+
+**Timbrado Retenciones V1**
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\Retention\RetencionesService as RetencionesService;
+
+    $params = array(
+        "url" => "http://services.test.sw.com.mx",
+        "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
+        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+    );
+
+    try
+    {
+        $xml = file_get_contents('./file.xml');
+        RetencionesService::Set($params);
+        $result = RetencionesService::TimbrarRetencionXML($xml);
+        var_dump($result);
+    }
+    catch(Exception $e)
+    {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuentra el CFDI
+
+```json
+{
+    "data": {
+        "cadenaOriginalSAT": "||1.1|51fc1848-f49b-4ba7-aaa2-d80c647b87c7|2024-10-15T14:38:17|SPR190613I52|qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==|30001000000400002495",
+        "noCertificadoSAT": "30001000000400002495",
+        "noCertificadoCFDI": "30001000000500003416",
+        "uuid": "51fc1848-f49b-4ba7-aaa2-d80c647b87c7",
+        "selloSAT": "NF43il08XzuRGiJYxMehL+19M5MAssx0vNq3GMtmiRZiLWw+LsFgsMI66c/AKvJYEl9EEe84NMlhiBe5mSaM1Qer81pOVZOMujSZNSGPFKTsy+NpQpv1FRtVUDQ8qC327kHClgNwONUxcHp0SEX/GsXi4uV4waYRZzCwDtnxK94OqLxSzZC9uq2i13apgxDlaxvYSqs5bLYphDl3e3AHj+OV3djIaCyn7xSZLSLVLSR7DEnfIEjyTTwuGd/ndAVm2TIle+y8R3uw06sOg/C5ELhAQZ9KxxMMVjl+hJ+JDHefzi6SUU7fF8P0AJ9nCTio0vVgBNjnhdjJRvdJIztL0w==",
+        "selloCFDI": "qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==",
+        "fechaTimbrado": "2024-10-15T14:38:17",
+        "qrCode": "",
+        "cfdi": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;retenciones:Retenciones xsi:schemaLocation=&quot;http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd&quot; Version=&quot;2.0&quot; FolioInt=&quot;5a64d3b5038e104ed108&quot; Sello=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificado=&quot;30001000000500003416&quot; Certificado=&quot;MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=&quot; FechaExp=&quot;2024-10-15T14: 54: 29&quot; LugarExpRetenc=&quot;45110&quot; CveRetenc=&quot;01&quot; xmlns:retenciones=&quot;http: //www.sat.gob.mx/esquemas/retencionpago/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;retenciones:Emisor RfcE=&quot;EKU9003173C9&quot; NomDenRazSocE=&quot;ESCUELA KEMPER URGATE&quot; RegimenFiscalE=&quot;601&quot; /&gt;&lt;retenciones:Receptor NacionalidadR=&quot;Nacional&quot;&gt;&lt;retenciones:Nacional RfcR=&quot;URE180429TM6&quot; NomDenRazSocR=&quot;UNIVERSIDAD ROBOTICA ESPAÑOLA&quot; DomicilioFiscalR=&quot;86991&quot; /&gt;&lt;/retenciones:Receptor&gt;&lt;retenciones:Periodo MesIni=&quot;01&quot; MesFin=&quot;03&quot; Ejercicio=&quot;2023&quot; /&gt;&lt;retenciones:Totales MontoTotOperacion=&quot;2000.00&quot; MontoTotGrav=&quot;2000.00&quot; MontoTotExent=&quot;0&quot; MontoTotRet=&quot;580.00&quot;&gt;&lt;retenciones:ImpRetenidos BaseRet=&quot;2000&quot; ImpuestoRet=&quot;001&quot; MontoRet=&quot;580.00&quot; TipoPagoRet=&quot;03&quot; /&gt;&lt;/retenciones:Totales&gt;&lt;retenciones:Complemento&gt;&lt;tfd:TimbreFiscalDigital xsi:schemaLocation=&quot;http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd&quot; Version=&quot;1.1&quot; UUID=&quot;eb4b0264-d937-44d8-ad00-24d4291aa285&quot; FechaTimbrado=&quot;2024-10-15T14:54:32&quot; RfcProvCertif=&quot;SPR190613I52&quot; SelloCFD=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificadoSAT=&quot;30001000000400002495&quot; SelloSAT=&quot;H4WHETIQhstpYUW78v/Z4KXoqk34bIwgcPCiX6Ek4NFvGfZ9MIDYURDr3pkh6E0vn9q1aahKrMok4+JhXLd46H2VMzdgAc3jPZtxcyKt7mEjeMjCuiw3dyo2SzkPgVmyjQsDHvDyd6jyz8gnKJByk+QJrLtQx4/Rvs6tpFKPwwDqY1BEgeaQtJX6nebM+mfEqMhSy8SS7UXZMKeXjxRy5Mu7/OSyvbmu7huc3VwBZce5+BgvGI9UTrm5MdA8jJ5qpQrSADP9BfbJTcD90P+1eTftQztnXGbYXWTQUEpY8YLKELRA5m//xF/6RD9Wawmapiga/FKXVJlImJkZXzJVQQ==&quot; xmlns:tfd=&quot;http://www.sat.gob.mx/TimbreFiscalDigital&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;&lt;/retenciones:Complemento&gt;&lt;/retenciones:Retenciones&gt;"
+    },
+    "status": "success"
+}
+```
+</details>
+
+<details>
+<summary>
+Timbrado Retenciones V2
+</summary>
+
+Timbrado Retenciones V2 Recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
+
+**Timbrado Retenciones V1**
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\Retention\RetencionesService as RetencionesService;
+
+    $params = array(
+        "url" => "http://services.test.sw.com.mx",
+        "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
+        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+    );
+
+    try
+    {
+        $xml = file_get_contents('./file.xml');
+        RetencionesService::Set($params);
+        $result = RetencionesService::TimbrarRetencionXMLV2($xml);
+        var_dump($result);
+    }
+    catch(Exception $e)
+    {
+        header('Content-type: text/plain');
+        echo $e->getMessage();
+    }
+?>
+```
+El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuentra el CFDI
+
+```json
+{
+    "data": {
+        "cadenaOriginalSAT": "||1.1|51fc1848-f49b-4ba7-aaa2-d80c647b87c7|2024-10-15T14:38:17|SPR190613I52|qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==|30001000000400002495",
+        "noCertificadoSAT": "30001000000400002495",
+        "noCertificadoCFDI": "30001000000500003416",
+        "uuid": "51fc1848-f49b-4ba7-aaa2-d80c647b87c7",
+        "selloSAT": "NF43il08XzuRGiJYxMehL+19M5MAssx0vNq3GMtmiRZiLWw+LsFgsMI66c/AKvJYEl9EEe84NMlhiBe5mSaM1Qer81pOVZOMujSZNSGPFKTsy+NpQpv1FRtVUDQ8qC327kHClgNwONUxcHp0SEX/GsXi4uV4waYRZzCwDtnxK94OqLxSzZC9uq2i13apgxDlaxvYSqs5bLYphDl3e3AHj+OV3djIaCyn7xSZLSLVLSR7DEnfIEjyTTwuGd/ndAVm2TIle+y8R3uw06sOg/C5ELhAQZ9KxxMMVjl+hJ+JDHefzi6SUU7fF8P0AJ9nCTio0vVgBNjnhdjJRvdJIztL0w==",
+        "selloCFDI": "qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==",
+        "fechaTimbrado": "2024-10-15T14:38:17",
+        "qrCode": "",
+        "cfdi": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;retenciones:Retenciones xsi:schemaLocation=&quot;http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd&quot; Version=&quot;2.0&quot; FolioInt=&quot;5a64d3b5038e104ed108&quot; Sello=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificado=&quot;30001000000500003416&quot; Certificado=&quot;MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=&quot; FechaExp=&quot;2024-10-15T14: 54: 29&quot; LugarExpRetenc=&quot;45110&quot; CveRetenc=&quot;01&quot; xmlns:retenciones=&quot;http: //www.sat.gob.mx/esquemas/retencionpago/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;retenciones:Emisor RfcE=&quot;EKU9003173C9&quot; NomDenRazSocE=&quot;ESCUELA KEMPER URGATE&quot; RegimenFiscalE=&quot;601&quot; /&gt;&lt;retenciones:Receptor NacionalidadR=&quot;Nacional&quot;&gt;&lt;retenciones:Nacional RfcR=&quot;URE180429TM6&quot; NomDenRazSocR=&quot;UNIVERSIDAD ROBOTICA ESPAÑOLA&quot; DomicilioFiscalR=&quot;86991&quot; /&gt;&lt;/retenciones:Receptor&gt;&lt;retenciones:Periodo MesIni=&quot;01&quot; MesFin=&quot;03&quot; Ejercicio=&quot;2023&quot; /&gt;&lt;retenciones:Totales MontoTotOperacion=&quot;2000.00&quot; MontoTotGrav=&quot;2000.00&quot; MontoTotExent=&quot;0&quot; MontoTotRet=&quot;580.00&quot;&gt;&lt;retenciones:ImpRetenidos BaseRet=&quot;2000&quot; ImpuestoRet=&quot;001&quot; MontoRet=&quot;580.00&quot; TipoPagoRet=&quot;03&quot; /&gt;&lt;/retenciones:Totales&gt;&lt;retenciones:Complemento&gt;&lt;tfd:TimbreFiscalDigital xsi:schemaLocation=&quot;http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd&quot; Version=&quot;1.1&quot; UUID=&quot;eb4b0264-d937-44d8-ad00-24d4291aa285&quot; FechaTimbrado=&quot;2024-10-15T14:54:32&quot; RfcProvCertif=&quot;SPR190613I52&quot; SelloCFD=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificadoSAT=&quot;30001000000400002495&quot; SelloSAT=&quot;H4WHETIQhstpYUW78v/Z4KXoqk34bIwgcPCiX6Ek4NFvGfZ9MIDYURDr3pkh6E0vn9q1aahKrMok4+JhXLd46H2VMzdgAc3jPZtxcyKt7mEjeMjCuiw3dyo2SzkPgVmyjQsDHvDyd6jyz8gnKJByk+QJrLtQx4/Rvs6tpFKPwwDqY1BEgeaQtJX6nebM+mfEqMhSy8SS7UXZMKeXjxRy5Mu7/OSyvbmu7huc3VwBZce5+BgvGI9UTrm5MdA8jJ5qpQrSADP9BfbJTcD90P+1eTftQztnXGbYXWTQUEpY8YLKELRA5m//xF/6RD9Wawmapiga/FKXVJlImJkZXzJVQQ==&quot; xmlns:tfd=&quot;http://www.sat.gob.mx/TimbreFiscalDigital&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;&lt;/retenciones:Complemento&gt;&lt;/retenciones:Retenciones&gt;"
+    },
+    "status": "success"
+}
+```
+</details>
+
+:pushpin: ***NOTA:*** Este servicio simila la respuesta V4 de nuestros servicios REST, de manera interna se hace uso de la petición SOAP de timbrado de retenciones.
 
 ## Cancelación CFDI ##
 
@@ -997,10 +1115,276 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 
 </details>
 
+## Usuarios ##
+
+Servicios para trabajar con usuarios, incluye métodos para crear, modificar, obtener y eliminar usuarios.
+
+<details>
+<summary>
+Crear Usuario
+</summary>
+
+<br> Método mediante el cual se puede crear un nuevo usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Un array con los datos necesario para crear el usuario.
+
+Los datos enviados en el data son los siguientes:
+| Dato      | Descripción                              |
+|-----------|------------------------------------------|
+| Email     | Correo del usuario                       |
+| Password  | Contraseña del usuario                   |
+| Name      | Nombre del usuario                       |
+| RFC       | RFC del usuario                          |
+| Profile   | (Default = 3) Tipo de perfil del usuario |
+| Stamps    | Timbres a asignar en la creación         |
+| Unlimited | Especificar si tendrá timbres ilimitados |
+| Active    | (Default = true) Estatus del usuario     |
+
+**Ejemplo de consumo de la librería para crear un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $data = array(
+                'Email' => "correoNuevo@gmail.com",
+                'Password' => "contraseña",
+                'Name' => "Nombre usuario",
+                'RFC' => "RFC",
+                'Profile' => 3,
+                'Stamps' => 1,
+                'Unlimited' => false,
+                'Active' => true
+            );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::CreateUser($data);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Consultar Usuario Por Token</summary>
+
+<br> Método mediante el cual se puede consultar un usuario por su token.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+
+**Ejemplo de consumo de la librería parala consulta de un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetUser();
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
+<details>
+<summary>Consultar Usuario Por Id</summary>
+
+<br> Método mediante el cual se puede consultar un usuario por su Id.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a consultar
+
+**Ejemplo de consumo de la librería parala consulta de un usuario por Id mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetUserById($idUser);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Consultar Usuarios</summary>
+
+<br> Método mediante el cual se puede consultar varios usuarios de una cuenta padre.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+
+**Ejemplo de consumo de la librería parala consulta de varios usuarios de una cuenta mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::GetAllUser();
+    var_dump($resultUser);
+```
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
+<details>
+<summary>Modificar Usuario</summary>
+
+<br> Método mediante el cual se puede modificar un usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a modificar.
+* Un array con los datos necesario para modificar el usuario.
+
+Los datos enviados en el data son los siguientes:
+| Dato      | Descripción                              |
+|-----------|------------------------------------------|
+| Name      | Nombre del usuario                       |
+| RFC       | RFC del usuario                          |
+| Unlimited | Especificar si tendrá timbres ilimitados |
+
+**Ejemplo de consumo de la librería para modificar un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $data = array(
+                'RFC' => "XAXX010101000",
+                'Name' => "Nuevo NombreUsuario",
+                'Unlimited' => false
+            );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::UpdateUser($idUser, $data);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
+<summary>Eliminar Usuario</summary>
+
+<br> Método mediante el cual se puede eliminar un usuario.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW y/o Url Api SW.
+* Usuario y contraseña ó token.
+* Id del usuario a eliminar.
+
+**Ejemplo de consumo de la librería para eliminar un usuario mediante usuario y contraseña**
+
+```php
+
+    require_once 'SWSDK.php';
+    use SWServices\AccountUser\AccountUserService as AccountUserService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $idUser ="09c3d000-0000-0000-0000-000000000000";
+    $accountUser = AccountUserService::Set($params);
+    $resultUser = $accountUser::DeleteUser($idUser);
+    var_dump($resultUser);
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+
+</details>
+
 ## Consultar Saldo ##
 
 <details>
-<summary>Ejemplos</summary>
+<summary>Consultar Saldo por Token</summary>
 
 Este servicio recibe el token y genera los elementos que componen la consulta de saldos:
 
@@ -1075,8 +1459,142 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 }
 ```
 </details>
+<details>
+<summary>
+Consulta Saldo por Id User
+</summary>
+Este servicio recibe el Id User y genera los elementos que componen la consulta de saldos:
 
-## Consulta Estatus ##
+* ID saldo cliente
+* ID cliente usuario
+* Saldo timbres
+* Timbres utilizados
+* Fecha de expiracion
+* Ilimitado
+* Timbres asignados
+
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::GetAccountBalanceById("fafb2ac2-62ca-49f8-91de-15cea73b01fb");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+</details>
+
+<details>
+<summary>Agregar Timbres</summary>
+Este servicio recibe como parametros:
+
+* ID User de la cuenta a abonar
+* Cantidad de timbres a añadir
+* Comentario opcional
+
+Ejemplo de uso:
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::AddStamps("fafb2ac2-62ca-49f8-81de-14cea73b01eb", 100, "Renovacion de contrato");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+### Respuestas de consulta de saldo ###
+El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
+
+>Tipos de respuesta
+>En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
+
+### Respuesta exitosa ###
+```json
+{
+    "data": "100 timbres correctamente agregados al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
+    "status": "success"
+}
+```
+### Respuesta no exitosa ###
+```json
+{
+    "message": "Validation errors",
+    "messageDetail": "Usuario no pertenece al Dealer",
+    "status": "error"
+}
+```
+</details>
+
+<details>
+<summary>Eliminar Timbres</summary>
+Este servicio recibe como parametros:
+
+* ID User de la cuenta
+* Cantidad de timbres a eliminar
+* Comentario opcional
+
+Ejemplo de uso:
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+            "urlApi" => "http://api.test.sw.com.mx",
+            "token" => "tokenReplaceForRealToken..."
+    );
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::RemoveStamps("fafb2ac2-62da-49f8-81de-14cea73b01eb", 100, "Cancelación de contrato");
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+### Respuestas de consulta de saldo ###
+El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
+
+>Tipos de respuesta
+>En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
+
+### Respuesta exitosa ###
+```json
+{
+    "data": "100 timbres correctamente removidos al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
+    "status": "success"
+}
+```
+### Respuesta no exitosa ###
+```json
+{
+    "message": "AU1006 Saldo insuficiente.",
+    "messageDetail": "",
+    "status": "error"
+}
+```
+</details>
+</details>
+
+## Consulta Estatus SAT ##
 
 <details>
 <summary>
@@ -1101,28 +1619,6 @@ Ejemplo de uso
 ```
 </details>
 
-## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
-Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
-
-
-<details>
-  <summary>Ejemplo de uso</summary>
-
-```php
-    require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "user"=>"cuentaUsuario",
-        "password"=> "contraseña"
-    );
-
-    $rfc = "LAN7008173R5";
-    cancelationService::Set($params);
-    $consultaPendientes = cancelationService::PendientesPorCancelar($rfc);
-    var_dump($consultaPendientes);
-```
-</details>
 
 ## Aceptar/Rechazar Cancelación ##
 
@@ -1311,8 +1807,60 @@ Este método recibe los siguientes parámetros:
 ```
 </details>
 
+## Consulta de Solicitudes pendientes de Aceptar/Rechazar ##
+Este servicio devuelve una lista [Array] de UUID correspondientes a las solicitudes que tiene pendientes de aceptar o rechazar determinado RFC. Así mismo este servicio recibe solamente el RFC para consultar.
+
+<details>
+<summary>
+Pendientes por cancelar con RFC
+</summary>
+
+Está modalidad recibe como parámetro el RFC del Receptor.
+
+Ejemplo de uso
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Pendings\PendingsService as pendingsService;
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    
+    $rfc = "LAN7008173R5";
+    pendingsService::Set($params);
+    $consultaRelacionados = relationsService::PendientesPorCancelar($rfc);
+    var_dump($consultaRelacionados);
+```
+</details>
+
 ## Consulta documentos relacionados ##
 Este servicio nos permite conocer las facturas que se encuentren relacionadas a un UUID. El método tiene varias maneras de ser consumido, por CSD, PFX, sólo UUID y por XML.
+
+<details>
+<summary>
+Documentos relacionados con UUID
+</summary>
+
+Está modalidad recibe como parámetros el RFC del Receptor y el UUID a consultar.
+
+Ejemplo de uso
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Relations\RelationsService as relationsService;
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    
+    $rfc = "LAN7008173R5";
+    $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
+    var_dump($consultaRelacionados);
+```
+</details>
 
 <details>
 <summary>
@@ -1324,7 +1872,7 @@ Está modalidad recibe como parámetros el RFC del Receptor, Certificado y Llave
 Ejemplo de uso
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\Relations\RelationsService as relationsService;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
@@ -1335,8 +1883,8 @@ Ejemplo de uso
     $keyB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.key'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-    cancelationService::Set($params);
-    $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosCSD($rfc, $cerB64, $keyB64, $password, $uuid);
     var_dump($consultaRelacionados);
 ```
 </details>
@@ -1351,7 +1899,7 @@ Está modalidad recibe como parámetros el RFC del Receptor, PFX [En base64], co
 Ejemplo de uso
 ```php
     require_once 'SWSDK.php';
-    use SWServices\Cancelation\CancelationService as cancelationService;
+    use SWServices\Relations\RelationsService as relationsService;
     $params = array(
         "url"=>"http://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
@@ -1361,8 +1909,8 @@ Ejemplo de uso
     $pfxB64 = base64_encode(file_get_contents('Test\Resources\CSD_Pruebas_CFDI_LAN7008173R5.pfx'));
     $rfc = "LAN7008173R5";
     $uuid = "52c02b64-d12e-4163-b581-bf749238896d";
-    cancelationService::Set($params);
-    $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
+    relationsService::Set($params);
+    $consultaRelacionados = relationsService::ConsultarCFDIRelacionadosPFX($rfc, $pfxB64, $password, $uuid);
     var_dump($consultaRelacionados);
 ```
 </details>
@@ -1789,11 +2337,12 @@ Este método recibe los siguientes parámetros:
 
 ### **CustomId - Pdf** ###
 
-</details>
 <details>
 <summary>Emisión Timbrado (IssueV4)</summary>
 
-**issueV4CustomIdPdfV1** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV1** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1820,7 +2369,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV2** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1847,7 +2398,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV3** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1873,7 +2426,9 @@ Este método recibe los siguientes parámetros:
 ?>
 ```
 
-**issueV4CustomIdPdfV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdPdfV4** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1895,6 +2450,114 @@ Este método recibe los siguientes parámetros:
 
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdPdfV3($xml, $customId); 
+    var_dump($result);
+
+?>
+```
+</details>
+
+<details>
+<summary>Emisión Timbrado JSON (IssueV4)</summary>
+
+**jsonIssueV4CustomIdPdfV1** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdPdfV2** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV2($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdPdfV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV3($json, $customId, $pdf);
+    var_dump($result);
+
+?>
+```
+
+**sonIssueV4CustomIdPdfV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String** y el parametro pdf de tipo **Boolean** de ser requerido, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $pdf = false;
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV4($json, $customId, $pdf);
     var_dump($result);
 
 ?>
@@ -1903,7 +2566,6 @@ Este método recibe los siguientes parámetros:
 
 ### **CustomId - Email** ###
 
-</details>
 <details>
 <summary>Emisión Timbrado (IssueV4)</summary>
 
@@ -1937,7 +2599,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV2** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV2** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el complemento timbre en un string (**TFD**),asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1965,7 +2629,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV3** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String** , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV3** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si la factura y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -1993,7 +2659,9 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 ?>
 ```
 
-**issueV4CustomIdEmailV4** Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, , se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, Se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado , en caso contrario lanza una excepción.
+**issueV4CustomIdEmailV4** 
+
+Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente regresara todos los datos del timbrado, en caso contrario lanza una excepción.
 
 ```php
 <?php
@@ -2017,6 +2685,114 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
     $stamp = EmisionTimbrado::Set($params);
     $result = $stamp::issueV4CustomIdEmailV4($xml, $customId); 
     var_dump($result);
+?>
+```
+</details>
+
+<details>
+<summary>Emisión Timbrado JSON (IssueV4)</summary>
+
+**jsonIssueV4CustomIdEmailV1** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV2** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el complemento timbre en un string (**TFD**), asi como el comprobante ya timbrado en formato string (**CFDI**) en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV2($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV3** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve el comprobante ya timbrado en formato string (**CFDI**), en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV3s($json, $customId, $email);
+    var_dump($result);
+
+?>
+```
+
+**jsonIssueV4CustomIdEmailV4** 
+
+Recibe un **JSON**, se pasa un parametro customId en formato **String**, se manda un parametro email en formato **String** o un **Array** de hasta maximo 5 correos electronicos, se genera un pdf por default con este metodo, posteriormente si el JSON y el token son correctos devuelve todos los datos del timbrado, en caso contrario lanza una excepción.
+
+```php
+<?php
+    require_once 'SWSDK.php';
+
+    use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
+
+    $prefixOne = date('Y-m-d');
+    $prefixTwo = rand(0, 555);
+    $customId = "Serie-" . $prefixOne . "-" . $prefixTwo;
+    $email = "correoT@correooest.com";
+    $params = array(
+        "url" => "https://services.test.sw.com.mx",
+        "token" => "T2lYQ0t4L0R...."
+    );
+    $json = file_get_contents("Test/Resources/cfdi40_json.json");
+    JsonEmisionTimbradoV4::Set($params);
+    $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV4($json, $customId, $email);
+    var_dump($result);
+
 ?>
 ```
 </details>

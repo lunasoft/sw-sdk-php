@@ -1,37 +1,17 @@
 <?php
 
-namespace SWServices\Stamp;
+namespace SWServices\JSonIssuer;
 
 use Exception;
 
-class StampHelper
+class JsonIssuerHelper
 {
-    private static $xml = null;
-    private static $_response = null;
-    private static $_urlApi = null;
-    private static $customId = null;
-    private static $email = null;
-
-    public static function get_xml($isB64)
+    public static function validate_json($json)
     {
-        try {
-
-            if ($isB64 == false) {
-                return self::validate_xml(self::$xml);
-            } else {
-                return self::validate_xml(base64_decode(self::$xml));
-            }
-        } catch (Exception $e) {
-            echo 'xml no válido', $e->getMessage();
-            exit();
-        }
-    }
-    public static function validate_xml($xml)
-    {
-        if (!empty($xml)) {
-            return $xml;
+        if (!empty($json)) {
+            return $json;
         } else {
-            echo 'si responde con el resultado';
+            echo 'JSON no válido o vacío';
             exit();
         }
     }
@@ -48,7 +28,7 @@ class StampHelper
     }
     public static function validate_email($email)
     {
-        try { //Revisar funcionalidad del helper solo falta este cambio para concretar el ejercicio
+        try {
             if ((count(array($email)) <= 5) && (count(array($email)) > 0)) {
                 $eResult = true;
                 foreach ((array) $email as $valor) {
@@ -66,7 +46,7 @@ class StampHelper
                 return $email;
             }
         } catch (Exception $e) {
-            echo 'recepcion de email invalido', $e->getMessage();
+            echo 'Recepcion de email invalido', $e->getMessage();
             exit();
         }
     }
