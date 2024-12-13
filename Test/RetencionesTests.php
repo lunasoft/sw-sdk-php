@@ -29,7 +29,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "success";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
@@ -47,7 +47,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "success";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
@@ -65,7 +65,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "success";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "token" => getenv('SDKTEST_TOKEN')
         );
@@ -82,7 +82,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "success";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "token" => getenv('SDKTEST_TOKEN')
         );
@@ -99,7 +99,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "error";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
@@ -117,7 +117,7 @@ final class RetencionesTests extends TestCase
     {
         $resultSpect = "error";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
@@ -136,7 +136,7 @@ final class RetencionesTests extends TestCase
         $resultSpect = "error";
         $messageSpect = "Reten20101 - El resultado de la digestión debe ser igual al resultado de la desencripción del sello.";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
@@ -156,7 +156,7 @@ final class RetencionesTests extends TestCase
         $resultSpect = "error";
         $messageSpect = "Reten20101 - El resultado de la digestión debe ser igual al resultado de la desencripción del sello.";
         $params = array(
-            "url" => "http://services.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')

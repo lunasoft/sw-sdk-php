@@ -15,7 +15,7 @@ final class PendingsTests extends TestCase
 		$rfc = "EKU9003173C9";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -34,7 +34,7 @@ final class PendingsTests extends TestCase
 		$rfc = "";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {

@@ -28,7 +28,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -48,7 +48,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -65,7 +65,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -84,7 +84,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -102,7 +102,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -124,7 +124,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -145,7 +145,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -163,7 +163,7 @@ class StampTests extends TestCase{
 			
 			$resultSpect = "success";
 			$params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -184,7 +184,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -202,7 +202,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=>getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -219,7 +219,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -237,7 +237,7 @@ class StampTests extends TestCase{
         {
 			$resultSpect = "success";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -260,7 +260,7 @@ class StampTests extends TestCase{
 			$customId = "Serie-".$prefixOne."-".$prefixTwo;
 			$pdf = false;
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -282,7 +282,7 @@ class StampTests extends TestCase{
 			$customId = "Serie-".$prefixOne."-".$prefixTwo;
 			$email = "correo@gmail.com";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());

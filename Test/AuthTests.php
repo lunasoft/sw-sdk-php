@@ -8,7 +8,7 @@
     final class AuthTests extends TestCase{
         public function testSuccess(){
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "user"=> getenv('SDKTEST_USER'),
                 "password"=> getenv('SDKTEST_PASSWORD')
             );
@@ -20,7 +20,7 @@
         }
         public function testError(){
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "user"=>getenv('SDKTEST_USER'),
                 "password"=> ""
             );

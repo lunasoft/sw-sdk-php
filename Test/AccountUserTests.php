@@ -13,14 +13,14 @@
 
         public function setUp(): void {
             $this->params = array(
-                "url" => "http://services.test.sw.com.mx",
-                "urlApi" => "http://api.test.sw.com.mx",
+                "url" => "https://services.test.sw.com.mx",
+                "urlApi" => "https://api.test.sw.com.mx",
                 "user" => getenv('SDKTEST_USER'),
                 "password" => getenv('SDKTEST_PASSWORD')
             );
 
             $this->tokenParams = array(
-                "urlApi" => "http://api.test.sw.com.mx",
+                "urlApi" => "https://api.test.sw.com.mx",
                 "token" => getenv('SDKTEST_TOKEN')
             );
         }
@@ -88,7 +88,7 @@
         public function testGetAllUserError(){
             $resultSpect = "error";
             $params = array(
-                'urlApi'=> 'http://api.test.sw.com.mx',
+                'urlApi'=> 'https://api.test.sw.com.mx',
                 'token'=> '1',
             );
             $accountUser = AccountUserService::Set($params);
@@ -114,7 +114,7 @@
         public function testGetUserError(){
             $resultSpect = "error";
             $params = array(
-                'urlApi'=> 'http://api.test.sw.com.mx',
+                'urlApi'=> 'https://api.test.sw.com.mx',
                 'token'=> "Token"
             );
             $accountUser = AccountUserService::Set($params);

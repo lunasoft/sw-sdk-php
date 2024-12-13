@@ -16,7 +16,7 @@ final class RelationsTests extends TestCase
 		$rfc = "EKU9003173C9";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -36,7 +36,7 @@ final class RelationsTests extends TestCase
 		$rfc = "EKU9003173C9";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -60,7 +60,7 @@ final class RelationsTests extends TestCase
 		$token = getenv('SDKTEST_TOKEN');
 		$service = "/relations/csd";
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -84,7 +84,7 @@ final class RelationsTests extends TestCase
 		$token = getenv('SDKTEST_TOKEN');
 		$service = "/relations/csd";
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -107,7 +107,7 @@ final class RelationsTests extends TestCase
 		$token = getenv('SDKTEST_TOKEN');
 		$service = "/relations/pfx";
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -129,7 +129,7 @@ final class RelationsTests extends TestCase
 		$token = getenv('SDKTEST_TOKEN');
 		$service = "/relations/pfx";
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {

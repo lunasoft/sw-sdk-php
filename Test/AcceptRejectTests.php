@@ -13,7 +13,7 @@
             $uuid = "dcbddeb9-a208-42be-ae5b-0390a929fe48";
             $action = "Aceptacion";
             $params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -68,7 +68,7 @@
 		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -128,7 +128,7 @@
             $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
             $passwordPfx = "swpass";
             $params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -182,7 +182,7 @@
             $resultSpect = "success";
             $xml = file_get_contents('Test\Resources\acceptReject_xml.xml');
             $params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);

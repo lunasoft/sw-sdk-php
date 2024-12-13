@@ -23,7 +23,7 @@
         public function testIssueXMLV1()
         {
             $params = array(
-			    "url"=>"http://services.test.sw.com.mx",
+			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
 			    "password"=> getenv('SDKTEST_PASSWORD')
 				);
@@ -48,7 +48,7 @@
 			$customId = "Serie-".$prefixOne."-".$prefixTwo;
 			$pdf = false;
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -68,7 +68,7 @@
 			$customId = "Serie-".$prefixOne."-".$prefixTwo;
 			$email = "correoT@correoest.com";
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
@@ -86,7 +86,7 @@
 			$customId = NULL;
 			$pdf = false;
 			$params = array(
-				"url"=>"http://services.test.sw.com.mx",
+				"url"=>"https://services.test.sw.com.mx",
 				"token"=> getenv('SDKTEST_TOKEN')
 				);
 			$xml = file_get_contents(self::$generateXML->createXML());
