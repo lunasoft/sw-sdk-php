@@ -13,9 +13,14 @@ class AuthRequest
             CURL_SSLVERSION_TLSv1_3
         ];
 
+        $data = json_encode([
+            "user" => $user,
+            "password" => $pass
+        ]);
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $url . "/security/authenticate",
+            CURLOPT_URL => $url . "/v2/security/authenticate",
             CURLOPT_SSLVERSION => $protocols,
             CURLOPT_SSL_VERIFYPEER => 0,
             CURLOPT_SSL_VERIFYHOST => 0,
@@ -25,11 +30,9 @@ class AuthRequest
             CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "POST",
+            CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => array(
-                "cache-control: no-cache",
-                "password: " . $pass,
-                "user: " . $user,
-                "Content-length: 0"
+                "Content-Type: application/json"
             ),
         ));
         if (isset($proxy)) {
