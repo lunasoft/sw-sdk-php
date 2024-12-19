@@ -133,6 +133,17 @@ class RequestHelper extends ResponseHelper
         $err = curl_error($curl);
         curl_close($curl);
 
+        //Provicional para manejo de creación de usuarios
+        if ($httpcode == "204" && strpos($path, '/management/v2/api/dealers/users/') !== false && $requestMethod == "DELETE"){
+            $lastSegment = substr($path, strrpos($path, '/') + 1);
+            if (!empty($lastSegment)) {
+                $response .= json_encode(array(
+                    "status" => "success",
+                    "message" => "Usuario eliminado con éxito"
+                ));
+            }
+        }
+
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else {
