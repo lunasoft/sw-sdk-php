@@ -1115,9 +1115,12 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 
 </details>
 
-## Usuarios ##
+## Usuarios V2 ##
 
 Servicios para trabajar con usuarios, incluye métodos para crear, modificar, obtener y eliminar usuarios.
+
+> [!IMPORTANT]
+> Los métodos han tenido algunos cambios y mejoras con respecto a la versión 1.
 
 <details>
 <summary>
@@ -1132,21 +1135,23 @@ Este método recibe los siguientes parámetros:
 * Un array con los datos necesario para crear el usuario.
 
 Los datos enviados en el data son los siguientes:
-| Dato      | Descripción                              |
-|-----------|------------------------------------------|
-| Email     | Correo del usuario                       |
-| Password  | Contraseña del usuario                   |
-| Name      | Nombre del usuario                       |
-| RFC       | RFC del usuario                          |
-| Profile   | (Default = 3) Tipo de perfil del usuario |
-| Stamps    | Timbres a asignar en la creación         |
-| Unlimited | Especificar si tendrá timbres ilimitados |
-| Active    | (Default = true) Estatus del usuario     |
+
+***Información del cliente:*** 
+
+| Dato              | Descripción                                  |
+|-------------------|----------------------------------------------|
+| Name              | Nombre del usuario                           |
+| TaxId             | RFC del usuario                              |
+| Email             | correo del nuevo usuario                     |
+| Stamps            | Cantidad de timbres a asignar                |
+| IsUnlimited       | Especificar si tendra timbres ilimitados     |
+| Password          | Contraseña del usuario                       |
+| NotificationEmail | Correo a donde quiere recibir notificaciones |
+| Phone             | Número del telefono del usuario              |
 
 **Ejemplo de consumo de la librería para crear un usuario mediante usuario y contraseña**
 
 ```php
-
     require_once 'SWSDK.php';
     use SWServices\AccountUser\AccountUserService as AccountUserService;
 
@@ -1157,15 +1162,15 @@ Los datos enviados en el data son los siguientes:
         "password"=> "contraseña"
     );
     $data = array(
-                'Email' => "correoNuevo@gmail.com",
-                'Password' => "contraseña",
-                'Name' => "Nombre usuario",
-                'RFC' => "RFC",
-                'Profile' => 3,
-                'Stamps' => 1,
-                'Unlimited' => false,
-                'Active' => true
-            );
+            'name' => "Nombre Usuario",
+            'taxId' => "RFC",
+            'email' => "correo_cuenta@gmail.com",
+            'stamps' => 1,
+            'isUnlimited' => false,
+            'password' => "SWpass1!",
+            'notificationEmail' => "correo_notificaciones@gmail.com",
+            'phone' => "1234567890"
+        );
     $accountUser = AccountUserService::Set($params);
     $resultUser = $accountUser::CreateUser($data);
     var_dump($resultUser);
@@ -1178,16 +1183,28 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
         "token"=>"tokenUsuario",
     );
 ```
+
+:pushpin: ***NOTA:*** La contraseña debe cumplir con las siguientes politicas:
+* La contraseña no debe ser igual que el nombre de usuario.
+* La contraseña debe incluir al menos una letra mayúscula.
+* La contraseña debe incluir al menos una letra minúscula
+* La contraseña debe incluir al menos un número.
+* La contraseña debe incluir al menos un símbolo (carácter especial).
+* La contraseña no debe incluir espacios en blanco.
+* La contraseña debe tener entre 10 y 20 caracteres.
+* La contraseña no debe incluir símbolos especiales fuera de lo común.
+* Los caracteres especiales aceptados son los siguientes: !@#$%^&*()_+=\[{\]};:<>|./?,-]
 </details>
 
 <details>
-<summary>Consultar Usuario Por Token</summary>
+<summary>Consultar Usuario(s)</summary>
 
-<br> Método mediante el cual se puede consultar un usuario por su token.
+<br> Método mediante el cual se puede consultar un usuario o usuarios indicando ciertos parámetros de busqueda.
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW y/o Url Api SW.
 * Usuario y contraseña ó token.
+* Un array con los datos necesario para la busqueda (opcional).
 
 **Ejemplo de consumo de la librería parala consulta de un usuario mediante usuario y contraseña**
 
@@ -1196,14 +1213,17 @@ Este método recibe los siguientes parámetros:
     require_once 'SWSDK.php';
     use SWServices\AccountUser\AccountUserService as AccountUserService;
 
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
-        "user"=>"cuentaUsuario",
-        "password"=> "contraseña"
-    );
+    $data = array(
+            'taxId' => null,
+            'email' => null,
+            'name' => "UsuarioBusqueda",
+            'idUser' => "09c3d000-0000-0000-0000-000000000000",
+            'isActive' => true,
+            // 'Page' => "1",
+            // 'PerPage' => "10"
+        );
     $accountUser = AccountUserService::Set($params);
-    $resultUser = $accountUser::GetUser();
+    $resultUser = $accountUser::GetUser($data);
     var_dump($resultUser);
 ```
 
@@ -1214,87 +1234,15 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
         "token"=>"tokenUsuario",
     );
 ```
+:pushpin: ***NOTA:*** Puedes enviar todos los parámetros, solo los que necesites o ninguno, en caso de no enviar parámetros, por default se retornarán únicamente los primeros 10 de la página 1.
 
-</details>
-
-<details>
-<summary>Consultar Usuario Por Id</summary>
-
-<br> Método mediante el cual se puede consultar un usuario por su Id.
-
-Este método recibe los siguientes parámetros:
-* Url Servicios SW y/o Url Api SW.
-* Usuario y contraseña ó token.
-* Id del usuario a consultar
-
-**Ejemplo de consumo de la librería parala consulta de un usuario por Id mediante usuario y contraseña**
-
-```php
-
-    require_once 'SWSDK.php';
-    use SWServices\AccountUser\AccountUserService as AccountUserService;
-
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
-        "user"=>"cuentaUsuario",
-        "password"=> "contraseña"
-    );
-    $idUser ="09c3d000-0000-0000-0000-000000000000";
-    $accountUser = AccountUserService::Set($params);
-    $resultUser = $accountUser::GetUserById($idUser);
-    var_dump($resultUser);
-```
-
-Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
-```php
-    $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
-        "token"=>"tokenUsuario",
-    );
-```
-</details>
-
-<details>
-<summary>Consultar Usuarios</summary>
-
-<br> Método mediante el cual se puede consultar varios usuarios de una cuenta padre.
-
-Este método recibe los siguientes parámetros:
-* Url Servicios SW y/o Url Api SW.
-* Usuario y contraseña ó token.
-
-**Ejemplo de consumo de la librería parala consulta de varios usuarios de una cuenta mediante usuario y contraseña**
-
-```php
-
-    require_once 'SWSDK.php';
-    use SWServices\AccountUser\AccountUserService as AccountUserService;
-
-    $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
-        "user"=>"cuentaUsuario",
-        "password"=> "contraseña"
-    );
-    $accountUser = AccountUserService::Set($params);
-    $resultUser = $accountUser::GetAllUser();
-    var_dump($resultUser);
-```
-Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
-```php
-    $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
-        "token"=>"tokenUsuario",
-    );
-```
 
 </details>
 
 <details>
 <summary>Modificar Usuario</summary>
 
-<br> Método mediante el cual se puede modificar un usuario.
+<br> Método mediante el cual se puede modificar un usuario existente.
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW y/o Url Api SW.
@@ -1302,12 +1250,18 @@ Este método recibe los siguientes parámetros:
 * Id del usuario a modificar.
 * Un array con los datos necesario para modificar el usuario.
 
+> [!NOTE]  
+> Puedes asignarles “null” a las propiedades que no vayas a actualizar.
+
 Los datos enviados en el data son los siguientes:
-| Dato      | Descripción                              |
-|-----------|------------------------------------------|
-| Name      | Nombre del usuario                       |
-| RFC       | RFC del usuario                          |
-| Unlimited | Especificar si tendrá timbres ilimitados |
+| Dato              | Descripción                              |
+|-------------------|------------------------------------------|
+| idUser            | Id del usuario a actualizar              |
+| name              | Nuevo nombre del usuario                 |
+| taxId             | Nuevo RFC del usuario                    |
+| notificationEmail | Nuevo correo para recibir notificaciones |
+| isUnlimited       | Especificar si tendra timbres ilimitados |
+| phone             | Número del telefono del usuario          |
 
 **Ejemplo de consumo de la librería para modificar un usuario mediante usuario y contraseña**
 
@@ -1323,10 +1277,13 @@ Los datos enviados en el data son los siguientes:
         "password"=> "contraseña"
     );
     $data = array(
-                'RFC' => "XAXX010101000",
-                'Name' => "Nuevo NombreUsuario",
-                'Unlimited' => false
-            );
+            'name' => "Usuario",
+            'taxId' => "RFC",
+            'isUnlimited' => false,
+            'iduser' => "09c3d000-0000-0000-0000-000000000000",
+            'notificationEmail' => "usuario@gmail.com",
+            'phone' => "1234567890"
+        );
     $idUser ="09c3d000-0000-0000-0000-000000000000";
     $accountUser = AccountUserService::Set($params);
     $resultUser = $accountUser::UpdateUser($idUser, $data);
@@ -1345,12 +1302,15 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
 <details>
 <summary>Eliminar Usuario</summary>
 
-<br> Método mediante el cual se puede eliminar un usuario.
+<br> Método mediante el cual se puede eliminar un usuario existente.
 
 Este método recibe los siguientes parámetros:
 * Url Servicios SW y/o Url Api SW.
 * Usuario y contraseña ó token.
 * Id del usuario a eliminar.
+
+> [!IMPORTANT]  
+> Los nombres de las variables en la respuesta han cambiado.
 
 **Ejemplo de consumo de la librería para eliminar un usuario mediante usuario y contraseña**
 
@@ -1495,7 +1455,7 @@ Este servicio recibe el Id User y genera los elementos que componen la consulta 
 
 <details>
 <summary>Agregar Timbres</summary>
-Este servicio recibe como parametros:
+Este servicio recibe como parámetros:
 
 * ID User de la cuenta a abonar
 * Cantidad de timbres a añadir
@@ -1545,7 +1505,7 @@ El response de añadir timbres retorna la siguiente estructura en caso de error 
 
 <details>
 <summary>Eliminar Timbres</summary>
-Este servicio recibe como parametros:
+Este servicio recibe como parámetros:
 
 * ID User de la cuenta
 * Cantidad de timbres a eliminar
@@ -2248,7 +2208,7 @@ Consultar Certificados
 
 Método para consultar todos los certificados cargados en la cuenta.
 
-Este método recibe los siguientes parametros:
+Este método recibe los siguientes parámetros:
 * Url Servicios SW
 * Usuario y contraseña
 
