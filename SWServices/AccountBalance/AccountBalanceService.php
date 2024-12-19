@@ -1,5 +1,7 @@
 <?php
+
 namespace SWServices\AccountBalance;
+
 use SWServices\AccountBalance\AccountBalanceRequest as accountBalanceRequest;
 use SWServices\Services as Services;
 use Exception;
@@ -29,10 +31,9 @@ class AccountBalanceService extends Services
     {
         return accountBalanceRequest::distributionStampRequest(Services::get_urlApi(), Services::get_token(), "add", $id, $stamps, $comment, Services::get_proxy());
     }
-      //Método público para eliminar timbres
+    //Método público para eliminar timbres
     public static function RemoveStamps($id, $stamps, $comment = null)
     {
         return accountBalanceRequest::distributionStampRequest(Services::get_urlApi(), Services::get_token(), "remove", $id, $stamps, $comment, Services::get_proxy());
     }
 }
-?>

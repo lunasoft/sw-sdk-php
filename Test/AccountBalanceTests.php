@@ -19,7 +19,7 @@ final class AccountBalanceTests extends TestCase
     {
         $resultSpect = "error";
         $params = array(
-            'url' => 'services.test.sw.com.mx',
+            'url' => 'https://services.test.sw.com.mx',
             'token' => '1',
         );
         $accountBalance = AccountBalanceService::Set($params);

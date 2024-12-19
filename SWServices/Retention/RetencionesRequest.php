@@ -25,9 +25,17 @@ class RetencionesRequest
         $curl = curl_init();
         $action = ($soapAction === 'v1') ? self::SOAP_ACTION_V1 : self::SOAP_ACTION_V2;
 
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
         curl_setopt_array($curl, [
             CURLOPT_URL => $urlRetention,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSLVERSION => $protocols,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => self::createSoapRequest($xmlRetencion, $tokenAutenticacion, $soapAction),
             CURLOPT_HTTPHEADER => [

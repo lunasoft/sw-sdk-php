@@ -11,6 +11,11 @@ class AccountBalanceRequest
     // Función privada para realizar solicitudes HTTP comunes
     private static function sendRequest($url, $token, $method = "GET", $data = null, $proxy = null)
     {
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
@@ -18,6 +23,9 @@ class AccountBalanceRequest
             CURLOPT_ENCODING => "UTF-8",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
+            CURLOPT_SSLVERSION => $protocols,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_POSTFIELDS => $data ? json_encode($data) : null,
@@ -62,4 +70,3 @@ class AccountBalanceRequest
         return self::sendRequest($url, $token, "POST", $postData, $proxy);
     }
 }
-?>

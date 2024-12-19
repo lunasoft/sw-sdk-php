@@ -108,7 +108,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
-			$this->assertNotEmpty($result->data,"Acuse vacio");
+			$this->assertNotEmpty($result->data, "Acuse vacio");
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -151,7 +151,7 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo);
 			$this->assertEquals($resultSpect, $result->status);
-			$this->assertNotEmpty($result->data,"Acuse vacio");
+			$this->assertNotEmpty($result->data, "Acuse vacio");
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

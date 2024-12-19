@@ -96,17 +96,16 @@
             $this->assertEquals($resultSpect, $result->status);
         }
 
-        public function testGetUserSuccess(){
-            $resultSpect = "success";
-            $accountUser = AccountUserService::Set($this->params);
-            $result = $accountUser::GetUser();
-            var_dump($result);
-            $this->assertEquals($resultSpect, $result->status);
-        }
-
         public function testGetUserSuccessToken(){
             $resultSpect = "success";
             $accountUser = AccountUserService::Set($this->tokenParams);
+            $result = $accountUser::GetUser();
+            $this->assertEquals($resultSpect, $result->status);
+        }
+
+        public function testGetUserSuccess(){
+            $resultSpect = "success";
+            $accountUser = AccountUserService::Set($this->params);
             $result = $accountUser::GetUser();
             $this->assertEquals($resultSpect, $result->status);
         }
@@ -122,18 +121,18 @@
             $this->assertEquals($resultSpect, $result->status);
         }
 
-        public function testGetUserByIdSuccess(){
-            $resultSpect = "success";
-            $idUser="eee19973-df42-46ae-a42b-937e5745346e";
-            $accountUser = AccountUserService::Set($this->params);
-            $result = $accountUser::GetUserById($idUser);
-            $this->assertEquals($resultSpect, $result->status);
-        }
-
         public function testGetUserByIdSuccessToken(){
             $resultSpect = "success";
             $idUser="eee19973-df42-46ae-a42b-937e5745346e";
             $accountUser = AccountUserService::Set($this->tokenParams);
+            $result = $accountUser::GetUserById($idUser);
+            $this->assertEquals($resultSpect, $result->status);
+        }
+
+        public function testGetUserByIdSuccess(){
+            $resultSpect = "success";
+            $idUser="eee19973-df42-46ae-a42b-937e5745346e";
+            $accountUser = AccountUserService::Set($this->params);
             $result = $accountUser::GetUserById($idUser);
             $this->assertEquals($resultSpect, $result->status);
         }
@@ -168,10 +167,8 @@
             );
             $accountUser = AccountUserService::Set($this->params);
             $result = $accountUser::UpdateUser($idUser, $data);
-            var_dump($result);
             $this->assertEquals($resultSpect, $result->status);
             $this->assertEquals($message, $result->data);
-            var_dump($result);
         }
     }
 ?>

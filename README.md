@@ -1594,6 +1594,40 @@ El response de añadir timbres retorna la siguiente estructura en caso de error 
 </details>
 </details>
 
+## Validación ##
+
+<details>
+<summary>
+Validación XML
+</summary>
+
+Este servicio recibe un comprobante CFDI 4.0 en formato XML mediante el cual se valida integridad, sello, errores de estructura, matriz de errores del SAT incluyendo complementos, se valida que exista en el SAT, así como el estatus en el SAT.
+
+Este método recibe los siguientes parámetros:
+* Url Servicios SW o Usuario y contraseña o token
+* XML
+* Opcional: Indicar si se desea consultar estatus antes el SAT
+
+**Ejemplo de consumo de la librería para validación de XML**
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Validation\ValidateXMLService as ValidateXMLService;
+
+    $params = array(
+        "url"=>"http://services.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+
+    $xml = file_get_contents('Test\Resources\cfdi40_sellado.xml');
+    $validateStatus = false;
+
+    $validateXml = ValidateXMLService::Set($params);
+    $result = $validateXml::ValidaXML($xml, $validateStatus);
+    var_dump($result);
+```
+</details>
+
 ## Consulta Estatus SAT ##
 
 <details>
@@ -1992,6 +2026,39 @@ Ejemplo de uso
     cancelationService::Set($params);
     $consultaRelacionados = cancelationService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
     var_dump($consultaRelacionados);
+```
+</details>
+
+## Recuperar XML ##
+Servicio para recuperar información de un XML timbrado con SW.
+
+<details>
+<summary>
+Recuperar por UUID
+</summary>
+
+Método para recuperar la información de un XML enviando el UUID de la factura, así como el token de la cuenta en la cual fue timbrada.
+
+Este método recibe los siguientes parámetros:
+* Url Api SW
+* Url Servicios SW (Cuando se use usuario y contraseña)
+* Usuario y contraseña ò token
+* UUID
+
+**Ejemplo de consumo de la libreria para la recuperación de XML**
+```php
+    require_once 'SWSDK.php';
+    use SWServices\Storage\StorageService as StorageService;
+
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+
+    $resend = StorageService::Set($params);
+    $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+    var_dump($result);
 ```
 </details>
 

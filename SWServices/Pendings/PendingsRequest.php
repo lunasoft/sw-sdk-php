@@ -8,12 +8,19 @@ class PendingsRequest
 {
     public static function sendReqGet($url, $token, $rfc, $proxy, $service)
     {
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
         $curl = curl_init();
-        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $url . $service . $rfc,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSLVERSION => $protocols,
+            CURLOPT_SSL_VERIFYPEER => 0,
+            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
             CURLOPT_TIMEOUT => 30,
@@ -24,9 +31,13 @@ class PendingsRequest
                 "Cache-Control: no-cache"
             ],
         ]);
+
+        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
+
         $response = curl_exec($curl);
         $err = curl_error($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        
         curl_close($curl);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);

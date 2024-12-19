@@ -87,7 +87,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::GeneratePDF($xml, $logo, $templateId, $extras, false);
-            $this->assertEquals($result ,NULL);
+            $this->assertEquals($result, NULL);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -151,10 +151,10 @@ final class PDFTest extends TestCase
     public function testRegeneratePdfExtra_Success()
     {
         $extras =  array(
-            "extras"=>array(
-                "EDIRECCION1"=>"STERNO PRODUCTS 2483 Harbor Avenue Memphis, TN 38113"
+            "extras" => array(
+                "EDIRECCION1" => "STERNO PRODUCTS 2483 Harbor Avenue Memphis, TN 38113"
             ),
-            "templateId"=>"extradata"
+            "templateId" => "extradata"
         );
         $uuid = "cddad1da-0141-438a-ba94-d3036a8ee82d";
         $params = array(

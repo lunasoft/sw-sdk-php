@@ -30,7 +30,7 @@
             $uuid = "dcbddeb9-a208-42be-ae5b-0390a929fe48";
             $action = "Aceptacion";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -48,7 +48,7 @@
             $uuid = "dcbddeb9-a208-42be-ae5b-0390a929fe48";
             $action = "Aceptacion";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -88,7 +88,7 @@
 		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -109,7 +109,7 @@
 		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -126,7 +126,7 @@
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
             $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
-            $passwordPfx = "swpass";
+            $passwordPfx = "12345678a";
             $params = array(
 			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
@@ -145,9 +145,9 @@
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
             $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
-            $passwordPfx = "swpass";
+            $passwordPfx = "12345678a";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -168,7 +168,7 @@
             $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
             $passwordPfx = "swpass";
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);
@@ -196,7 +196,7 @@
             $resultSpect = "success";
             $xml = file_get_contents('Test\Resources\acceptReject_xml.xml');
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);

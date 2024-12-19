@@ -97,7 +97,7 @@
                 "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
-            $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+            $json = file_get_contents("Test/Resources/cfdi40_json.json");
             JsonEmisionTimbradoV4::Set($params);
             $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
             $this->assertTrue($resultSpect == $result->status);
@@ -111,7 +111,7 @@
                 "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
-            $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+            $json = file_get_contents("Test/Resources/cfdi40_json.json");
             JsonEmisionTimbradoV4::Set($params);
             $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
             $this->assertTrue($resultSpect == $result->status);
