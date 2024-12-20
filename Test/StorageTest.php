@@ -11,13 +11,14 @@ final class StorageTest extends TestCase
     public function testGetAllDataToken_Success()
     {
         $params = array(
+            "url" => "https://services.test.sw.com.mx",
             "urlApi" => "https://api.test.sw.com.mx",
-            "user"=>"cuentaUsuario",
-            "password"=> "contraseña"
+            "user" => getenv('SDKTEST_USER'),
+            "password" => getenv('SDKTEST_PASSWORD')
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+            $result = $resend::getXml("d8ecd6b8-8789-4de4-b578-6719f9826b98");
             $resultSpect = "success";
             $this->assertEquals($resultSpect, $result::getStatus());
         } catch (Exception $e) {

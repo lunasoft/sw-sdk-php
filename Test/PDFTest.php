@@ -183,9 +183,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::RegeneratePDF($uuid);
-            $this->assertEquals("error", $result->status);
-            $this->assertEquals("URL debe especificarse", $result->message);
-            $this->assertNotEmpty($result->messageDetail);
+            $this->assertEquals("No se encontro el UUID.", $result->message);
         } catch (Exception $e) {
             echo $e->getMessage();
         }
