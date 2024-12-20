@@ -31,7 +31,7 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 
 ### Documentación
 * [Inicio Rápido](https://developers.sw.com.mx/knowledge-base/conoce-el-proceso-de-integracion-en-solo-7-pasos/)
-* [Documentacion Oficial Servicios](http://developers.sw.com.mx)
+* [Documentacion Oficial Servicios](https://developers.sw.com.mx)
 
 ---
 
@@ -91,7 +91,7 @@ La librería cuenta con dos servicios principales los que son la Autenticacion y
 Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, debes pasar un parametro extra llamado "proxy" con el host y puerto de tu servidor proxy.
 ```php
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "proxy"=> "server.domain.com:8888"
     );
 ```
@@ -110,7 +110,7 @@ El servicio de Autenticación es utilizado principalmente para obtener el **toke
     require_once  'SWSDK.php';
 	use SWServices\Authentication\AuthenticationService  as Authentication;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -162,7 +162,7 @@ Timbrado CFDI
         header('Content-type: application/json');
 
         $params = array(
-            "url"=>"http://services.test.sw.com.mx",
+            "url"=>"https://services.test.sw.com.mx",
             "user"=>"cuentaUsuario",
             "password"=> "contraseña"
             );
@@ -196,7 +196,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -246,7 +246,7 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
         header('Content-type: application/json');
 
         $params = array(
-            "url"=>"http://services.test.sw.com.mx",
+            "url"=>"https://services.test.sw.com.mx",
             "user"=>"cuentaUsuario",
             "password"=> "contraseña"
             );
@@ -281,7 +281,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -321,7 +321,7 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -365,7 +365,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         header('Content-type: application/json');
 
         $params = array(
-            "url"=>"http://services.test.sw.com.mx",
+            "url"=>"https://services.test.sw.com.mx",
             "user"=>"cuentaUsuario",
             "password"=> "contraseña"
             );
@@ -399,7 +399,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -442,7 +442,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
         header('Content-type: application/json');
 
         $params = array(
-            "url"=>"http://services.test.sw.com.mx",
+            "url"=>"https://services.test.sw.com.mx",
             "user"=>"cuentaUsuario",
             "password"=> "contraseña"
             );
@@ -484,7 +484,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -529,7 +529,7 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
     use SWServices\Stamp\StampService as StampService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -585,7 +585,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 ```php
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -603,7 +603,7 @@ Está versión de timbrado regresa ***TFD*** y el ***CFDI***.
 ```php
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -620,7 +620,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
 ```php
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -638,7 +638,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 ```php
     use SWServices\Stamp\EmisionTimbrado  as EmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -665,7 +665,7 @@ Está versión de timbrado regresa únicamente el ***TFD***.
 ```php
     use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -682,7 +682,7 @@ Está versión de timbrado regresa el ***TFD*** y ***CFDI***.
 ```php
     use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -699,7 +699,7 @@ Está versión de timbrado regresa únicamente el ***CFDI***.
 ```php
     use SWServices\JSonIssuer\JsonEmisionTimbrado as jsonEmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -716,7 +716,7 @@ Está versión de timbrado regresa ***CFDI***, ***CadenaOriginalSAT***, ***noCer
 ```php
     use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"usuario@demo.com",
         "password"=> "contraseña"
     );
@@ -755,7 +755,7 @@ Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en fo
     use SWServices\Retention\RetencionesService as RetencionesService;
 
     $params = array(
-        "url" => "http://services.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
         "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
@@ -808,7 +808,7 @@ Timbrado Retenciones V2 Recibe el contenido de un XML ya emitido (sellado) en fo
     use SWServices\Retention\RetencionesService as RetencionesService;
 
     $params = array(
-        "url" => "http://services.test.sw.com.mx",
+        "url" => "https://services.test.sw.com.mx",
         "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
@@ -847,7 +847,7 @@ El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuen
 ```
 </details>
 
-:pushpin: ***NOTA:*** Este servicio simila la respuesta V4 de nuestros servicios REST, de manera interna se hace uso de la petición SOAP de timbrado de retenciones.
+:pushpin: ***NOTA:*** Este servicio simula la respuesta V4 de nuestros servicios REST, de manera interna se hace uso de la petición SOAP de timbrado de retenciones.
 
 ## Cancelación CFDI ##
 
@@ -890,7 +890,7 @@ Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán en
     $foliosustitucion=" ";
     $b64Cer="MIIFuzCCA6OgAwIBAgIU.........";
     $b64Key="MIIFDjBABgkqhkiG9w0B.........";
-    $url="http://services.test.sw.com.mx/";
+    $url="https://services.test.sw.com.mx/";
     $token=" ";
  
     $params = array(
@@ -933,7 +933,7 @@ Se envían los datos necesarios para la cancelación, que únicamente es el XML.
 
     $resultSpect = "success";
 	$params = array(
-		"url"=>"http://services.test.sw.com.mx/",	
+		"url"=>"https://services.test.sw.com.mx/",	
 		"token"=>" "				
 	);
             $xml=file_get_contents("../Test/Resources/CancelationResources/cancelByXml.xml");
@@ -983,7 +983,7 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
     $motivo=" ";
     $foliosustitucion=" ";
     $b64Pfx="MIIL+QIBAzCCC.................";
-    $url="http://services.test.sw.com.mx/";
+    $url="https://services.test.sw.com.mx/";
     $token=" ";
 
     $params = array(
@@ -1034,7 +1034,7 @@ Se envían los datos necesarios para la cancelación y el token obtenido previam
     $motivo=" ";
     $foliosustitucion=" ";
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",  
+        "url"=>"https://services.test.sw.com.mx",  
         "token"=>" "
     );
     
@@ -1156,8 +1156,8 @@ Los datos enviados en el data son los siguientes:
     use SWServices\AccountUser\AccountUserService as AccountUserService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1179,7 +1179,7 @@ Los datos enviados en el data son los siguientes:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1230,7 +1230,7 @@ Este método recibe los siguientes parámetros:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1271,8 +1271,8 @@ Los datos enviados en el data son los siguientes:
     use SWServices\AccountUser\AccountUserService as AccountUserService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1293,7 +1293,7 @@ Los datos enviados en el data son los siguientes:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1320,8 +1320,8 @@ Este método recibe los siguientes parámetros:
     use SWServices\AccountUser\AccountUserService as AccountUserService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1334,7 +1334,7 @@ Este método recibe los siguientes parámetros:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1363,8 +1363,8 @@ Este método recibe los siguientes parametros:
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1381,7 +1381,7 @@ Este método recibe los siguientes parametros:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1412,8 +1412,8 @@ Este método recibe los siguientes parametros:
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1430,7 +1430,7 @@ Este método recibe los siguientes parametros:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1461,8 +1461,8 @@ Ejemplo de uso:
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
-        "urlApi" => "http://api.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1479,7 +1479,7 @@ Ejemplo de uso:
 Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
     $params = array(
-        "urlApi" => "http://api.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
         "token"=>"tokenUsuario",
     );
 ```
@@ -1507,7 +1507,7 @@ Este método recibe los siguientes parámetros:
     use SWServices\Validation\ValidateXMLService as ValidateXMLService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1574,7 +1574,7 @@ Este método recibe los siguientes parámetros:
     use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1613,7 +1613,7 @@ Este método recibe los siguientes parámetros:
     use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1685,7 +1685,7 @@ Este método recibe los siguientes parámetros:
     use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1719,7 +1719,7 @@ Este método recibe los siguientes parámetros:
     use SWServices\AcceptReject\AcceptRejectService as AcceptRejectService;
 
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1749,7 +1749,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Pendings\PendingsService as pendingsService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1776,7 +1776,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Relations\RelationsService as relationsService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1801,7 +1801,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Relations\RelationsService as relationsService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1828,7 +1828,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Relations\RelationsService as relationsService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1883,7 +1883,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Cancelation\CancelationService as cancelationService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -1909,7 +1909,7 @@ Ejemplo de uso
     require_once 'SWSDK.php';
     use SWServices\Cancelation\CancelationService as cancelationService;
     $params = array(
-        "url"=>"http://services.test.sw.com.mx",
+        "url"=>"https://services.test.sw.com.mx",
         "user"=>"cuentaUsuario",
         "password"=> "contraseña"
     );
@@ -2759,6 +2759,6 @@ Recibe un **JSON**, se pasa un parametro customId en formato **String**, se mand
 
 -----
 
-Para mayor referencia de un listado completo de los servicios favor de visitar el siguiente [link](http://developers.sw.com.mx/).
+Para mayor referencia de un listado completo de los servicios favor de visitar el siguiente [link](https://developers.sw.com.mx/).
 
 Si deseas contribuir a la librería o tienes dudas envianos un correo a **soporte@sw.com.mx**.

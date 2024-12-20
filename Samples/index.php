@@ -7,7 +7,7 @@
         header('Content-type: application/json');
 
         $params = array(
-            "url"=>"http://services.test.sw.com.mx",
+            "url"=>"https://services.test.sw.com.mx",
             "user"=>"demo",
             "password"=> "123456789"
             );

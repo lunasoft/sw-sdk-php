@@ -19,8 +19,8 @@ use SWServices\Services;
 
 header('Content-type: text/plain');
 $params = array(
-    "url" => "http://services.test.sw.com.mx",
-    "urlApi" => "http://api.test.sw.com.mx",
+    "url" => "https://services.test.sw.com.mx",
+    "urlApi" => "https://api.test.sw.com.mx",
     "user" => getenv('SDKTEST_USER'),
     "password" => getenv('SDKTEST_PASSWORD')
 );

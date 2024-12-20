@@ -4,7 +4,7 @@
 	
   $params = array(
 		"proxy"=>"localhost:8888",
-	    "url"=>"http://services.test.sw.com.mx",
+	    "url"=>"https://services.test.sw.com.mx",
 	    "user"=>"demo",
 	    "password"=> "123456789"
 	);
