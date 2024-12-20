@@ -1341,24 +1341,21 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
 
 </details>
 
-## Consultar Saldo ##
+## Consulta y Asignación de Timbres ##
+Métodos para realizar la consulta de saldo así como la asignación y eliminación de timbres a un usuario.
 
 <details>
-<summary>Consultar Saldo por Token</summary>
+<summary>Consulta de timbres</summary>
+Servicio para consultar timmbres a una cuenta hija o subcuenta.
+Este método recibe los siguientes parametros:
+<br>
 
-Este servicio recibe el token y genera los elementos que componen la consulta de saldos:
+* Usuario y contraseña o Token
+* Url Servicios SW
+* Url Api
 
-* ID saldo cliente
-* ID cliente usuario
-* Saldo timbres
-* Timbres utilizados
-* Fecha de expiracion
-* Ilimitado
-* Timbres asignados
-
-Paso 1: Se deberá autenticar en nuestros servicios en orden de obtener token de acceso, o si se desea, se puede usar el token infinito.
-
-Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de saldo.
+> [!IMPORTANT]  
+> Los nombres de las variables en la respuesta han cambiado.
 
 ```php
 <?php
@@ -1366,8 +1363,10 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-        'url'=> 'services.test.sw.com.mx',
-        'token'=> 'T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE...............',
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
     );
     try {
         AccountBalanceService::Set($params);
@@ -1379,59 +1378,33 @@ Paso 2: Enviar token de acceso. Se envía el token para realizar la consulta de 
 ?>
 ```
 
-### Respuestas de consulta de saldo ###
-El response de consulta de saldo retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
-
->Tipos de respuesta
->En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
-
-### Respuesta exitosa ###
-```json
-{
-    "data": {
-        "idSaldoCliente": "126eac70-425d-4493-87af-93505bfca746",
-        "idClienteUsuario": "05f731af-4c94-4d6e-aa87-7b19a16ff891",
-        "saldoTimbres": 995026340,
-        "timbresUtilizados": 1895963,
-        "fechaExpiracion": "0001-01-01T00:00:00",
-        "unlimited": false,
-        "timbresAsignados": 0
-    },
-    "status": "success"
-}
-```
-
-En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
-
-* idSaldoCliente: Id del registro.
-* idClienteUsuario: Id del usuario.
-* saldoTimbres: saldo de los timbres.
-* timbresUtilizados: timbres utilizados.
-* fechaExpiracion: fecha de expiración.
-* unlimited: En caso de que sea verdadero la forma de validar el saldo depende del numero de timbres que tenga el * * distribuidor. En caso de verdadero le descontará los timbres al distribuidor.
-* timbresAsignados: timbres asignados.
-
-### Respuesta no exitosa ###
-```json
-{
-    "message": "Parámetros incompletos",
-    "status": "error"
-}
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
 ```
 </details>
+
 <details>
 <summary>
-Consulta Saldo por Id User
+Agregar timbres
 </summary>
-Este servicio recibe el Id User y genera los elementos que componen la consulta de saldos:
+Servicio para agregar timmbres a una cuenta hija o subcuenta.
+<br>
+Este método recibe los siguientes parametros:
+<br>
 
-* ID saldo cliente
-* ID cliente usuario
-* Saldo timbres
-* Timbres utilizados
-* Fecha de expiracion
-* Ilimitado
-* Timbres asignados
+* Usuario y contraseña o Token
+* Url Servicios SW
+* Url Api
+* Id del usuario
+* Número de timbres
+* Comentario
+
+> [!NOTE] 
+> El servicio regresa unicamente la cantidad de timbres despues del abono de timbres.
 
 ```php
 <?php
@@ -1439,27 +1412,47 @@ Este servicio recibe el Id User y genera los elementos que componen la consulta 
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-            "urlApi" => "http://api.test.sw.com.mx",
-            "token" => "tokenReplaceForRealToken..."
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
     );
     try {
         AccountBalanceService::Set($params);
-        $result = AccountBalanceService::GetAccountBalanceById("fafb2ac2-62ca-49f8-91de-15cea73b01fb");
+        $result = $accountBalance::AddStamps("09c3d000-0000-0000-0000-000000000000", 1, "Comentario");
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
 ?>
 ```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
 </details>
 
 <details>
-<summary>Agregar Timbres</summary>
-Este servicio recibe como parámetros:
+<summary>
+Eliminar Timbres
+</summary>
+Servicio para remover timmbres a una cuenta hija o subcuenta.
+<br>
+Este método recibe los siguientes parametros:
 
-* ID User de la cuenta a abonar
-* Cantidad de timbres a añadir
-* Comentario opcional
+* Usuario y contraseña o Token
+* Url Servicios SW
+* Url Api
+* Id del usuario
+* Número de timbres
+* Comentario
+
+> [!NOTE]
+> El servicio regresa unicamente la cantidad de timbres despues de remover los timbres.
 
 Ejemplo de uso:
 ```php
@@ -1468,89 +1461,29 @@ Ejemplo de uso:
     use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
 
     $params = array(
-            "urlApi" => "http://api.test.sw.com.mx",
-            "token" => "tokenReplaceForRealToken..."
+        "url"=>"http://services.test.sw.com.mx",
+        "urlApi" => "http://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
     );
     try {
         AccountBalanceService::Set($params);
-        $result = AccountBalanceService::AddStamps("fafb2ac2-62ca-49f8-81de-14cea73b01eb", 100, "Renovacion de contrato");
+        $result = AccountBalanceService::RemoveStamps("09c3d000-0000-0000-0000-000000000000", 100, "Cancelación de contrato");
         var_dump($result);
     } catch(Exception $e) {
         echo 'Caught exception: ',  $e->getMessage(), "\n";
     }
 ?>
 ```
-### Respuestas de consulta de saldo ###
-El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
 
->Tipos de respuesta
->En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
-
-### Respuesta exitosa ###
-```json
-{
-    "data": "100 timbres correctamente agregados al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
-    "status": "success"
-}
-```
-### Respuesta no exitosa ###
-```json
-{
-    "message": "Validation errors",
-    "messageDetail": "Usuario no pertenece al Dealer",
-    "status": "error"
-}
-```
-</details>
-
-<details>
-<summary>Eliminar Timbres</summary>
-Este servicio recibe como parámetros:
-
-* ID User de la cuenta
-* Cantidad de timbres a eliminar
-* Comentario opcional
-
-Ejemplo de uso:
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
 ```php
-<?php
-    require_once 'vendor/autoload.php';
-    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
-
     $params = array(
-            "urlApi" => "http://api.test.sw.com.mx",
-            "token" => "tokenReplaceForRealToken..."
+        "urlApi" => "http://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
     );
-    try {
-        AccountBalanceService::Set($params);
-        $result = AccountBalanceService::RemoveStamps("fafb2ac2-62da-49f8-81de-14cea73b01eb", 100, "Cancelación de contrato");
-        var_dump($result);
-    } catch(Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), "\n";
-    }
-?>
 ```
-### Respuestas de consulta de saldo ###
-El response de añadir timbres retorna la siguiente estructura en caso de error o en caso de petición satisfactoria:
 
->Tipos de respuesta
->En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código >diferente de 200, el código puede variar dependiendo del problema dado.
-
-### Respuesta exitosa ###
-```json
-{
-    "data": "100 timbres correctamente removidos al usuario fafb2ac2-62ca-49f8-81de-14cea73b01eb",
-    "status": "success"
-}
-```
-### Respuesta no exitosa ###
-```json
-{
-    "message": "AU1006 Saldo insuficiente.",
-    "messageDetail": "",
-    "status": "error"
-}
-```
 </details>
 </details>
 
