@@ -1,4 +1,5 @@
 <?php
+
 namespace SWServices\PDF;
 
 use Exception;
@@ -8,20 +9,21 @@ use SWServices\Services as Services;
 use SWServices\PDF\PdfRequest as PdfRequest;
 use SWServices\Helpers\ResponseHelper as Response;
 
-class PdfService extends Services 
+class PdfService extends Services
 {
 
-    public function __construct($params) {
+    public function __construct($params)
+    {
         parent::__construct($params);
     }
     /**
      * Inicializa PDF Service.
      * @return PdfService
      */
-    public static function Set($params){
-        
+    public static function Set($params)
+    {
+
         return new PdfService($params);
-        
     }
     /**
      * Servicio mediante el cual se genera un PDF a  partir de un documento XML y una plantilla.
@@ -32,12 +34,13 @@ class PdfService extends Services
      * @param string $isB64 Especifica si el XML está en B64.
      * @return PdfRequest
      */
-     public static function GeneratePDF($xml, $logo, $templateId,$extras,$isB64=false){
+    public static function GeneratePDF($xml, $logo, $templateId, $extras, $isB64 = false)
+    {
         $params = array(
             "xml" => $xml
-        );  
+        );
         $helper = new PdfHelper($params);
-        $response = PdfRequest::sendReqGenerate(Services::get_urlApi(), Services::get_token(), $helper::getXml($isB64), $logo, $templateId,$extras);
+        $response = PdfRequest::sendReqGenerate(Services::get_urlApi(), Services::get_token(), $helper::getXml($isB64), $logo, $templateId, $extras);
         return $response;
     }
 
@@ -48,20 +51,16 @@ class PdfService extends Services
      * @param string $extra Datos adicionales al xml.
      * @return HttpRequest
      */
-    public static function RegeneratePDF($uuid, $extra=null){
+    public static function RegeneratePDF($uuid, $extra = null)
+    {
         try {
-            if(isset($extra)){
+            if (isset($extra)) {
                 $extra = json_encode($extra);
             }
             PdfHelper::validateUuid($uuid);
-            return HttpRequest::postJson(Services::get_urlApi(),'/pdf/v1/api/RegeneratePdf/'.$uuid, Services::get_token(), $extra, Services::get_proxy());
+            return HttpRequest::postJson(Services::get_urlApi(), '/pdf/v1/api/RegeneratePdf/' . $uuid, Services::get_token(), $extra, Services::get_proxy());
         } catch (Exception $e) {
             return Response::handleException($e);
         }
     }
-
-     
 }
-
-
-?>

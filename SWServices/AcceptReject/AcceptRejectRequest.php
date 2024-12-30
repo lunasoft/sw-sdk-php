@@ -1,10 +1,54 @@
 <?php
 
 namespace SWServices\AcceptReject;
+
 use Exception;
 
 class AcceptRejectRequest
 {
+    private static function sendRequest($url, $token, $method, $data, $headers = [], $proxy = null)
+    {
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
+        $curl = curl_init($url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+        if ($proxy) {
+            curl_setopt($curl, CURLOPT_PROXY, $proxy);
+        }
+
+        $defaultHeaders = [
+            'Authorization: Bearer ' . $token
+        ];
+
+        curl_setopt($curl, CURLOPT_HTTPHEADER, array_merge($defaultHeaders, $headers));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            throw new Exception("cURL Error: " . $err);
+        }
+
+        if ($httpcode >= 500) {
+            throw new Exception("HTTP Error: $httpcode. Response: $response");
+        }
+
+        return json_decode($response);
+    }
+
+
     //AcceptReject - UUID
     public static function sendReqUUID($url, $token, $rfc, $uuid, $proxy, $service, $action)
     {
@@ -13,29 +57,10 @@ class AcceptRejectRequest
             "uuid" => $uuid,
             "action" => $action ?? null
         ]);
-        $curl = curl_init($url . $service . $rfc . '/' . $uuid . '/' . $action);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
 
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Authorization: Bearer ' . $token
-        ]);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            throw new Exception("cURL Error #:" . $err);
-        } else {
-            if ($httpcode < 500) {
-                return json_decode($response);
-            } else {
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
-            }
-        }
+        $path = $url . $service . $rfc . '/' . $uuid . '/' . $action;
+        $headers = ['Content-Type: application/json'];
+        return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
     }
 
     //AcceptReject - CSD
@@ -49,29 +74,10 @@ class AcceptRejectRequest
             "b64Key" => $keyB64,
             "password" => $password,
         ]);
-        $curl = curl_init($url . $service);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data),
-            'Authorization: Bearer ' . $token
-        ]);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            throw new Exception("cURL Error #:" . $err);
-        } else {
-            if ($httpcode < 500) {
-                return json_decode($response);
-            } else {
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
-            }
-        }
+
+        $path = $url . $service;
+        $headers = ['Content-Type: application/json'];
+        return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
     }
 
     //AcceptReject - PFX
@@ -83,29 +89,18 @@ class AcceptRejectRequest
             "b64Pfx" => $pfxB64,
             "password" => $password,
         ]);
-        $curl = curl_init($url . $service);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Content-Length: ' . strlen($data),
-            'Authorization: Bearer ' . $token
+
+        $data = json_encode([
+            "rfc" => $rfc,
+            "uuids" => $uuids,
+            "b64Pfx" => $pfxB64,
+            "password" => $password,
         ]);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            throw new Exception("cURL Error #:" . $err);
-        } else {
-            if ($httpcode < 500) {
-                return json_decode($response);
-            } else {
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
-            }
-        }
+
+        $path = $url . $service;
+        $headers = ['Content-Type: application/json'];
+
+        return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
     }
 
     //AcceptReject - XML
@@ -128,26 +123,12 @@ class AcceptRejectRequest
             $data .= $file['content'] . "\r\n";
         }
         $data .= "--" . $delimiter . "--\r\n";
-        $curl = curl_init($url . $service);
-        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_POST, true);
-        (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
-        curl_setopt($curl, CURLOPT_HTTPHEADER, [
+        $path = $url . $service;
+        $headers = [
             'Content-Type: multipart/form-data; boundary=' . $delimiter,
-            'Content-Length: ' . strlen($data),
-            'Authorization: Bearer ' . $token
-        ]);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            throw new Exception("cURL Error #:" . $err);
-        } else {
-            return json_decode($response);
-        }
+            'Content-Length: ' . strlen($data)
+        ];
+
+        return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
     }
 }
-
-?>

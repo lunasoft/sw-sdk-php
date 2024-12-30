@@ -26,18 +26,6 @@ class StampService extends Services {
         return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/cfdi33/stamp/');
     }
 
-    public static function StampVersion2V1($xml, $isb64 = false){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v1", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
-    }
-    public static function StampVersion2V2($xml, $isb64 = false){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v2", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
-    }
-    public static function StampVersion2V3($xml, $isb64 = false){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v3", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
-    }
-    public static function StampVersion2V4($xml, $isb64 = false){
-        return stampRequest::sendReq(Services::get_url(), Services::get_token(), $xml, "v4", $isb64, Services::get_proxy(), '/cfdi33/v2/stamp/');
-    }
     //Funciones para timbrado V4
     public static function stampV4CustomIdPdfV1($xml, $customId, $pdf = false ,$isb64 = false){
         $params = array(
