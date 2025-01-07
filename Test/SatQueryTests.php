@@ -8,8 +8,12 @@ use Exception;
 
 final class SatQueryTests extends TestCase
 {
+    /**
+     * @skip El servicio consulta estatus de pruebas no está disponible.
+     */
     public function testSuccess()
     {
+        $this->markTestSkipped('El servicio consulta estatus de pruebas no está disponible.');
         $resultSpect = ["Vigente", "Cancelado", "No Encontrado"];
         $url = "https://pruebacfdiconsultaqr.cloudapp.net/ConsultaCFDIService.svc";
         $rfcEmisor = "EKU9003173C9";
