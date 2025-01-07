@@ -4,6 +4,7 @@ require_once 'SWSDK.php';
 use SWServices\Authentication\AuthenticationService as Authentication;
 use SWServices\Stamp\StampService as StampService;
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+use SWServices\Retention\RetencionesService as RetencionesService;
 use SWServices\Validation\ValidateXMLService as ValidateXMLService;
 use SWServices\JSonIssuer\JsonEmisionTimbrado as JsonEmisionTimbrado;
 use SWServices\JSonIssuer\JsonEmisionTimbradoV4 as JsonEmisionTimbradoV4;
@@ -20,6 +21,7 @@ use SWServices\Services;
 header('Content-type: text/plain');
 $params = array(
     "url" => "https://services.test.sw.com.mx",
+    "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
     "urlApi" => "https://api.test.sw.com.mx",
     "user" => getenv('SDKTEST_USER'),
     "password" => getenv('SDKTEST_PASSWORD')
@@ -76,6 +78,15 @@ try {
     StampService::Set($params);
     $resultadoStamp = StampService::StampV4($xmlSellado);
     var_dump($resultadoStamp);
+} catch (Exception $e) {
+    echo 'Caught exception: ',  $e->getMessage(), "\n";
+}
+echo "\n\n-------- Timbrado Retenciones -----------\n\n";
+try {
+    $xmlRetencionSellado = file_get_contents('Test/Resources/retencion20_sellado.xml');
+    RetencionesService::Set($params);
+    $resultadoStampRetencion = json_decode(RetencionesService::TimbrarRetencionXML($xmlRetencionSellado));
+    var_dump($resultadoStampRetencion);
 } catch (Exception $e) {
     echo 'Caught exception: ',  $e->getMessage(), "\n";
 }
