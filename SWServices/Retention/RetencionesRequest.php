@@ -41,10 +41,7 @@ class RetencionesRequest
             CURLOPT_HTTPHEADER => [
                 'Content-Type: text/xml; charset=utf-8',
                 'SOAPAction: ' . $action,
-            ],
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_SSL_VERIFYHOST => false,
-            CURLOPT_TIMEOUT => 0,
+            ]
         ]);
 
         $responseSoap = curl_exec($curl);
