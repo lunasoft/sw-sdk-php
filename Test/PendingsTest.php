@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 use SWServices\Pendings\PendingsService as pendingsService;
 use Exception;
 
-final class PendingsTests extends TestCase
+final class PendingsTest extends TestCase
 {
 	/* -------------------------------------------------------Pendientes por cancelar-------------------------------------------------------- */
 	public function testPendings()
@@ -15,7 +15,7 @@ final class PendingsTests extends TestCase
 		$rfc = "EKU9003173C9";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
@@ -28,20 +28,21 @@ final class PendingsTests extends TestCase
 		}
 	}
 
-	public function testPendings_null()
+	public function testPendings_Error()
 	{
-        $resultSpect = "error";
-		$rfc = "";
+        $resultSpect = "CA1101 - No existen peticiones para el RFC Receptor.";
+		$codeSpect = "1101";
+		$rfc = "EKU9003173C8";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
 			$pendingsService = PendingsService::Set($params);
 			$result = $pendingsService::PendientesPorCancelar($rfc);
-			$this->assertEquals($resultSpect, $result->status);
-			$this->assertNotEmpty($result->data);
+			$this->assertEquals($resultSpect, $result->message);
+			$this->assertEquals($codeSpect, $result->codStatus);
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

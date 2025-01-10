@@ -25,12 +25,11 @@ class RelationsService extends Services
 
             return relationsRequest::sendReqUUID(
                 $url,
+                '/relations/',
                 $token,
                 $rfc,
                 $uuid,
-                null,
                 Services::get_proxy(),
-                '/relations/'
             );
         } catch (Exception $e) {
             return ['error' => 'Ocurrió un error durante la solicitud: ' . $e->getMessage()];
@@ -50,7 +49,8 @@ class RelationsService extends Services
                 $password,
                 $rfc,
                 $cerB64,
-                $keyB64
+                $keyB64,
+                Services::get_proxy(),
             );
         } catch (Exception $e) {
             return ['error' => 'Ocurrió un error durante la solicitud: ' . $e->getMessage()];
@@ -70,7 +70,8 @@ class RelationsService extends Services
                 $uuid,
                 $password,
                 $rfc,
-                $pfxB64
+                $pfxB64,
+                Services::get_proxy(),
             );
         } catch (Exception $e) {
             return ['error' => 'Ocurrió un error durante la solicitud: ' . $e->getMessage()];

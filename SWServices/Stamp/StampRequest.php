@@ -11,6 +11,11 @@ class StampRequest
 {
     public static function sendReq($url, $token, $xml, $version, $isB64, $proxy, $path)
     {
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
             'xml' => array(
@@ -32,6 +37,9 @@ class StampRequest
         $curl = curl_init($url . $path . $version . ($isB64 ? '/b64' : ''));
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         if (isset($proxy)) {
             curl_setopt($curl, CURLOPT_PROXY, $proxy);
         }
@@ -59,6 +67,10 @@ class StampRequest
     }
     public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $pdf, $email)
     {
+        $protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
         //Esto genera el string junto con la variable que se recibe para generar CURLOPT_HTTPHEADER
         $pdf = ($pdf == false) ? NULL : "'extra: pdf',";
         $email = implode(',', (array) $email);
@@ -84,8 +96,9 @@ class StampRequest
         $data .= "--" . $delimiter . "--\r\n";
 
         $curl = curl_init($url . $path . $version . ($isb64 ? '/b64' : ''));
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curl, CURLOPT_POST, true);
         if (isset($proxy)) {

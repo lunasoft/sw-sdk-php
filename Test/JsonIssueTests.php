@@ -21,7 +21,7 @@
 /*---------------------------------------- Issue JSON ---------------------------------------------------------------------------------------------------------------*/
         public function testIssueJsonV1() {
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "user"=> getenv('SDKTEST_USER'),
                 "password"=> getenv('SDKTEST_PASSWORD')
             );
@@ -41,7 +41,7 @@
             $resultSpect = "error";
             $json = NULL;
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "user"=> getenv('SDKTEST_USER'),
                 "password"=> getenv('SDKTEST_PASSWORD')
             );
@@ -58,7 +58,7 @@
             $customId = "Serie-".$prefixOne."-".$prefixTwo;
             $pdf = false;
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
@@ -77,7 +77,7 @@
             $customId = "Serie-".$prefixOne."-".$prefixTwo;
             $email = "correoT@correooest.com";
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
             $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
@@ -94,10 +94,10 @@
             $customId = NULL;
             $pdf = false;
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
-            $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+            $json = file_get_contents("Test/Resources/cfdi40_json.json");
             JsonEmisionTimbradoV4::Set($params);
             $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
             $this->assertTrue($resultSpect == $result->status);
@@ -108,10 +108,10 @@
             $customId = NULL;
             $email = NULL;
             $params = array(
-                "url"=>"http://services.test.sw.com.mx",
+                "url"=>"https://services.test.sw.com.mx",
                 "token"=> getenv('SDKTEST_TOKEN')
             );
-            $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+            $json = file_get_contents("Test/Resources/cfdi40_json.json");
             JsonEmisionTimbradoV4::Set($params);
             $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
             $this->assertTrue($resultSpect == $result->status);

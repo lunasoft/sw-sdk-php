@@ -11,13 +11,17 @@ class JsonIssuerRequest
 
 	public static function sendReq($url, $token, $json, $version, $isb64, $proxy)
 	{
+		$protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
 		$headers = array(
 			"Authorization: Bearer " . $token,
 			"Content-Type: application/jsontoxml"
 		);
 
-		//Path para timbrar, no se coloca como parametro ya que puede afectar a los clientes que ya lo tienen en su codigo
-		$path = "/v3/cfdi33/issue/json/";
+		$path = $url . "/v3/cfdi33/issue/json/" . $version . ($isb64 ? '/b64' : '');
 
 		$curl = curl_init();
 
@@ -26,9 +30,11 @@ class JsonIssuerRequest
 		}
 
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => $url . $path . $version . ($isb64 ? '/b64' : ''),
+			CURLOPT_URL => $path,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSLVERSION => $protocols,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_TIMEOUT => 30,
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $json,
@@ -57,6 +63,11 @@ class JsonIssuerRequest
 
 	public static function sendReqJsonV4($url, $token, $json, $version, $customId, $pdf, $email, $path, $proxy)
 	{
+		$protocols = [
+            CURL_SSLVERSION_TLSv1_2,
+            CURL_SSLVERSION_TLSv1_3
+        ];
+
 		$headers = array(
 			"Authorization: Bearer " . $token,
 			"Content-Type: application/jsontoxml"
@@ -82,10 +93,14 @@ class JsonIssuerRequest
 			curl_setopt($curl, CURLOPT_PROXY, $proxy);
 		}
 
+		$url = $url . $path . $version;
+
 		curl_setopt_array($curl, array(
-			CURLOPT_URL => $url . $path . $version,
+			CURLOPT_URL => $url,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSL_VERIFYPEER => false,
+			CURLOPT_SSLVERSION => $protocols,
+			CURLOPT_SSL_VERIFYPEER => 0,
+			CURLOPT_SSL_VERIFYHOST => 0,
 			CURLOPT_TIMEOUT => 30,
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $json,

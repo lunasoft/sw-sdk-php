@@ -31,4 +31,3 @@ class StorageService extends StorageRequest
         return $response;
     }
 }
-?>

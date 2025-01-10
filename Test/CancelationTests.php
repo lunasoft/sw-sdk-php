@@ -19,7 +19,7 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token,
 		);
 		try {
@@ -41,7 +41,7 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token
 		);
 		try {
@@ -60,7 +60,7 @@ final class CancelationTests extends TestCase
 		$xml = file_get_contents('Test\Resources\cancel_xml.xml');
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token
 		);
 		try {
@@ -78,7 +78,7 @@ final class CancelationTests extends TestCase
 		$messageSpect = "CASD - Acuse sin descripción específica.";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token
 		);
 		try {
@@ -101,14 +101,14 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token
 		);
 		try {
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
-			$this->assertNotEmpty($result->data,"Acuse vacio");
+			$this->assertNotEmpty($result->data, "Acuse vacio");
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -123,7 +123,7 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx/",
+			"url" => "https://services.test.sw.com.mx/",
 			"token" => $token
 		);
 		try {
@@ -144,14 +144,14 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo);
 			$this->assertEquals($resultSpect, $result->status);
-			$this->assertNotEmpty($result->data,"Acuse vacio");
+			$this->assertNotEmpty($result->data, "Acuse vacio");
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -164,7 +164,7 @@ final class CancelationTests extends TestCase
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
-			"url" => "http://services.test.sw.com.mx",
+			"url" => "https://services.test.sw.com.mx",
 			"token" => $token
 		);
 		try {

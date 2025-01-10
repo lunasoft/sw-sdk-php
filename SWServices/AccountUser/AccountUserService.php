@@ -6,40 +6,65 @@ use SWServices\AccountUser\AccountUserRequest as accountUserRequest;
 use SWServices\Services as Services;
 use Exception;
 
-
+/**
+ * Clase AccountUserService
+ * 
+ * Consumo de los métodos de la API Usuarios.
+ */
 class AccountUserService extends Services
 {
     public function __construct($params)
     {
         parent::__construct($params);
     }
+
+    /**
+     * Inicializa AccountUserService.
+     *
+     */
     public static function Set($params)
     {
         return new AccountUserService($params);
     }
-    //Función para crear un usuario
-    public static function CreateUser($data){
-       return AccountUserRequest::sendReqServicesUser(null, $data, "POST");
+
+    /**
+     * Servicio que permite crear un nuevo usuario.
+     *
+     * @param array $data Datos del usuario a crear.
+     */
+    public static function CreateUser($data)
+    {
+        return AccountUserRequest::sendReqCreateUser($data, "POST");
     }
-    //Función para consultar usuario por token
-    public static function GetUser(){
-        return AccountUserRequest::sendReqGetUser();
+
+    /**
+     * Servicio que actualiza un usuario existente.
+     *
+     * @param string $id Id del usuario a actualizar.
+     * @param array $data Datos a actualizar del usuario.
+     */
+    public static function UpdateUser($id, $data)
+    {
+        return AccountUserRequest::sendReqUpdateUser($id, $data, "PUT");
     }
-    //Función para consultar usuarios
-    public static function GetAllUser(){
-        return AccountUserRequest::sendReqGetUsers();
+
+    /**
+     * Servicio que elimina un usuario.
+     *
+     * @param string $id Id del usuario a eliminar.
+     */
+    public static function DeleteUser($id)
+    {
+        return AccountUserRequest::sendReqDeleteteUser($id, "DELETE");
     }
-     //Función para consultar usuario por ID
-    public static function GetUserById($idUser){
-        return AccountUserRequest::sendReqGetUser($idUser);
-    }
-    //Función para actualizar usuario
-    public static function UpdateUser($idUser, $data){
-        return AccountUserRequest::sendReqServicesUser($idUser, $data, "PUT");
-    }
-    //Función para eliminar usuario
-    public static function DeleteUser($idUser){
-        return AccountUserRequest::sendReqServicesUser($idUser, null, "DELETE");
+
+    /**
+     * Servicio que obtiene información de usuario(s).
+     *
+     * @param array $data Filtros o parámetros de búsqueda (opcionales).
+     */
+    public static function GetUser($data)
+    {
+        return AccountUserRequest::sendReqGetUser($data, "GET");
     }
 }
-?>
