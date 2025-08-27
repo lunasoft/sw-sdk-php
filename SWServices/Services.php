@@ -15,7 +15,6 @@ class Services extends Request
     private static $_password = null;
     private static $_url = null;
     private static $_urlApi = null;
-    private static $_urlRetention = null;
     private static $_expirationDate = null;
     private static $_proxy = null;
     private static $_timeSession = "PT2H";
@@ -31,9 +30,6 @@ class Services extends Request
         }
         if (isset($params['urlApi'])) {
             self::$_urlApi = $params['urlApi'];
-        }
-        if (isset($params['urlRetention'])) {
-            self::$_urlRetention = $params['urlRetention'];
         }
         if (!isset($params['user']) && !isset($params['password']) && !isset($params['token'])) {
             throw new Exception('Datos de autenticación deben especificarse');
@@ -86,10 +82,6 @@ class Services extends Request
     public static function get_urlApi()
     {
         return self::$_urlApi;
-    }
-    public static function get_urlRetention()
-    {
-        return self::$_urlRetention;
     }
     public static function get_user()
     {
