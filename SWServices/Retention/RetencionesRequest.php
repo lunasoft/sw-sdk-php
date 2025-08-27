@@ -96,13 +96,13 @@ class RetencionesRequest
             return json_encode($json, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         }
 
-        $cfdi = $json['data']['retencion'] ?? null;
-        if (empty($cfdi)) {
+        $retencion = $json['data']['retencion'] ?? null;
+        if (empty($retencion)) {
             return Response::toErrorResponse('Falta data.retencion en respuesta REST', '');
         }
 
         try {
-            $tfd = simplexml_load_string($cfdi);
+            $tfd = simplexml_load_string($retencion);
             if ($tfd === false) {
                 return Response::toErrorResponse('No se pudo cargar XML de data.retencion', '');
             }
@@ -110,14 +110,14 @@ class RetencionesRequest
             $tfd->registerXPathNamespace('retenciones', self::XMLNS_RETENTION);
 
             $retenciones = $tfd;
-            $normalized = self::buildResponseData($tfd, $retenciones, $cfdi);
+            $normalized = self::buildResponseData($tfd, $retenciones, $retencion);
             return json_encode($normalized, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
         } catch (Exception $e) {
             return Response::toErrorResponse('Error al normalizar', $e->getMessage());
         }
     }
 
-    private static function buildResponseData(SimpleXMLElement $tfd, SimpleXMLElement $retenciones, string $cfdi)
+    private static function buildResponseData(SimpleXMLElement $tfd, SimpleXMLElement $retenciones, string $retencion)
     {
         $tfdNode = $tfd->xpath('//tfd:TimbreFiscalDigital')[0] ?? null;
         $retNode = $retenciones->xpath('//retenciones:Retenciones')[0] ?? null;
@@ -126,7 +126,7 @@ class RetencionesRequest
         }
 
         $cadenaOriginal = self::generateOriginalChain($tfd);
-        $qrCode = self::generateQR($cfdi);
+        $qrCode = self::generateQR($retencion);
 
         return [
             'data' => [
@@ -138,7 +138,7 @@ class RetencionesRequest
                 'selloCFDI' => (string)$retNode['Sello'] ?? (string)$tfdNode['SelloCFD'],
                 'fechaTimbrado' => (string)$tfdNode['FechaTimbrado'],
                 'qrCode' => $qrCode,
-                'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1),
+                'retencion' => $retencion,
             ],
             'status' => 'success',
         ];
@@ -161,11 +161,11 @@ class RetencionesRequest
         return "||{$version}|{$uuid}|{$fecha}|{$rfcProv}|{$selloCFD}|{$certSAT}||";
     }
 
-    private static function generateQR(string $cfdi)
+    private static function generateQR(string $retencion)
     {
         try {
             $dom = new DOMDocument();
-            $dom->loadXML($cfdi);
+            $dom->loadXML($retencion);
             $xp = new DOMXPath($dom);
             $xp->registerNamespace('retenciones', self::XMLNS_RETENTION);
             $xp->registerNamespace('tfd', self::XMLNS_TFD);
