@@ -95,7 +95,7 @@ final class CancelationTests extends TestCase
 	{
 		$resultSpect = "success";
 		$pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
-		$passwordPfx = "swpass";
+		$passwordPfx = "12345678a";
 		$uuid = "cfc771b4-7d90-459e-ab06-afd2b3c59c10";
 		$rfc = "EKU9003173C9";
 		$motivo = "02";

@@ -65,7 +65,7 @@ final class CsdTest extends TestCase
 		);
         try {
             $csdService = CsdService::Set($params);
-            $result = $csdService::GetListCsdByType('EKU9003173C9');
+            $result = $csdService::GetListCsdByRfc('EKU9003173C9');
             $this->assertEquals($resultSpect, $result->status);
         } catch (Exception $e){
             echo $e->getMessage();
@@ -110,7 +110,7 @@ final class CsdTest extends TestCase
 		);
         try {
             $csdService = CsdService::Set($params);
-            $result = $csdService::DisableCsd('20001000000300022763');
+            $result = $csdService::DisableCsd('20001000000300022816');
             $this->assertEquals($resultSpect, $result->status);
         } catch (Exception $e){
             echo $e->getMessage();

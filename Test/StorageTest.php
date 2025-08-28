@@ -18,7 +18,7 @@ final class StorageTest extends TestCase
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("d8ecd6b8-8789-4de4-b578-6719f9826b98");
+            $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertEquals($resultSpect, $result::getStatus());
         } catch (Exception $e) {
@@ -36,7 +36,7 @@ final class StorageTest extends TestCase
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+            $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertEquals($resultSpect, $result::getStatus());
         } catch (Exception $e) {
@@ -51,7 +51,7 @@ final class StorageTest extends TestCase
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+            $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertNotEmpty($result::getXml(), "url xml vacío");
             $this->assertEquals($resultSpect, $result::getStatus());
@@ -67,7 +67,7 @@ final class StorageTest extends TestCase
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+            $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertNotEmpty($result::getPdf(), "UUID inválido o no pertenece a la cuenta.");
             $this->assertEquals($resultSpect, $result::getStatus());
@@ -85,7 +85,7 @@ final class StorageTest extends TestCase
         );
         try {
             $resend = StorageService::Set($params);
-            $result = $resend::getXml("5643d565-3efb-4a29-98d1-dcf271503cb6");
+            $result = $resend::getXml("a281e1b4-c050-4048-a503-64d3b5ff31b6");
             $resultSpect = "success";
             $this->assertNotEmpty($result::getUrlCancelacion(), "UUID inválido o no pertenece a la cuenta.");
             $this->assertEquals($resultSpect, $result::getStatus());
@@ -104,7 +104,10 @@ final class StorageTest extends TestCase
             $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
             $this->assertNotEmpty($result, "Authentication error: AU2000 - El usuario y/o contraseña son inválidos, no se puede autenticar el servicio.");
         } catch (Exception $e) {
-            echo $e->getMessage();
+            $this->expectException(\Exception::class);
+            $this->expectExceptionMessageMatches('/AU2000/');
+            $resend = StorageService::Set($params);
+            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
         }
     }
 
@@ -121,7 +124,10 @@ final class StorageTest extends TestCase
             $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
             $this->assertNotEmpty($result, "Authentication error: AU2000 - El usuario y/o contraseña son inválidos, no se puede autenticar el servicio.");
         } catch (Exception $e) {
-            echo $e->getMessage();
+            $this->expectException(\Exception::class);
+            $this->expectExceptionMessageMatches('/AU2000/');
+            $resend = StorageService::Set($params);
+            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
         }
     }
 }
