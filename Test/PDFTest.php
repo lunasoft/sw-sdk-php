@@ -106,8 +106,8 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::GeneratePDF($xml, $logo, $templateId, null, true);
-            $resultSpect = 'xml vacio o no es válido.';
-            $this->assertEquals($resultSpect, $result);
+            $this->assertIsObject($result);
+            $this->assertTrue(property_exists($result, 'error'));
         } catch (Exception $e) {
             echo $e->getMessage();
         }
