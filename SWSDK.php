@@ -12,6 +12,9 @@
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationService.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Cancelation/CancelationHandler.php';
+    require_once dirname(__FILE__) . '/SWServices/CancelationRetention/CancelationRetentionService.php';
+    require_once dirname(__FILE__) . '/SWServices/CancelationRetention/CancelationRetentionRequest.php';
+    require_once dirname(__FILE__) . '/SWServices/CancelationRetention/CancelationRetentionHelper.php';
     require_once dirname(__FILE__) . '/SWServices/Relations/RelationsService.php';
     require_once dirname(__FILE__) . '/SWServices/Relations/RelationsRequest.php';
     require_once dirname(__FILE__) . '/SWServices/Pendings/PendingsService.php';
