@@ -1,18 +1,18 @@
-<Cancelacion xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
-    xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Fecha=\"2023-10-03T16:13:34\" RfcEmisor=\"EKU9003173C9\"
-    xmlns=\"http://cancelacfd.sat.gob.mx\">
+<Cancelacion xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" Fecha="2023-10-03T16:13:34" RfcEmisor="EKU9003173C9"
+    xmlns="http://cancelacfd.sat.gob.mx">
     <Folios>
-        <Folio UUID=\"cfc771b4-7d90-459e-ab06-afd2b3c59c10\" Motivo=\"02\" FolioSustitucion=\"\" />
+        <Folio UUID="cfc771b4-7d90-459e-ab06-afd2b3c59c10" Motivo="02" FolioSustitucion="" />
     </Folios>
-    <Signature xmlns=\"http://www.w3.org/2000/09/xmldsig#\">
+    <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
         <SignedInfo>
-            <CanonicalizationMethod Algorithm=\"http://www.w3.org/TR/2001/REC-xml-c14n-20010315\" />
-            <SignatureMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#rsa-sha1\" />
-            <Reference URI=\"\">
+            <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+            <SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha1" />
+            <Reference URI="">
                 <Transforms>
-                    <Transform Algorithm=\"http://www.w3.org/2000/09/xmldsig#enveloped-signature\" />
+                    <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
                 </Transforms>
-                <DigestMethod Algorithm=\"http://www.w3.org/2000/09/xmldsig#sha1\" />
+                <DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
                 <DigestValue>pbP/jvKYtx2BnQE3phHITknqAKo=</DigestValue>
             </Reference>
         </SignedInfo>

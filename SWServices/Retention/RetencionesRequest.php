@@ -12,127 +12,133 @@ use Exception;
 
 class RetencionesRequest
 {
-    private const SOAP_ACTION_V1 = 'http://tempuri.org/IwcfTimbradoRetenciones/TimbrarRetencionXML';
-    private const SOAP_ACTION_V2 = 'http://tempuri.org/IwcfTimbradoRetenciones/TimbrarRetencionXMLV2';
     private const XMLNS_TFD = 'http://www.sat.gob.mx/TimbreFiscalDigital';
     private const XMLNS_RETENTION = 'http://www.sat.gob.mx/esquemas/retencionpago/2';
-    private const TEM_RETENTION_V1 = 'TimbrarRetencionXML';
-    private const TEM_RETENTION_V2 = 'TimbrarRetencionXMLV2';
-    private const URL_RETENTION_QR = 'https://prodretencionverificacion.clouda.sat.gob.mx?';
+    private const URL_QR = 'https://prodretencionverificacion.clouda.sat.gob.mx?';
+    private const PATH_STAMP = '/retencion/stamp/';
 
-    public static function sendSoapReq(string $urlRetention, string $tokenAutenticacion, string $xmlRetencion, string $soapAction)
+    public static function sendReq($url, $token, $xml, $version, $isB64)
     {
-        $curl = curl_init();
-        $action = ($soapAction === 'v1') ? self::SOAP_ACTION_V1 : self::SOAP_ACTION_V2;
-
         $protocols = [
             CURL_SSLVERSION_TLSv1_2,
             CURL_SSLVERSION_TLSv1_3
         ];
 
+        if ($url === '' || $token === '' || $xml === '') {
+            return Response::toErrorResponse('Parámetros inválidos', 'url/token/xml requerido');
+        }
+
+        $delimiter = '-------------' . uniqid();
+        $fileFields = array(
+            'xml' => array(
+                'type' => 'text/xml',
+                'content' => $xml
+            )
+        );
+        $data = '';
+        foreach ($fileFields as $name => $file) {
+            $data .= "--" . $delimiter . "\r\n";
+            $data .= 'Content-Disposition: form-data; name="' . $name . '"; filename="' . $name . '"' . "\r\n";
+            $data .= 'Content-Type: ' . $file['type'] . "\r\n";
+            $data .= "\r\n";
+            $data .= $file['content'] . "\r\n";
+        }
+        $data .= "--" . $delimiter . "--\r\n";
+
+        $endpoint = $url . rtrim(self::PATH_STAMP, '/') . '/' . $version . ($isB64 ? '/b64' : '');
+
+        $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => $urlRetention,
+            CURLOPT_URL => $endpoint,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: multipart/form-data; boundary=' . $delimiter,
+                'Content-Length: ' . strlen($data),
+                'Authorization: Bearer ' . $token,
+            ],
             CURLOPT_SSLVERSION => $protocols,
             CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 0,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => self::createSoapRequest($xmlRetencion, $tokenAutenticacion, $soapAction),
-            CURLOPT_HTTPHEADER => [
-                'Content-Type: text/xml; charset=utf-8',
-                'SOAPAction: ' . $action,
-            ]
+            CURLOPT_SSL_VERIFYHOST => 0
         ]);
 
-        $responseSoap = curl_exec($curl);
+        $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
         curl_close($curl);
 
         if ($err) {
-            return Response::handleSoapError($err);
+            return Response::toErrorResponse('Error de conexión', $err);
         }
-
         if ($httpcode >= 500) {
-            return Response::handleSoapError($responseSoap);
+            return Response::toErrorResponse('Error HTTP', "HTTPCode: $httpcode, Response: " . substr((string)$response, 0, 500));
         }
 
-        return self::processSoapResponse($responseSoap, $soapAction);
-    }
-
-    private static function createSoapRequest(string $xmlRetencion, string $tokenAutenticacion, string $version)
-    {
-        $tem = ($version === 'v1') ? self::TEM_RETENTION_V1 : self::TEM_RETENTION_V2;
-
-        return '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:tem="http://tempuri.org/">
-            <soapenv:Header/>
-            <soapenv:Body>
-                <tem:' . $tem . '>
-                    <tem:xmlRetencion><![CDATA[' . $xmlRetencion . ']]></tem:xmlRetencion>
-                    <tem:tokenAutenticacion>' . $tokenAutenticacion . '</tem:tokenAutenticacion>
-                </tem:' . $tem . '>
-            </soapenv:Body>
-        </soapenv:Envelope>';
-    }
-
-    private static function processSoapResponse(string $responseSoap, string $version)
-    {
-        $responseXml = simplexml_load_string($responseSoap);
-        if ($responseXml === false) {
-            return Response::handleSoapError($responseSoap);
+        $decoded = json_decode($response, true);
+        if (!is_array($decoded)) {
+            return Response::toErrorResponse('Respuesta no es JSON', substr((string)$response, 0, 500));
         }
 
-        $namespaces = $responseXml->getNamespaces(true);
-        $body = $responseXml->children($namespaces['s'])->Body;
-
-        $decodedCfdi = self::getDecodedCfdi($body, $namespaces, $version);
-
-        $cfdi = htmlspecialchars_decode($decodedCfdi);
-        $tfdDecoded = self::loadXmlWithNamespace($cfdi, self::XMLNS_TFD);
-        $retentionDecoded = self::loadXmlWithNamespace($cfdi, self::XMLNS_RETENTION);
-        return json_encode(self::buildResponseData($tfdDecoded, $retentionDecoded, $cfdi), JSON_PRETTY_PRINT);
+        return json_encode($decoded, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
     }
 
-    private static function loadXmlWithNamespace(string $xml, string $namespace)
+    public static function normalizeFromRest($rawJson)
     {
-        $decoded = simplexml_load_string($xml);
-        $decoded->registerXPathNamespace('tfd', $namespace);
-        return $decoded;
-    }
+        $json = json_decode($rawJson, true);
+        if (!is_array($json)) {
+            return Response::toErrorResponse('Respuesta no es JSON', substr((string)$rawJson, 0, 500));
+        }
+        if (($json['status'] ?? '') !== 'success') {
+            if (!array_key_exists('data', $json)) {
+                $json['data'] = null;
+            }
+            return json_encode($json, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        }
 
-    private static function getDecodedCfdi(SimpleXMLElement $body, array $namespaces, string $version): string
-    {
-        if ($version === 'v1') {
-            return (string) $body->children($namespaces[''])->TimbrarRetencionXMLResponse->TimbrarRetencionXMLResult;
-        } else {
-            return (string) $body->children($namespaces[''])->TimbrarRetencionXMLV2Response->TimbrarRetencionXMLV2Result;
+        $retencion = $json['data']['retencion'] ?? null;
+        if (empty($retencion)) {
+            return Response::toErrorResponse('Falta data.retencion en respuesta REST', '');
+        }
+
+        try {
+            $tfd = simplexml_load_string($retencion);
+            if ($tfd === false) {
+                return Response::toErrorResponse('No se pudo cargar XML de data.retencion', '');
+            }
+            $tfd->registerXPathNamespace('tfd', self::XMLNS_TFD);
+            $tfd->registerXPathNamespace('retenciones', self::XMLNS_RETENTION);
+
+            $retenciones = $tfd;
+            $normalized = self::buildResponseData($tfd, $retenciones, $retencion);
+            return json_encode($normalized, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
+        } catch (Exception $e) {
+            return Response::toErrorResponse('Error al normalizar', $e->getMessage());
         }
     }
 
-    private static function buildResponseData(SimpleXMLElement $tfd, SimpleXMLElement $retenciones, string $cfdi)
+    private static function buildResponseData(SimpleXMLElement $tfd, SimpleXMLElement $retenciones, string $retencion)
     {
-
-        $tfdXML = $tfd->asXML();
         $tfdNode = $tfd->xpath('//tfd:TimbreFiscalDigital')[0] ?? null;
-        $retencionesNode = $retenciones->xpath('//retenciones:Retenciones')[0] ?? null;
-
-        if ($tfdNode === null || $retencionesNode === null) {
-            throw new Exception("Nodo TFD o Retenciones no encontrado en el CFDI.");
+        $retNode = $retenciones->xpath('//retenciones:Retenciones')[0] ?? null;
+        if ($tfdNode === null || $retNode === null) {
+            throw new Exception('Nodo TFD o Retenciones no encontrado');
         }
+
         $cadenaOriginal = self::generateOriginalChain($tfd);
-        $qrCode = self::generateQR($cfdi);
+        $qrCode = self::generateQR($retencion);
 
         return [
             'data' => [
                 'cadenaOriginalSAT' => $cadenaOriginal,
                 'noCertificadoSAT' => (string)$tfdNode['NoCertificadoSAT'],
-                'noCertificadoCFDI' => (string)$retencionesNode['NoCertificado'] ?? '',
+                'noCertificadoCFDI' => (string)$retNode['NoCertificado'] ?? '',
                 'uuid' => (string)$tfdNode['UUID'],
                 'selloSAT' => (string)$tfdNode['SelloSAT'],
-                'selloCFDI' => (string)$retencionesNode['Sello'] ?? (string)$tfdNode['SelloCFD'],
+                'selloCFDI' => (string)$retNode['Sello'] ?? (string)$tfdNode['SelloCFD'],
                 'fechaTimbrado' => (string)$tfdNode['FechaTimbrado'],
                 'qrCode' => $qrCode,
-                'cfdi' => htmlspecialchars($cfdi, ENT_QUOTES | ENT_XML1) ?? htmlspecialchars($tfdXML, ENT_QUOTES | ENT_XML1),
+                'retencion' => $retencion,
             ],
             'status' => 'success',
         ];
@@ -141,54 +147,48 @@ class RetencionesRequest
     private static function generateOriginalChain(SimpleXMLElement $tfd)
     {
         $tfdNode = $tfd->xpath('//tfd:TimbreFiscalDigital')[0] ?? null;
-
         if ($tfdNode === null) {
-            return '';
+            throw new Exception('Nodo TFD no encontrado');
         }
 
-        $attributes = [
-            'version' => '||' . (string)$tfdNode['Version'],
-            'uuid' => '|' . (string)$tfdNode['UUID'],
-            'fechaTimbrado' => '|' . (string)$tfdNode['FechaTimbrado'],
-            'rfcProv' => '|' . (string)$tfdNode['RfcProvCertif'],
-            'selloCFD' => '|' . (string)$tfdNode['SelloCFD'],
-            'noCertSat' => '|' . (string)$tfdNode['NoCertificadoSAT'],
-        ];
+        $version = (string)$tfdNode['Version'];
+        $uuid = (string)$tfdNode['UUID'];
+        $fecha = (string)$tfdNode['FechaTimbrado'];
+        $rfcProv = (string)$tfdNode['RfcProvCertif'];
+        $selloCFD = (string)$tfdNode['SelloCFD'];
+        $certSAT = (string)$tfdNode['NoCertificadoSAT'];
 
-        $cadenaOriginal = implode('', $attributes);
-        return $cadenaOriginal;
+        return "||{$version}|{$uuid}|{$fecha}|{$rfcProv}|{$selloCFD}|{$certSAT}||";
     }
 
-    private static function generateQR(string $cfdi)
+    private static function generateQR(string $retencion)
     {
         try {
-            $doc = new DOMDocument();
-            $doc->loadXML($cfdi);
+            $dom = new DOMDocument();
+            $dom->loadXML($retencion);
+            $xp = new DOMXPath($dom);
+            $xp->registerNamespace('retenciones', self::XMLNS_RETENTION);
+            $xp->registerNamespace('tfd', self::XMLNS_TFD);
 
-            $xpath = new DOMXPath($doc);
-            $xpath->registerNamespace('cfdi', 'http://www.sat.gob.mx/cfd/4');
-            $xpath->registerNamespace('tfd', 'http://www.sat.gob.mx/TimbreFiscalDigital');
+            $uuid = $xp->evaluate('string(//tfd:TimbreFiscalDigital/@UUID)');
+            $rfcE = $xp->evaluate('string(//retenciones:Emisor/@RfcE)');
+            $nac = $xp->evaluate('string(//retenciones:Receptor/@Nacionalidad)');
+            $rfcR = ($nac === 'Nacional') ?
+                $xp->evaluate('string(//retenciones:Nacional/@RfcR)') :
+                $xp->evaluate('string(//retenciones:Extranjero/@NumRegIdTribR)');
+            $tt = $xp->evaluate('string(//retenciones:Totales/@MontoTotRet)');
+            $fe = substr($xp->evaluate('string(//retenciones:Retenciones/@Certificado)'), -8);
 
+            $params = 'id=' . $uuid . '&re=' . $rfcE . '&rr=' . $rfcR . '&tt=' . $tt . '&fe=' . $fe;
 
-            $attributes = [
-                'url' => self::URL_RETENTION_QR,
-                'id' => 'id=' . $xpath->evaluate('string(//tfd:TimbreFiscalDigital/@UUID)'),
-                're' => '&re=' . $xpath->evaluate('string(//retenciones:Emisor/@RfcE)'),
-                'rr' => '&rr=' . $xpath->evaluate('string(//retenciones:Nacional/@RfcR)') ?? '&nr=' . $xpath->evaluate('string(//retenciones:Extranjero/@NumRegIdTribR)'),
-                'tt' => '&tt=' . $xpath->evaluate('string(//retenciones:Totales/@MontoTotRet)'),
-                'fe' => '&fe=' . substr($xpath->evaluate('string(//retenciones:Retenciones/@Certificado)'), -8),
-            ];
-
-            $cadenaQR = implode('', $attributes);
             $options = new QROptions([
                 'outputType' => QRCode::OUTPUT_IMAGE_PNG,
                 'eccLevel' => QRCode::ECC_L,
                 'scale' => 5,
             ]);
 
-            $qrcode = (new QRCode($options))->render($cadenaQR);
-            $qr = str_replace("data:image/png;base64,", "", $qrcode);
-            return $qr;
+            $img = (new QRCode($options))->render(self::URL_QR . $params);
+            return str_replace('data:image/png;base64,', '', $img);
         } catch (Exception $e) {
             return '';
         }

@@ -19,7 +19,7 @@ class RequestHelper extends ResponseHelper
         ];
 
         $headers = [
-            'Content-Type: application/json;  ',
+            'Content-Type: application/json',
             'Content-Length: ' . strlen($data),
             'Authorization: Bearer ' . $token
         ];

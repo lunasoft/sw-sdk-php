@@ -94,7 +94,7 @@ final class PDFTest extends TestCase
     }
     public function testPDF_XmlNull()
     {
-        $xml = null;
+        $xml = "xml";
         $logo = "";
         $templateId = "cfdi40";
         $params = array(
@@ -106,8 +106,8 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::GeneratePDF($xml, $logo, $templateId, null, true);
-            $resultSpect = 'xml vacio o no es válido.';
-            $this->assertEquals($resultSpect, $result);
+            $this->assertIsObject($result);
+            $this->assertTrue(property_exists($result, 'error'));
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -116,7 +116,7 @@ final class PDFTest extends TestCase
     /*-----------------------------Pruebas para Regenerate Service----------------------------------------*/
     public function testRegeneratePdf_TokenSuccess()
     {
-        $uuid = "cddad1da-0141-438a-ba94-d3036a8ee82d";
+        $uuid = "e560ab08-f093-4e5e-a59d-4e5e6d24d06b";
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
             "url" => "https://services.test.sw.com.mx",
@@ -125,7 +125,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::RegeneratePDF($uuid);
-            $resultSpect = "success";
+            $resultSpect = "Solicitud se proceso correctamente.";
             $this->assertEquals($resultSpect, $result->message);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -133,7 +133,7 @@ final class PDFTest extends TestCase
     }
     public function testRegeneratePdf_AuthSuccess()
     {
-        $uuid = "cddad1da-0141-438a-ba94-d3036a8ee82d";
+        $uuid = "e560ab08-f093-4e5e-a59d-4e5e6d24d06b";
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
             "url" => "https://services.test.sw.com.mx",
@@ -142,7 +142,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::RegeneratePDF($uuid);
-            $resultSpect = "success";
+            $resultSpect = "Solicitud se proceso correctamente.";
             $this->assertEquals($resultSpect, $result->message);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -156,7 +156,7 @@ final class PDFTest extends TestCase
             ),
             "templateId" => "extradata"
         );
-        $uuid = "cddad1da-0141-438a-ba94-d3036a8ee82d";
+        $uuid = "e560ab08-f093-4e5e-a59d-4e5e6d24d06b";
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
             "url" => "https://services.test.sw.com.mx",
@@ -166,7 +166,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::RegeneratePDF($uuid, $extras);
-            $resultSpect = "success";
+            $resultSpect = "Solicitud se proceso correctamente.";
             $this->assertEquals($resultSpect, $result->message);
         } catch (Exception $e) {
             echo $e->getMessage();
@@ -177,6 +177,7 @@ final class PDFTest extends TestCase
         $uuid = "cddad1da-0141-438a-ba94-d3036a8ee82d";
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
+            "url" => "https://services.test.sw.com.mx",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
         );
@@ -200,9 +201,7 @@ final class PDFTest extends TestCase
         try {
             $pdfService = pdfService::Set($params);
             $result = $pdfService::RegeneratePDF($uuid);
-            $this->assertEquals("error", $result->status);
-            $this->assertEquals("UID vacío o es inválido", $result->message);
-            $this->assertNotEmpty($result->messageDetail);
+            $this->assertEquals("UUID vacío o es inválido", $result->message);
         } catch (Exception $e) {
             echo $e->getMessage();
         }

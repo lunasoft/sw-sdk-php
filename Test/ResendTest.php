@@ -19,7 +19,7 @@ final class ResendTest extends TestCase
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
-            $result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
+            $result = $resend::ResendEmail("e560ab08-f093-4e5e-a59d-4e5e6d24d06b", $emails);
             $this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
@@ -42,7 +42,7 @@ final class ResendTest extends TestCase
                 "pruebas_ut@sw.com.mx"
             );
             $resend = ResendService::Set($params);
-            $result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
+            $result = $resend::ResendEmail("e560ab08-f093-4e5e-a59d-4e5e6d24d06b", $emails);
             $this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
@@ -68,7 +68,7 @@ final class ResendTest extends TestCase
                 "test@mail.com"
             );
             $resend = ResendService::Set($params);
-            $result = $resend::ResendEmail("5643d565-3efb-4a29-98d1-dcf271503cb6", $emails);
+            $result = $resend::ResendEmail("e560ab08-f093-4e5e-a59d-4e5e6d24d06b", $emails);
             $this->assertEquals("success", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
