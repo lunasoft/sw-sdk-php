@@ -1105,6 +1105,213 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 
 </details>
 
+
+## Cancelación Retenciones ##
+
+Este servicio se utiliza para cancelar documentos xml de retenciones y se puede hacer mediante varios métodos **Cancelación XML**, **Cancelación CSD** y **Cancelacion PFX**.
+
+<details>
+
+<summary>
+Cancelación XML
+</summary>
+
+Como su nombre lo indica, este servicio recibe únicamente el XML sellado con los UUID de retenciones a cancelar.
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea, se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => "TuToken",
+];
+
+try {
+    $xml = file_get_contents('Test/Resources/cancel_retention_xml.xml');
+    $service  = CancelRetentionService::Set($params);
+    $result = $service::CancelationByXML($xml);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Cancelación CSD
+</summary>
+
+Se deben incluir los siguientes datos:
+
+* Certificado (.cer)
+* Key (.key)
+* Password del archivo key
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución (sólo cuando Motivo=01)
+
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación en la instancia del metodo de cancelacion de retenciones
+
+Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán enviarse en formato base64** para que podamos procesarlos en nuestro servidor.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+// Preparar credenciales y datos
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => "TuToken",
+];
+
+$rfc      = "EKU9003173C9";
+$uuid     = "1fae5735-ca51-4be4-9180-827c44fdb227";
+$motivo   = "02";
+$b64Cer="MIIFuzCCA6OgAwIBAgIU.........";
+$b64Key="MIIFDjBABgkqhkiG9w0B.........";
+$password = "12345678a";
+
+// Opcional si motivo = "01"
+$folioSustitucion = "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8";
+
+try {
+    $service = CancelRetentionService::Set($params);
+    $result  = $service::CancelationByCSD($rfc, $uuid, $motivo, $b64Cer, $b64Key, $password, /* $folioSustitucion */ null);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Cancelación PFX
+</summary>
+
+Se deben incluir los siguientes datos:
+
+* Pfx (en base64)
+* Password del archivo key
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución (sólo cuando Motivo=01)
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación de retenciones y el token obtenido previamente.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => getenv('SDKTEST_TOKEN'),
+];
+
+$rfc      = "EKU9003173C9";
+$uuid     = "578052ce-710f-4d0b-9ffc-6ca73daf92a5";
+$motivo   = "01";
+$password = "12345678a";
+$b64Pfx="MIIL+QIBAzCCC.................";
+
+// Requerido si motivo = "01"
+$folioSustitucion = "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8";
+
+try {
+    $service = CancelRetentionService::Set($params);
+    $result  = $service::CancelationByPFX($rfc, $uuid, $motivo, $b64Pfx, $password, $folioSustitucion);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Respuestas de cancelación de retenciones
+</summary>
+
+Todos los response de cancelación retornan la misma estructura en caso de error o en caso de petición satisfactoria, las cuales son las siguientes:
+
+Tipos de respuesta
+> En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código diferente de 200, el código puede variar dependiendo del problema dado.
+
+
+#### Respuesta exitosa ####
+```json
+{
+  "data": {
+    "acuse": "<?xml version=\"1.0\"?><Acuse ...><Folios><UUID>3044CC3F-572F-4535-85E2-374C205F5B11</UUID><EstatusUUID>1202</EstatusUUID><Motivo>02</Motivo><Extemporaneo>false</Extemporaneo></Folios>...</Acuse>",
+    "uuid": {
+      "3044CC3F-572F-4535-85E2-374C205F5B11": "1202"
+    }
+  },
+  "status": "success"
+}
+```
+
+En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
+
+* Acuse: Xml de acuse que regresa el SAT cuando se cancela un comprobante de retenciones.
+* UUID: uuid cancelado y su estatus.
+
+
+#### Respuesta no exitosa ####
+```json
+{
+  "message": "CACFDI33 - Problemas con el xml.",
+  "messageDetail": "CR1309 - Firma mal formada o inválida",
+  "data": null,
+  "status": "error"
+}
+```
+```json
+{
+  "message": "CACFDI33 - Problemas con el xml.",
+  "messageDetail": "CR1308 - Certificado revocado o caduco",
+  "data": null,
+  "status": "error"
+}
+```
+
+
+
+
 ## Usuarios V2 ##
 
 Servicios para trabajar con usuarios, incluye métodos para crear, modificar, obtener y eliminar usuarios.
