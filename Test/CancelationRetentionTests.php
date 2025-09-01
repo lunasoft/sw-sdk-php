@@ -23,11 +23,10 @@ final class CancelationRetentionTests extends TestCase
         return [
             "rfc"      => "EKU9003173C9",
             "uuid"     => "1fae5735-ca51-4be4-9180-827c44fdb227",
-            "motivo"   => "02",
+            "motivo"   => "01",
             "b64Cer"   => $cerB64,
             "b64Key"   => $keyB64,
-            "password" => "12345678a",
-            "folioSustitucion" => "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8"
+            "password" => "12345678a"
         ];
     }
 
@@ -37,10 +36,9 @@ final class CancelationRetentionTests extends TestCase
         return [
             "rfc"              => "EKU9003173C9",
             "uuid"             => "578052ce-710f-4d0b-9ffc-6ca73daf92a5",
-            "motivo"           => "01",
+            "motivo"           => "02",
             "b64Pfx"           => $paramsfxB64,
-            "password"         => "12345678a",
-            "folioSustitucion" => "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8"
+            "password"         => "12345678a"
         ];
     }
 
@@ -147,7 +145,7 @@ final class CancelationRetentionTests extends TestCase
         try {
             $service = CancelRetentionService::Set($this->paramsAuth());
             $params   = $this->paramsPFX();
-            $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password'], $params['folioSustitucion']);
+            $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
         } catch (Exception $e) {
@@ -160,7 +158,7 @@ final class CancelationRetentionTests extends TestCase
         try {
             $service = CancelRetentionService::Set($this->paramsToken());
             $params   = $this->paramsPFX();
-            $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password'], $params['folioSustitucion']);
+            $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
         } catch (Exception $e) {
@@ -173,7 +171,7 @@ final class CancelationRetentionTests extends TestCase
         try {
             $service = CancelRetentionService::Set($this->paramsToken());
             $params   = $this->paramsPFX();
-            $response = $service::CancelationByPFX($params['rfc'], "00000000-0000-0000-0000-000000000000", $params['motivo'], "AAA", $params['password'], $params['folioSustitucion']);
+            $response = $service::CancelationByPFX($params['rfc'], "00000000-0000-0000-0000-000000000000", $params['motivo'], "AAA", $params['password']);
             $this->assertEquals('error', $response->status);
             $this->assertEquals('CACFDI33 - Problemas con los campos.', $response->message);
         } catch (Exception $e) {
