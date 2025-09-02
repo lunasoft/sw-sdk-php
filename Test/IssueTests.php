@@ -6,6 +6,8 @@ require_once 'SWSDK.php';
 
 use PHPUnit\Framework\TestCase;
 use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
+use DateInterval;
+use DateTime;
 
 final class IssueTests extends TestCase
 {
@@ -104,7 +106,11 @@ final class GenerateXML
 	{
 		date_default_timezone_set('America/Mexico_City');
 		$xml = simplexml_load_file('./Test/Resources/cfdi40_test.xml'); //leemos el xml base
-		$date = date("Y-m-d\TH:i:s");
+		$currentDateTime = new DateTime();
+		$interval = new DateInterval('PT1H0M0S');
+		$currentDateTime->sub($interval);
+
+		$date = $date = $currentDateTime->format('Y-m-d\TH:i:s');
 		$xml["Fecha"] = $date;
 		$xml->asXML('./Test/Resources/cfdi40_test.xml'); //cambiamos la fecha y lo guardamos en un nuevo archivo
 

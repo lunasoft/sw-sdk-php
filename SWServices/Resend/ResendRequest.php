@@ -15,14 +15,10 @@ class ResendRequest extends Services
             if (!self::validateParams($uuid, $email)) {
                 return Response::toErrorResponse("El UUID o los correos no son válidos.");
             }
-            $data = json_encode(
-                array_merge(
-                    array(
-                        "uuid" => $uuid,
-                        "to" => implode(',', $email)
-                    )
-                )
-            );
+            $data = json_encode([
+                "uuid" => $uuid,
+                "to" => implode(',', $email)
+            ]);
             return HttpRequest::postJson(Services::get_urlApi(), '/comprobante/resendemail', Services::get_token(), $data, Services::get_proxy());
         } catch (Exception $e) {
             return Response::handleException($e);

@@ -743,12 +743,12 @@ Para mayor referencia de estas versiones de respuesta, favor de visitar el sigui
 
 <details>
 <summary>
-Timbrado Retenciones V1 
+Timbrado Retenciones V3
 </summary>
 
-Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
+Timbrado Retenciones V3 recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
 
-**Timbrado Retenciones V1**
+**Timbrado Retenciones V3**
 ```php
 <?php
     require_once 'vendor/autoload.php';
@@ -756,7 +756,6 @@ Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -764,7 +763,7 @@ Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en fo
     {
         $xml = file_get_contents('./file.xml');
         RetencionesService::Set($params);
-        $result = RetencionesService::TimbrarRetencionXML($xml);
+        $result = RetencionesService::TimbrarRetencionXMLV3($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -774,20 +773,12 @@ Timbrado Retenciones V1 Recibe el contenido de un XML ya emitido (sellado) en fo
     }
 ?>
 ```
-El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuentra el CFDI
+El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuentra el comprobante de retenciones
 
 ```json
 {
     "data": {
-        "cadenaOriginalSAT": "||1.1|51fc1848-f49b-4ba7-aaa2-d80c647b87c7|2024-10-15T14:38:17|SPR190613I52|qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==|30001000000400002495",
-        "noCertificadoSAT": "30001000000400002495",
-        "noCertificadoCFDI": "30001000000500003416",
-        "uuid": "51fc1848-f49b-4ba7-aaa2-d80c647b87c7",
-        "selloSAT": "NF43il08XzuRGiJYxMehL+19M5MAssx0vNq3GMtmiRZiLWw+LsFgsMI66c/AKvJYEl9EEe84NMlhiBe5mSaM1Qer81pOVZOMujSZNSGPFKTsy+NpQpv1FRtVUDQ8qC327kHClgNwONUxcHp0SEX/GsXi4uV4waYRZzCwDtnxK94OqLxSzZC9uq2i13apgxDlaxvYSqs5bLYphDl3e3AHj+OV3djIaCyn7xSZLSLVLSR7DEnfIEjyTTwuGd/ndAVm2TIle+y8R3uw06sOg/C5ELhAQZ9KxxMMVjl+hJ+JDHefzi6SUU7fF8P0AJ9nCTio0vVgBNjnhdjJRvdJIztL0w==",
-        "selloCFDI": "qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==",
-        "fechaTimbrado": "2024-10-15T14:38:17",
-        "qrCode": "",
-        "cfdi": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;retenciones:Retenciones xsi:schemaLocation=&quot;http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd&quot; Version=&quot;2.0&quot; FolioInt=&quot;5a64d3b5038e104ed108&quot; Sello=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificado=&quot;30001000000500003416&quot; Certificado=&quot;MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=&quot; FechaExp=&quot;2024-10-15T14: 54: 29&quot; LugarExpRetenc=&quot;45110&quot; CveRetenc=&quot;01&quot; xmlns:retenciones=&quot;http: //www.sat.gob.mx/esquemas/retencionpago/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;retenciones:Emisor RfcE=&quot;EKU9003173C9&quot; NomDenRazSocE=&quot;ESCUELA KEMPER URGATE&quot; RegimenFiscalE=&quot;601&quot; /&gt;&lt;retenciones:Receptor NacionalidadR=&quot;Nacional&quot;&gt;&lt;retenciones:Nacional RfcR=&quot;URE180429TM6&quot; NomDenRazSocR=&quot;UNIVERSIDAD ROBOTICA ESPAÑOLA&quot; DomicilioFiscalR=&quot;86991&quot; /&gt;&lt;/retenciones:Receptor&gt;&lt;retenciones:Periodo MesIni=&quot;01&quot; MesFin=&quot;03&quot; Ejercicio=&quot;2023&quot; /&gt;&lt;retenciones:Totales MontoTotOperacion=&quot;2000.00&quot; MontoTotGrav=&quot;2000.00&quot; MontoTotExent=&quot;0&quot; MontoTotRet=&quot;580.00&quot;&gt;&lt;retenciones:ImpRetenidos BaseRet=&quot;2000&quot; ImpuestoRet=&quot;001&quot; MontoRet=&quot;580.00&quot; TipoPagoRet=&quot;03&quot; /&gt;&lt;/retenciones:Totales&gt;&lt;retenciones:Complemento&gt;&lt;tfd:TimbreFiscalDigital xsi:schemaLocation=&quot;http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd&quot; Version=&quot;1.1&quot; UUID=&quot;eb4b0264-d937-44d8-ad00-24d4291aa285&quot; FechaTimbrado=&quot;2024-10-15T14:54:32&quot; RfcProvCertif=&quot;SPR190613I52&quot; SelloCFD=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificadoSAT=&quot;30001000000400002495&quot; SelloSAT=&quot;H4WHETIQhstpYUW78v/Z4KXoqk34bIwgcPCiX6Ek4NFvGfZ9MIDYURDr3pkh6E0vn9q1aahKrMok4+JhXLd46H2VMzdgAc3jPZtxcyKt7mEjeMjCuiw3dyo2SzkPgVmyjQsDHvDyd6jyz8gnKJByk+QJrLtQx4/Rvs6tpFKPwwDqY1BEgeaQtJX6nebM+mfEqMhSy8SS7UXZMKeXjxRy5Mu7/OSyvbmu7huc3VwBZce5+BgvGI9UTrm5MdA8jJ5qpQrSADP9BfbJTcD90P+1eTftQztnXGbYXWTQUEpY8YLKELRA5m//xF/6RD9Wawmapiga/FKXVJlImJkZXzJVQQ==&quot; xmlns:tfd=&quot;http://www.sat.gob.mx/TimbreFiscalDigital&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;&lt;/retenciones:Complemento&gt;&lt;/retenciones:Retenciones&gt;"
+        "retencion": "<?xml version=\"1.0\" encoding=\"utf-8\"?><retenciones:Retenciones xmlns:retenciones=\"http://www.sat.gob.mx/esquemas/retencionpago/2\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd\" Version=\"2.0\" FolioInt=\"a84f427f0f3030474a09\" FechaExp=\"2025-08-26T19:46:49\" LugarExpRetenc=\"45110\" CveRetenc=\"01\" NoCertificado=\"30001000000500003416\" Certificado=\"MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=\" Sello=\"aB50sp1653T2EgAEKB2yeZJNZh/IvQvIc07wnUa+3TXXV2mNIRNoOoPnuRXkdOTVWa6qg+Iv73R0kj3AlPjPNS2iebk6VCqtn+D7T8pm93rM4FtiA+k2DRZ6MtyPMXQ3lO8cq+rBp933lAEduhn75EYUe+GmVnchmU9Tfo5lkAAUP+MHzJRfiE+NOO329F8O5uQN/wVnpOUEZFu2xqhNrNMP5RBP0XOJg4P2CKhp/a3iNMBpwfZ9whr5REJT7Blyxn7i+ZezgkRo2gPvKWWOMx2V/E0zlAwoaCbD8nRihaa/0yoI836L4waKMSgqw+kpQjeNkxVN1GSfcDhPZYUtcA==\"><retenciones:Emisor RfcE=\"EKU9003173C9\" NomDenRazSocE=\"ESCUELA KEMPER URGATE\" RegimenFiscalE=\"601\" /><retenciones:Receptor NacionalidadR=\"Nacional\"><retenciones:Nacional RfcR=\"URE180429TM6\" NomDenRazSocR=\"UNIVERSIDAD ROBOTICA ESPAÑOLA\" DomicilioFiscalR=\"86991\" /></retenciones:Receptor><retenciones:Periodo MesIni=\"01\" MesFin=\"03\" Ejercicio=\"2023\" /><retenciones:Totales MontoTotOperacion=\"2000.00\" MontoTotGrav=\"2000.00\" MontoTotExent=\"0\" MontoTotRet=\"580.00\"><retenciones:ImpRetenidos BaseRet=\"2000\" ImpuestoRet=\"001\" MontoRet=\"580.00\" TipoPagoRet=\"03\" /></retenciones:Totales><retenciones:Complemento><tfd:TimbreFiscalDigital xsi:schemaLocation=\"http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd\" Version=\"1.1\" UUID=\"fa3ae76a-e6ae-43db-912b-f754fa5ffcfd\" FechaTimbrado=\"2025-08-26T19:47:02\" RfcProvCertif=\"SPR190613I52\" SelloCFD=\"aB50sp1653T2EgAEKB2yeZJNZh/IvQvIc07wnUa+3TXXV2mNIRNoOoPnuRXkdOTVWa6qg+Iv73R0kj3AlPjPNS2iebk6VCqtn+D7T8pm93rM4FtiA+k2DRZ6MtyPMXQ3lO8cq+rBp933lAEduhn75EYUe+GmVnchmU9Tfo5lkAAUP+MHzJRfiE+NOO329F8O5uQN/wVnpOUEZFu2xqhNrNMP5RBP0XOJg4P2CKhp/a3iNMBpwfZ9whr5REJT7Blyxn7i+ZezgkRo2gPvKWWOMx2V/E0zlAwoaCbD8nRihaa/0yoI836L4waKMSgqw+kpQjeNkxVN1GSfcDhPZYUtcA==\" NoCertificadoSAT=\"30001000000500003456\" SelloSAT=\"W6rxUQ8d4B+Hvk81s4emDByWiBeFWrnm2+sTlg6WmT8/cfkyrp7In7+FYCWRzIoAfEcISAL2MWB/j+kvkWtdSlsKLtN0lTsENUipceh9jczkwvd+sKpkOevlWDMqvW8WWZ4FcVkvCF9QUY5LI+5eJ/z+k2kCalKA71eBKcimB9Sngw207Dhey7scTIIk4iP4DTAhZzNX4BUJOcLgyumvlAfqmmJw7CezlvwwhdU73Whyb0Jfpi2Ot0WTmpgBlbOMCzXsiCmwLp8Wm1DulRtG51+WAbDoah6w28DRf8CJcnIg2tQ6QG94V2poJUJGEaymEE9C5/IA99QBvglhtXSFQA==\" xmlns:tfd=\"http://www.sat.gob.mx/TimbreFiscalDigital\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" /></retenciones:Complemento></retenciones:Retenciones>"
     },
     "status": "success"
 }
@@ -796,10 +787,10 @@ El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuen
 
 <details>
 <summary>
-Timbrado Retenciones V2
+Timbrado Retenciones V4
 </summary>
 
-Timbrado Retenciones V2 Recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
+Timbrado Retenciones V4 recibe el contenido de un XML ya emitido (sellado) en formato String, posteriormente si la factura, el token y/o las credenciales son correctas devuelve el comprobante ya timbrado, en caso contrario mostrará error al ser enviado a timbrar.
 
 **Timbrado Retenciones V1**
 ```php
@@ -809,7 +800,6 @@ Timbrado Retenciones V2 Recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
         "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
     );
 
@@ -817,7 +807,7 @@ Timbrado Retenciones V2 Recibe el contenido de un XML ya emitido (sellado) en fo
     {
         $xml = file_get_contents('./file.xml');
         RetencionesService::Set($params);
-        $result = RetencionesService::TimbrarRetencionXMLV2($xml);
+        $result = RetencionesService::TimbrarRetencionXMLV4($xml);
         var_dump($result);
     }
     catch(Exception $e)
@@ -840,14 +830,14 @@ El ejemplo anterior la respuesta es un objeto tipo JSON y dentro de el se encuen
         "selloCFDI": "qPMOmisd2SlKHUgiGM08jWWfRVPE6ar+CeHJlsu6xXf1DnRep9ZZIwJcQ+1pi8paIgL/JW6jBJ0csk6pA/fD3YI33T81I2XGkoIHROYQUsqkRmvUAp6zNHM4fSW7pKiEK3bFS2Vip3G8bl9GSVFP9m04f40ZRjvaLm85Vjtb5YNe6oxokVQm2dMKqN3SVAhGVcfg5+AqS6BG1gPFOXoMjrnTcAIK1L7BunHcvsvQKy3jlHTz9xXRS2jQXe8mXMqSEHRoop4zTVUQ19G6Cu/vpeItFeHjdsWX9kKJGJUgh/v3wv44JTjmYk8omEw6+HpBWulXoWg0jrkwzxnCbAGcqg==",
         "fechaTimbrado": "2024-10-15T14:38:17",
         "qrCode": "",
-        "cfdi": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;retenciones:Retenciones xsi:schemaLocation=&quot;http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd&quot; Version=&quot;2.0&quot; FolioInt=&quot;5a64d3b5038e104ed108&quot; Sello=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificado=&quot;30001000000500003416&quot; Certificado=&quot;MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=&quot; FechaExp=&quot;2024-10-15T14: 54: 29&quot; LugarExpRetenc=&quot;45110&quot; CveRetenc=&quot;01&quot; xmlns:retenciones=&quot;http: //www.sat.gob.mx/esquemas/retencionpago/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;retenciones:Emisor RfcE=&quot;EKU9003173C9&quot; NomDenRazSocE=&quot;ESCUELA KEMPER URGATE&quot; RegimenFiscalE=&quot;601&quot; /&gt;&lt;retenciones:Receptor NacionalidadR=&quot;Nacional&quot;&gt;&lt;retenciones:Nacional RfcR=&quot;URE180429TM6&quot; NomDenRazSocR=&quot;UNIVERSIDAD ROBOTICA ESPAÑOLA&quot; DomicilioFiscalR=&quot;86991&quot; /&gt;&lt;/retenciones:Receptor&gt;&lt;retenciones:Periodo MesIni=&quot;01&quot; MesFin=&quot;03&quot; Ejercicio=&quot;2023&quot; /&gt;&lt;retenciones:Totales MontoTotOperacion=&quot;2000.00&quot; MontoTotGrav=&quot;2000.00&quot; MontoTotExent=&quot;0&quot; MontoTotRet=&quot;580.00&quot;&gt;&lt;retenciones:ImpRetenidos BaseRet=&quot;2000&quot; ImpuestoRet=&quot;001&quot; MontoRet=&quot;580.00&quot; TipoPagoRet=&quot;03&quot; /&gt;&lt;/retenciones:Totales&gt;&lt;retenciones:Complemento&gt;&lt;tfd:TimbreFiscalDigital xsi:schemaLocation=&quot;http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd&quot; Version=&quot;1.1&quot; UUID=&quot;eb4b0264-d937-44d8-ad00-24d4291aa285&quot; FechaTimbrado=&quot;2024-10-15T14:54:32&quot; RfcProvCertif=&quot;SPR190613I52&quot; SelloCFD=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificadoSAT=&quot;30001000000400002495&quot; SelloSAT=&quot;H4WHETIQhstpYUW78v/Z4KXoqk34bIwgcPCiX6Ek4NFvGfZ9MIDYURDr3pkh6E0vn9q1aahKrMok4+JhXLd46H2VMzdgAc3jPZtxcyKt7mEjeMjCuiw3dyo2SzkPgVmyjQsDHvDyd6jyz8gnKJByk+QJrLtQx4/Rvs6tpFKPwwDqY1BEgeaQtJX6nebM+mfEqMhSy8SS7UXZMKeXjxRy5Mu7/OSyvbmu7huc3VwBZce5+BgvGI9UTrm5MdA8jJ5qpQrSADP9BfbJTcD90P+1eTftQztnXGbYXWTQUEpY8YLKELRA5m//xF/6RD9Wawmapiga/FKXVJlImJkZXzJVQQ==&quot; xmlns:tfd=&quot;http://www.sat.gob.mx/TimbreFiscalDigital&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;&lt;/retenciones:Complemento&gt;&lt;/retenciones:Retenciones&gt;"
+        "retencion": "&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;&lt;retenciones:Retenciones xsi:schemaLocation=&quot;http://www.sat.gob.mx/esquemas/retencionpago/2 http://www.sat.gob.mx/esquemas/retencionpago/2/retencionpagov2.xsd&quot; Version=&quot;2.0&quot; FolioInt=&quot;5a64d3b5038e104ed108&quot; Sello=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificado=&quot;30001000000500003416&quot; Certificado=&quot;MIIFsDCCA5igAwIBAgIUMzAwMDEwMDAwMDA1MDAwMDM0MTYwDQYJKoZIhvcNAQELBQAwggErMQ8wDQYDVQQDDAZBQyBVQVQxLjAsBgNVBAoMJVNFUlZJQ0lPIERFIEFETUlOSVNUUkFDSU9OIFRSSUJVVEFSSUExGjAYBgNVBAsMEVNBVC1JRVMgQXV0aG9yaXR5MSgwJgYJKoZIhvcNAQkBFhlvc2Nhci5tYXJ0aW5lekBzYXQuZ29iLm14MR0wGwYDVQQJDBQzcmEgY2VycmFkYSBkZSBjYWxpejEOMAwGA1UEEQwFMDYzNzAxCzAJBgNVBAYTAk1YMRkwFwYDVQQIDBBDSVVEQUQgREUgTUVYSUNPMREwDwYDVQQHDAhDT1lPQUNBTjERMA8GA1UELRMIMi41LjQuNDUxJTAjBgkqhkiG9w0BCQITFnJlc3BvbnNhYmxlOiBBQ0RNQS1TQVQwHhcNMjMwNTE4MTE0MzUxWhcNMjcwNTE4MTE0MzUxWjCB1zEnMCUGA1UEAxMeRVNDVUVMQSBLRU1QRVIgVVJHQVRFIFNBIERFIENWMScwJQYDVQQpEx5FU0NVRUxBIEtFTVBFUiBVUkdBVEUgU0EgREUgQ1YxJzAlBgNVBAoTHkVTQ1VFTEEgS0VNUEVSIFVSR0FURSBTQSBERSBDVjElMCMGA1UELRMcRUtVOTAwMzE3M0M5IC8gVkFEQTgwMDkyN0RKMzEeMBwGA1UEBRMVIC8gVkFEQTgwMDkyN0hTUlNSTDA1MRMwEQYDVQQLEwpTdWN1cnNhbCAxMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtmecO6n2GS0zL025gbHGQVxznPDICoXzR2uUngz4DqxVUC/w9cE6FxSiXm2ap8Gcjg7wmcZfm85EBaxCx/0J2u5CqnhzIoGCdhBPuhWQnIh5TLgj/X6uNquwZkKChbNe9aeFirU/JbyN7Egia9oKH9KZUsodiM/pWAH00PCtoKJ9OBcSHMq8Rqa3KKoBcfkg1ZrgueffwRLws9yOcRWLb02sDOPzGIm/jEFicVYt2Hw1qdRE5xmTZ7AGG0UHs+unkGjpCVeJ+BEBn0JPLWVvDKHZAQMj6s5Bku35+d/MyATkpOPsGT/VTnsouxekDfikJD1f7A1ZpJbqDpkJnss3vQIDAQABox0wGzAMBgNVHRMBAf8EAjAAMAsGA1UdDwQEAwIGwDANBgkqhkiG9w0BAQsFAAOCAgEAFaUgj5PqgvJigNMgtrdXZnbPfVBbukAbW4OGnUhNrA7SRAAfv2BSGk16PI0nBOr7qF2mItmBnjgEwk+DTv8Zr7w5qp7vleC6dIsZFNJoa6ZndrE/f7KO1CYruLXr5gwEkIyGfJ9NwyIagvHHMszzyHiSZIA850fWtbqtythpAliJ2jF35M5pNS+YTkRB+T6L/c6m00ymN3q9lT1rB03YywxrLreRSFZOSrbwWfg34EJbHfbFXpCSVYdJRfiVdvHnewN0r5fUlPtR9stQHyuqewzdkyb5jTTw02D2cUfL57vlPStBj7SEi3uOWvLrsiDnnCIxRMYJ2UA2ktDKHk+zWnsDmaeleSzonv2CHW42yXYPCvWi88oE1DJNYLNkIjua7MxAnkNZbScNw01A6zbLsZ3y8G6eEYnxSTRfwjd8EP4kdiHNJftm7Z4iRU7HOVh79/lRWB+gd171s3d/mI9kte3MRy6V8MMEMCAnMboGpaooYwgAmwclI2XZCczNWXfhaWe0ZS5PmytD/GDpXzkX0oEgY9K/uYo5V77NdZbGAjmyi8cE2B2ogvyaN2XfIInrZPgEffJ4AB7kFA2mwesdLOCh0BLD9itmCve3A1FGR4+stO2ANUoiI3w3Tv2yQSg4bjeDlJ08lXaaFCLW2peEXMXjQUk7fmpb5MNuOUTW6BE=&quot; FechaExp=&quot;2024-10-15T14: 54: 29&quot; LugarExpRetenc=&quot;45110&quot; CveRetenc=&quot;01&quot; xmlns:retenciones=&quot;http: //www.sat.gob.mx/esquemas/retencionpago/2&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;&gt;&lt;retenciones:Emisor RfcE=&quot;EKU9003173C9&quot; NomDenRazSocE=&quot;ESCUELA KEMPER URGATE&quot; RegimenFiscalE=&quot;601&quot; /&gt;&lt;retenciones:Receptor NacionalidadR=&quot;Nacional&quot;&gt;&lt;retenciones:Nacional RfcR=&quot;URE180429TM6&quot; NomDenRazSocR=&quot;UNIVERSIDAD ROBOTICA ESPAÑOLA&quot; DomicilioFiscalR=&quot;86991&quot; /&gt;&lt;/retenciones:Receptor&gt;&lt;retenciones:Periodo MesIni=&quot;01&quot; MesFin=&quot;03&quot; Ejercicio=&quot;2023&quot; /&gt;&lt;retenciones:Totales MontoTotOperacion=&quot;2000.00&quot; MontoTotGrav=&quot;2000.00&quot; MontoTotExent=&quot;0&quot; MontoTotRet=&quot;580.00&quot;&gt;&lt;retenciones:ImpRetenidos BaseRet=&quot;2000&quot; ImpuestoRet=&quot;001&quot; MontoRet=&quot;580.00&quot; TipoPagoRet=&quot;03&quot; /&gt;&lt;/retenciones:Totales&gt;&lt;retenciones:Complemento&gt;&lt;tfd:TimbreFiscalDigital xsi:schemaLocation=&quot;http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd&quot; Version=&quot;1.1&quot; UUID=&quot;eb4b0264-d937-44d8-ad00-24d4291aa285&quot; FechaTimbrado=&quot;2024-10-15T14:54:32&quot; RfcProvCertif=&quot;SPR190613I52&quot; SelloCFD=&quot;R5Et5nBdNXY+1bjRi20Ua5uOG5jXzXE5D07GYR0po0LHYGZkVkqAwNWt+z8P+U1oe3I/l14NsZQnHPvN2xog3dEhH47VKmFOd4agLIcT0uisZFBXjlIAre8AB9+lJOOHjd/RxRFcONDWx7n9Sa70ucGAFtdpAKQcLtk7CM5SrudPl9ALtKATqTfO2Y5ytO1Fg9XqcBYH5zNx/V9vsuVAPNVgdBfraNSFuy3sPBzHRtvuUj5JfNbIP7wyWA4pmql1ZWpmCZrnGG6FOb1X+tpoS/vFXVxvdIj8Jd0w9HT411K09okodQdG4ARiKpwvoLFV6cFCuzT9vBNgYOHQmft0QQ==&quot; NoCertificadoSAT=&quot;30001000000400002495&quot; SelloSAT=&quot;H4WHETIQhstpYUW78v/Z4KXoqk34bIwgcPCiX6Ek4NFvGfZ9MIDYURDr3pkh6E0vn9q1aahKrMok4+JhXLd46H2VMzdgAc3jPZtxcyKt7mEjeMjCuiw3dyo2SzkPgVmyjQsDHvDyd6jyz8gnKJByk+QJrLtQx4/Rvs6tpFKPwwDqY1BEgeaQtJX6nebM+mfEqMhSy8SS7UXZMKeXjxRy5Mu7/OSyvbmu7huc3VwBZce5+BgvGI9UTrm5MdA8jJ5qpQrSADP9BfbJTcD90P+1eTftQztnXGbYXWTQUEpY8YLKELRA5m//xF/6RD9Wawmapiga/FKXVJlImJkZXzJVQQ==&quot; xmlns:tfd=&quot;http://www.sat.gob.mx/TimbreFiscalDigital&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; /&gt;&lt;/retenciones:Complemento&gt;&lt;/retenciones:Retenciones&gt;"
     },
     "status": "success"
 }
 ```
 </details>
 
-:pushpin: ***NOTA:*** Este servicio simula la respuesta V4 de nuestros servicios REST, de manera interna se hace uso de la petición SOAP de timbrado de retenciones.
+:pushpin: ***NOTA:*** El servicio **TimbrarRetencionXMLV4** simula la respuesta V4 de nuestros servicios REST, de manera interna se hace uso de la petición REST V3 de timbrado de retenciones.
 
 ## Cancelación CFDI ##
 
@@ -1114,6 +1104,213 @@ En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
 | 312 | UUID no relacionado | UUID no relacionado de acuerdo a la clave de motivo de cancelación | |
 
 </details>
+
+
+## Cancelación Retenciones ##
+
+Este servicio se utiliza para cancelar documentos xml de retenciones y se puede hacer mediante varios métodos **Cancelación XML**, **Cancelación CSD** y **Cancelacion PFX**.
+
+<details>
+
+<summary>
+Cancelación XML
+</summary>
+
+Como su nombre lo indica, este servicio recibe únicamente el XML sellado con los UUID de retenciones a cancelar.
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea, se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación, que únicamente es el XML.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => "TuToken",
+];
+
+try {
+    $xml = file_get_contents('Test/Resources/cancel_retention_xml.xml');
+    $service  = CancelRetentionService::Set($params);
+    $result = $service::CancelationByXML($xml);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Cancelación CSD
+</summary>
+
+Se deben incluir los siguientes datos:
+
+* Certificado (.cer)
+* Key (.key)
+* Password del archivo key
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución (sólo cuando Motivo=01)
+
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación en la instancia del metodo de cancelacion de retenciones
+
+Cabe mencionar que los archivos **.cer y .key**,  al ser binarios, **deberán enviarse en formato base64** para que podamos procesarlos en nuestro servidor.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+// Preparar credenciales y datos
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => "TuToken",
+];
+
+$rfc      = "EKU9003173C9";
+$uuid     = "1fae5735-ca51-4be4-9180-827c44fdb227";
+$motivo   = "02";
+$b64Cer="MIIFuzCCA6OgAwIBAgIU.........";
+$b64Key="MIIFDjBABgkqhkiG9w0B.........";
+$password = "12345678a";
+
+// Opcional si motivo = "01"
+$folioSustitucion = "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8";
+
+try {
+    $service = CancelRetentionService::Set($params);
+    $result  = $service::CancelationByCSD($rfc, $uuid, $motivo, $b64Cer, $b64Key, $password, /* $folioSustitucion */ null);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Cancelación PFX
+</summary>
+
+Se deben incluir los siguientes datos:
+
+* Pfx (en base64)
+* Password del archivo key
+* RFC emisor 
+* UUID
+* Motivo
+* Folio Sustitución (sólo cuando Motivo=01)
+
+* Paso 1: Obtener token de acceso, o en su defecto usar token infinito
+
+Primeramente se deberá autenticar en nuestros servicios con el token de acceso, o si se desea,  se puede usar el token infinito.
+
+* Paso 2: Enviar datos necesarios
+
+Se envían los datos necesarios para la cancelación de retenciones y el token obtenido previamente.
+
+```php
+<?php
+include('./SWSDK.php');
+use SWServices\CancelationRetention\CancelationRetentionService as CancelRetentionService;
+
+$params = [
+    "url"   => "https://services.test.sw.com.mx",
+    "token" => getenv('SDKTEST_TOKEN'),
+];
+
+$rfc      = "EKU9003173C9";
+$uuid     = "578052ce-710f-4d0b-9ffc-6ca73daf92a5";
+$motivo   = "01";
+$password = "12345678a";
+$b64Pfx="MIIL+QIBAzCCC.................";
+
+// Requerido si motivo = "01"
+$folioSustitucion = "fe4e71b0-8959-4fb9-8091-f5ac4fb0fef8";
+
+try {
+    $service = CancelRetentionService::Set($params);
+    $result  = $service::CancelationByPFX($rfc, $uuid, $motivo, $b64Pfx, $password, $folioSustitucion);
+    header('Content-Type: application/json');
+    echo json_encode($result);
+} catch (\Throwable $e) {
+    header('Content-Type: text/plain');
+    echo $e->getMessage();
+}
+```
+</details>
+
+<details>
+<summary>
+Respuestas de cancelación de retenciones
+</summary>
+
+Todos los response de cancelación retornan la misma estructura en caso de error o en caso de petición satisfactoria, las cuales son las siguientes:
+
+Tipos de respuesta
+> En caso de una respuesta exitosa, se regresará un 200. En caso de una respuesta no exitosa, se regresará un código diferente de 200, el código puede variar dependiendo del problema dado.
+
+
+#### Respuesta exitosa ####
+```json
+{
+  "data": {
+    "acuse": "<?xml version=\"1.0\"?><Acuse ...><Folios><UUID>3044CC3F-572F-4535-85E2-374C205F5B11</UUID><EstatusUUID>1202</EstatusUUID><Motivo>02</Motivo><Extemporaneo>false</Extemporaneo></Folios>...</Acuse>",
+    "uuid": {
+      "3044CC3F-572F-4535-85E2-374C205F5B11": "1202"
+    }
+  },
+  "status": "success"
+}
+```
+
+En este caso se recibe un mensaje JSON, el cual contiene los siguientes datos:
+
+* Acuse: Xml de acuse que regresa el SAT cuando se cancela un comprobante de retenciones.
+* UUID: uuid cancelado y su estatus.
+
+
+#### Respuesta no exitosa ####
+```json
+{
+  "message": "CACFDI33 - Problemas con el xml.",
+  "messageDetail": "CR1309 - Firma mal formada o inválida",
+  "data": null,
+  "status": "error"
+}
+```
+```json
+{
+  "message": "CACFDI33 - Problemas con el xml.",
+  "messageDetail": "CR1308 - Certificado revocado o caduco",
+  "data": null,
+  "status": "error"
+}
+```
+
+
+
 
 ## Usuarios V2 ##
 

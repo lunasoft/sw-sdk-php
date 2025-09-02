@@ -25,146 +25,138 @@ final class RetencionesTests extends TestCase
         self::$generateXML = null;
     }
 
-    public function testStampV1_success()
+    public function testStampV3_success()
     {
         $resultSpect = "success";
         $params = array(
             "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
         );
 
         $xml = file_get_contents(self::$generateXML->createXML());
         $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXML($xml));
+        $result = json_decode($retention::TimbrarRetencionXMLV3($xml));
 
         $this->assertEquals($resultSpect, $result->status);
         $this->assertNotNull($result->data);
     }
 
-    public function testStampV2_success()
+    public function testStampV3_successToken()
     {
         $resultSpect = "success";
         $params = array(
             "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD')
-        );
-
-        $xml = file_get_contents(self::$generateXML->createXML());
-        $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXMLV2($xml));
-
-        $this->assertEquals($resultSpect, $result->status);
-        $this->assertNotNull($result->data);
-    }
-
-    public function testStampV1_successToken()
-    {
-        $resultSpect = "success";
-        $params = array(
-            "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "token" => getenv('SDKTEST_TOKEN')
         );
 
         $xml = file_get_contents(self::$generateXML->createXML());
         $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXML($xml));
+        $result = json_decode($retention::TimbrarRetencionXMLV3($xml));
 
         $this->assertEquals($resultSpect, $result->status);
         $this->assertNotNull($result->data);
     }
 
-    public function testStampV2_successToken()
-    {
-        $resultSpect = "success";
-        $params = array(
-            "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
-            "token" => getenv('SDKTEST_TOKEN')
-        );
-
-        $xml = file_get_contents(self::$generateXML->createXML());
-        $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXMLV2($xml));
-
-        $this->assertEquals($resultSpect, $result->status);
-        $this->assertNotNull($result->data);
-    }
-
-    public function testStampV1_error()
+    public function testStampV3_error()
     {
         $resultSpect = "error";
         $params = array(
             "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
         );
 
         $xml = "";
         $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXML($xml));
+        $result = json_decode($retention::TimbrarRetencionXMLV3($xml));
 
         $this->assertEquals($resultSpect, $result->status);
         $this->isNull($result->data);
     }
 
-    public function testStampV2_error()
-    {
-        $resultSpect = "error";
-        $params = array(
-            "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
-            "user" => getenv('SDKTEST_USER'),
-            "password" => getenv('SDKTEST_PASSWORD')
-        );
-
-        $xml = "";
-        $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXMLV2($xml));
-
-        $this->assertEquals($resultSpect, $result->status);
-        $this->isNull($result->data);
-    }
-
-    public function testStampV1_errorReten()
+    public function testStampV3_errorReten()
     {
         $resultSpect = "error";
         $messageSpect = "Reten20101 - El resultado de la digestión debe ser igual al resultado de la desencripción del sello.";
         $params = array(
             "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
         );
 
         $xml = file_get_contents(self::$generateXML->errorXML());
         $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXML($xml));
+        $result = json_decode($retention::TimbrarRetencionXMLV3($xml));
 
         $this->assertEquals($resultSpect, $result->status);
         $this->assertEquals($messageSpect, $result->message);
         $this->isNull($result->data);
     }
 
-    public function testStampV2_errorReten()
+    public function testStampV4_success()
+    {
+        $resultSpect = "success";
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "user" => getenv('SDKTEST_USER'),
+            "password" => getenv('SDKTEST_PASSWORD')
+        );
+
+        $xml = file_get_contents(self::$generateXML->createXML());
+        $retention = RetencionesService::Set($params);
+        $result = json_decode($retention::TimbrarRetencionXMLV4($xml));
+
+        $this->assertEquals($resultSpect, $result->status);
+        $this->assertNotNull($result->data);
+    }
+
+    public function testStampV4_successToken()
+    {
+        $resultSpect = "success";
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "token" => getenv('SDKTEST_TOKEN')
+        );
+
+        $xml = file_get_contents(self::$generateXML->createXML());
+        $retention = RetencionesService::Set($params);
+        $result = json_decode($retention::TimbrarRetencionXMLV4($xml));
+
+        $this->assertEquals($resultSpect, $result->status);
+        $this->assertNotNull($result->data);
+    }
+
+    public function testStampV4_error()
+    {
+        $resultSpect = "error";
+        $params = array(
+            "url" => "https://services.test.sw.com.mx",
+            "user" => getenv('SDKTEST_USER'),
+            "password" => getenv('SDKTEST_PASSWORD')
+        );
+
+        $xml = "";
+        $retention = RetencionesService::Set($params);
+        $result = json_decode($retention::TimbrarRetencionXMLV4($xml));
+
+        $this->assertEquals($resultSpect, $result->status);
+        $this->isNull($result->data);
+    }
+
+    public function testStampV4_errorReten()
     {
         $resultSpect = "error";
         $messageSpect = "Reten20101 - El resultado de la digestión debe ser igual al resultado de la desencripción del sello.";
         $params = array(
             "url" => "https://services.test.sw.com.mx",
-            "urlRetention" => "https://pruebascfdi.smartweb.com.mx/Timbrado/wcfTimbradoRetenciones.svc",
             "user" => getenv('SDKTEST_USER'),
             "password" => getenv('SDKTEST_PASSWORD')
         );
 
         $xml = file_get_contents(self::$generateXML->errorXML());
         $retention = RetencionesService::Set($params);
-        $result = json_decode($retention::TimbrarRetencionXMLV2($xml));
+        $result = json_decode($retention::TimbrarRetencionXMLV4($xml));
 
         $this->assertEquals($resultSpect, $result->status);
         $this->assertEquals($messageSpect, $result->message);
