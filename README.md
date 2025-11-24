@@ -1585,6 +1585,51 @@ Si se desea consumir el servicio mediante token, solo es necesario modificar la 
 </details>
 
 <details>
+<summary>Consulta de timbres por ID de usuario</summary>
+Servicio para consultar timbres de una cuenta hija o subcuenta mediante el ID del usuario.
+Este método recibe los siguientes parametros:
+<br>
+
+* Usuario y contraseña o Token
+* Url Servicios SW
+* Url Api
+* Id del usuario
+
+> [!IMPORTANT]  
+> Los nombres de las variables en la respuesta han cambiado.
+
+```php
+<?php
+    require_once 'vendor/autoload.php';
+    use SWServices\AccountBalance\AccountBalanceService as AccountBalanceService;
+
+    $params = array(
+        "url"=>"https://services.test.sw.com.mx",
+        "urlApi" => "https://api.test.sw.com.mx",
+        "user"=>"cuentaUsuario",
+        "password"=> "contraseña"
+    );
+    $userId = "50f80bcc-cce1-4e39-bee2-8f2099a1a2ae";
+    try {
+        AccountBalanceService::Set($params);
+        $result = AccountBalanceService::GetBalanceByUserId($userId);
+        var_dump($result);
+    } catch(Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+    }
+?>
+```
+
+Si se desea consumir el servicio mediante token, solo es necesario modificar la variable $params por:
+```php
+    $params = array(
+        "urlApi" => "https://api.test.sw.com.mx",
+        "token"=>"tokenUsuario",
+    );
+```
+</details>
+
+<details>
 <summary>
 Agregar timbres
 </summary>

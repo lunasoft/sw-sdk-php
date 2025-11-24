@@ -60,6 +60,12 @@ class AccountBalanceRequest
         $url = $urlService . "/management/v2/api/users/balance";
         return self::sendRequest($url, $token, "GET", null, [], $proxy);
     }
+    // Método para obtener el Balance por userId
+    public static function getBalanceByUserIdRequest($urlService, $token, $userId, $proxy = null)
+    {
+        $url = $urlService . "/management/v2/api/dealers/balance/users/$userId";
+        return self::sendRequest($url, $token, "GET", null, [], $proxy);
+    }
     // Método para añadir o eliminar timbres a una cuenta
     public static function distributionStampRequest($urlApi, $token, $action, $id, $stamps, $comment = null, $proxy = null)
     {
