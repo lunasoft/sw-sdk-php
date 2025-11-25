@@ -21,6 +21,11 @@ class AccountBalanceService extends Services
     {
         return accountBalanceRequest::getBalanceByTokenRequest(Services::get_urlApi(), Services::get_token(), Services::get_proxy());
     }
+    //Método público para obtener el Balance por userId
+    public static function GetBalanceByUserId($userId)
+    {
+        return accountBalanceRequest::getBalanceByUserIdRequest(Services::get_urlApi(), Services::get_token(), $userId, Services::get_proxy());
+    }
     //Método público para añadir timbres
     public static function AddStamps($id, $stamps, $comment = null)
     {
