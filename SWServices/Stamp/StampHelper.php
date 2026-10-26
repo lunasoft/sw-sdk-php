@@ -22,7 +22,7 @@ class StampHelper
                 return self::validate_xml(base64_decode(self::$xml));
             }
         } catch (Exception $e) {
-            echo 'xml no válido', $e->getMessage();
+            echo 'xml no válido';
             exit();
         }
     }
@@ -38,11 +38,11 @@ class StampHelper
     public static function validate_customid($customId)
     {
         try {
-            if (!empty($customId) && (strlen($customId) <= 100)) {
+            if (!empty($customId) && (strlen($customId) <= 100) && !preg_match('/[\x00-\x1F\x7F]/', $customId)) {
                 return $customId;
             }
         } catch (Exception $e) {
-            echo 'CustomId viene vacío o es mayor a 100 caracteres', $e->getMessage();
+            echo 'CustomId viene vacío o es mayor a 100 caracteres';
             exit();
         }
     }
@@ -60,13 +60,13 @@ class StampHelper
             }
             if ($eResult == false) {
                 echo "Error";
-                var_dump($email);
+                echo 'Recepcion de email invalido';
                 exit();
             } else {
                 return $email;
             }
         } catch (Exception $e) {
-            echo 'recepcion de email invalido', $e->getMessage();
+            echo 'recepcion de email invalido';
             exit();
         }
     }

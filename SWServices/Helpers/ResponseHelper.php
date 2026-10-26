@@ -13,7 +13,8 @@ class ResponseHelper {
         return json_decode($response);
     }
     protected static function handleException($ex){
-        return ResponseHelper::ToErrorResponse($ex->getMessage(), $ex->getTraceAsString());
+        $debug = class_exists('SWServices\\Services', false) && \SWServices\Services::get_debug();
+        return ResponseHelper::ToErrorResponse($ex->getMessage(), $debug ? $ex->getTraceAsString() : '');
     }
 }
 ?>
