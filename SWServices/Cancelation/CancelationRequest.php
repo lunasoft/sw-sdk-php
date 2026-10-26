@@ -41,7 +41,7 @@ class CancelationRequest
         }
 
         if ($httpcode >= 500) {
-            throw new Exception("HTTP Error: $httpcode. Response: " . CurlHelper::truncateResponse($response));
+            throw new Exception("HTTP Error: $httpcode. Response: $response");
         }
 
         return json_decode($response);
@@ -156,7 +156,7 @@ class CancelationRequest
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
             }
         }
     }

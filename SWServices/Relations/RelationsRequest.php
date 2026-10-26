@@ -55,7 +55,7 @@ class RelationsRequest
         if ($httpcode < 500) {
             return json_decode($response);
         } else {
-            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 

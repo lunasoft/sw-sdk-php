@@ -103,9 +103,8 @@ Todos los servicios aceptan estos parametros opcionales en el mismo arreglo de c
 | --- | --- | --- |
 | `verify_ssl` | Verificacion del certificado TLS. Solo se desactiva con el booleano `false`, por ejemplo cuando un proxy corporativo intercepta TLS con su propio certificado. | `true` |
 | `cainfo` | Ruta a un bundle de certificados de CA propio, si el de PHP no esta configurado (comun en Windows). | el de PHP |
-| `timeout` | Tiempo maximo total de la solicitud en segundos. | 60 (120 en timbrado, emision y retenciones) |
+| `timeout` | Tiempo maximo total de la solicitud en segundos. Con `0` no hay limite. | 60 |
 | `connect_timeout` | Tiempo maximo para conectar en segundos. | 15 |
-| `debug` | Con `true`, los errores incluyen el detalle tecnico (traza) en `messageDetail`. | `false` |
 
 Se usa TLS 1.2 como version minima.
 

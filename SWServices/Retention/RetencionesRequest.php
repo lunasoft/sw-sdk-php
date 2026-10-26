@@ -60,7 +60,7 @@ class RetencionesRequest
         ]);
 
         CurlHelper::applySslOptions($curl, Services::get_ssl_options());
-        CurlHelper::applyTimeoutOptions($curl, [], 120);
+        CurlHelper::applyTimeoutOptions($curl);
         CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -70,12 +70,12 @@ class RetencionesRequest
             return Response::toErrorResponse('Error de conexión', $err);
         }
         if ($httpcode >= 500) {
-            return Response::toErrorResponse('Error HTTP', "HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+            return Response::toErrorResponse('Error HTTP', "HTTPCode: $httpcode, Response: " . $response);
         }
 
         $decoded = json_decode($response, true);
         if (!is_array($decoded)) {
-            return Response::toErrorResponse('Respuesta no es JSON', CurlHelper::truncateResponse($response));
+            return Response::toErrorResponse('Respuesta no es JSON', (string)$response);
         }
 
         return json_encode($decoded, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
@@ -85,7 +85,7 @@ class RetencionesRequest
     {
         $json = json_decode($rawJson, true);
         if (!is_array($json)) {
-            return Response::toErrorResponse('Respuesta no es JSON', CurlHelper::truncateResponse($rawJson));
+            return Response::toErrorResponse('Respuesta no es JSON', (string)$rawJson);
         }
         if (($json['status'] ?? '') !== 'success') {
             if (!array_key_exists('data', $json)) {

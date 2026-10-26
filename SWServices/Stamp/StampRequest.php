@@ -48,7 +48,7 @@ class StampRequest
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
         CurlHelper::applySslOptions($curl, Services::get_ssl_options());
-        CurlHelper::applyTimeoutOptions($curl, [], 120);
+        CurlHelper::applyTimeoutOptions($curl);
         CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -60,7 +60,7 @@ class StampRequest
             if ($httpcode < 500)
                 return json_decode($response);
             else
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
     public static function sendReqV4($url, $token, $xml, $version, $isb64, $proxy, $path, $customId, $pdf, $email)
@@ -105,7 +105,7 @@ class StampRequest
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
         CurlHelper::applySslOptions($curl, Services::get_ssl_options());
-        CurlHelper::applyTimeoutOptions($curl, [], 120);
+        CurlHelper::applyTimeoutOptions($curl);
         CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -117,7 +117,7 @@ class StampRequest
             if ($httpcode < 500)
                 return json_decode($response);
             else
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 }

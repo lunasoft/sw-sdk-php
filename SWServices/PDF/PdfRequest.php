@@ -47,7 +47,7 @@ class PdfRequest
             if ($httpcode < 500)
                 return json_decode($response);
             else
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
         }
     }
 }

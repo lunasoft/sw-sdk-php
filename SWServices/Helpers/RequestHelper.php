@@ -44,7 +44,7 @@ class RequestHelper extends ResponseHelper
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", CurlHelper::truncateResponse($response));
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
             }
         }
     }
@@ -76,7 +76,7 @@ class RequestHelper extends ResponseHelper
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", CurlHelper::truncateResponse($response));
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
             }
         }
     }
@@ -137,7 +137,7 @@ class RequestHelper extends ResponseHelper
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", CurlHelper::truncateResponse($response));
+                return ResponseHelper::toErrorResponse("cUrl Error, HTTPCode: $httpcode", $response);
             }
         }
     }

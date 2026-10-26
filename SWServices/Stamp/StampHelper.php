@@ -38,7 +38,7 @@ class StampHelper
     public static function validate_customid($customId)
     {
         try {
-            if (!empty($customId) && (strlen($customId) <= 100) && !preg_match('/[\x00-\x1F\x7F]/', $customId)) {
+            if (!empty($customId) && (strlen($customId) <= 100)) {
                 return $customId;
             }
         } catch (Exception $e) {

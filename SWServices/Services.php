@@ -18,7 +18,6 @@ class Services extends Request
     private static $_expirationDate = null;
     private static $_proxy = null;
     private static $_sslOptions = [];
-    private static $_debug = false;
     private static $_timeoutOptions = ['timeout' => null, 'connect_timeout' => null];
     private static $_timeSession = "PT2H";
 
@@ -51,7 +50,6 @@ class Services extends Request
             'verify_ssl' => ($params['verify_ssl'] ?? true) !== false,
             'cainfo' => $params['cainfo'] ?? null
         ];
-        self::$_debug = ($params['debug'] ?? false) === true;
         self::$_timeoutOptions = [
             'timeout' => $params['timeout'] ?? null,
             'connect_timeout' => $params['connect_timeout'] ?? null
@@ -74,7 +72,6 @@ class Services extends Request
                 "password" => self::$_password,
                 "verify_ssl" => self::$_sslOptions['verify_ssl'] ?? true,
                 "cainfo" => self::$_sslOptions['cainfo'] ?? null,
-                "debug" => self::$_debug,
                 "timeout" => self::$_timeoutOptions['timeout'],
                 "connect_timeout" => self::$_timeoutOptions['connect_timeout']
             );
@@ -84,11 +81,7 @@ class Services extends Request
             if ($token->status == "success") {
                 self::set_token($token->data->token);
             } else {
-                preg_match('/^.{0,500}/us', (string) $token->message, $message);
-                preg_match('/^.{0,500}/us', (string) $token->messageDetail, $messageDetail);
-                $message = $message[0] ?? substr((string) $token->message, 0, 500);
-                $messageDetail = $messageDetail[0] ?? substr((string) $token->messageDetail, 0, 500);
-                throw new Exception("Authentication error: $message Detail: $messageDetail");
+                throw new Exception("Authentication error: $token->message Detail: $token->messageDetail");
             }
             date_default_timezone_set("America/Mexico_City");
         }
@@ -122,11 +115,6 @@ class Services extends Request
     public static function get_ssl_options(): array
     {
         return self::$_sslOptions;
-    }
-
-    public static function get_debug()
-    {
-        return self::$_debug;
     }
 
     public static function get_timeout_options(): array

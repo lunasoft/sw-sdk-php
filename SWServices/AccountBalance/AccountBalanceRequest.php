@@ -46,7 +46,7 @@ class AccountBalanceRequest
         if ($err) {
             throw new Exception("cURL Error: $err");
         } elseif ($httpcode >= 500) {
-            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
+            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: $response");
         }
         return json_decode($response);
     }
