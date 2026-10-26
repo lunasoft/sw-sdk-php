@@ -94,6 +94,9 @@ final class IssueTests extends TestCase
 		);
 		$xml = file_get_contents(self::$generateXML->createXML());
 		$stamp = EmisionTimbrado::Set($params);
+		// Primer envío: puede timbrar o ya existir; la prueba afirma sobre el segundo.
+		$stamp::issueV4CustomIdPdfV1($xml, $customId, $pdf);
+		// Mismo XML otra vez: el servicio siempre responde error por timbre duplicado.
 		$result = $stamp::issueV4CustomIdPdfV1($xml, $customId, $pdf);
 		$this->assertTrue($resultSpect == $result->status);
 	}

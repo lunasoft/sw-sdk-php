@@ -179,13 +179,7 @@ class RetencionesRequest
             $tt = $xp->evaluate('string(//retenciones:Totales/@MontoTotRet)');
             $fe = substr($xp->evaluate('string(//retenciones:Retenciones/@Certificado)'), -8);
 
-            $params = http_build_query([
-                'id' => $uuid,
-                're' => $rfcE,
-                'rr' => $rfcR,
-                'tt' => $tt,
-                'fe' => $fe,
-            ], '', '&', PHP_QUERY_RFC3986);
+            $params = 'id=' . $uuid . '&re=' . $rfcE . '&rr=' . $rfcR . '&tt=' . $tt . '&fe=' . $fe;
 
             $options = new QROptions([
                 'outputType' => QRCode::OUTPUT_IMAGE_PNG,

@@ -211,7 +211,7 @@ final class GenerateXMLRetenciones
         $xml->asXML(__DIR__ . '/Resources/retencion20_test.xml');
 
         $cadenaOriginal = file_get_contents(__DIR__ . '/Resources/cadenaOriginalRetenciones.txt');
-        $cadenaOriginal = preg_replace('/\d{4}-\d{2}-\d{2}\T\d{2}:\d{2}:\d{2}/', $date, $cadenaOriginal);
+        $cadenaOriginal = preg_replace('/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/', $date, $cadenaOriginal);
 
         file_put_contents(__DIR__ . "/Resources/cadenaOriginalRetenciones.txt", $cadenaOriginal);
 
