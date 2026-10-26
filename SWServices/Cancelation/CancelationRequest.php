@@ -2,6 +2,9 @@
 
 namespace SWServices\Cancelation;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use SWServices\Cancelation\cancelationHandler as CancelationHandler;
 use Exception;
 
@@ -9,16 +12,9 @@ class CancelationRequest
 {
     private static function sendRequest($url, $token, $method, $data, $headers = [], $proxy = null)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
@@ -32,18 +28,20 @@ class CancelationRequest
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array_merge($defaultHeaders, $headers));
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
 
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error: " . $err);
         }
 
         if ($httpcode >= 500) {
-            throw new Exception("HTTP Error: $httpcode. Response: $response");
+            throw new Exception("HTTP Error: $httpcode. Response: " . CurlHelper::truncateResponse($response));
         }
 
         return json_decode($response);
@@ -77,7 +75,7 @@ class CancelationRequest
             "action" => $action ?? null
         ]);
 
-        $path = $url . $service . $rfc . '/' . $uuid . '/' . $motivo . '/' . ($foliosustitucion ?? '') . '/' . ($action ?? '');
+        $path = $url . $service . rawurlencode((string)$rfc) . '/' . rawurlencode((string)$uuid) . '/' . rawurlencode((string)$motivo) . '/' . rawurlencode((string)($foliosustitucion ?? '')) . '/' . rawurlencode((string)($action ?? ''));
         $headers = ['Content-Type: application/json'];
 
         return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
@@ -135,11 +133,10 @@ class CancelationRequest
         (isset($proxy)) ? curl_setopt($curl, CURLOPT_PROXY, $proxy) : "";
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => $url . $service . $rfc,
+            CURLOPT_URL => $url . $service . rawurlencode((string)$rfc),
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
@@ -147,17 +144,19 @@ class CancelationRequest
                 "Cache-Control: no-cache"
             ],
         ]);
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $err = curl_error($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
         } else {
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+                throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
             }
         }
     }

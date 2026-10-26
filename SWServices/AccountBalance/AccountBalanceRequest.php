@@ -2,16 +2,15 @@
 
 namespace SWServices\AccountBalance;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use Exception;
 
 class AccountBalanceRequest
 {
     private static function sendRequest($url, $token, $method, $data = null, $headers = [], $proxy = null)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -19,10 +18,6 @@ class AccountBalanceRequest
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => "UTF-8",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 30,
-            CURLOPT_SSLVERSION => $protocols,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $method,
         ));
@@ -41,15 +36,17 @@ class AccountBalanceRequest
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array_merge($defaultHeaders, $headers));
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error: $err");
         } elseif ($httpcode >= 500) {
-            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: $response");
+            throw new Exception("cURL Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
         }
         return json_decode($response);
     }
@@ -63,13 +60,13 @@ class AccountBalanceRequest
     // Método para obtener el Balance por userId
     public static function getBalanceByUserIdRequest($urlService, $token, $userId, $proxy = null)
     {
-        $url = $urlService . "/management/v2/api/dealers/balance/users/$userId";
+        $url = $urlService . "/management/v2/api/dealers/balance/users/" . rawurlencode((string)$userId);
         return self::sendRequest($url, $token, "GET", null, [], $proxy);
     }
     // Método para añadir o eliminar timbres a una cuenta
     public static function distributionStampRequest($urlApi, $token, $action, $id, $stamps, $comment = null, $proxy = null)
     {
-        $url = $urlApi . "/management/v2/api/dealers/users/$id/stamps";
+        $url = $urlApi . "/management/v2/api/dealers/users/" . rawurlencode((string)$id) . "/stamps";
         $headers = ['Content-Type: application/json'];
 
         $data = ["stamps" => $stamps];

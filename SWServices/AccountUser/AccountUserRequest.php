@@ -17,13 +17,13 @@ class AccountUserRequest
 
     public static function sendReqUpdateUser($id, $data, $action)
     {
-        $path = "/management/v2/api/dealers/users/" . $id;
+        $path = "/management/v2/api/dealers/users/" . rawurlencode((string)$id);
         return HttpRequest::sendRequest(Services::get_urlApi(), $action, $path, Services::get_token(), $data, Services::get_proxy());
     }
 
     public static function sendReqDeleteteUser($id, $action)
     {
-        $path = "/management/v2/api/dealers/users/" . $id;
+        $path = "/management/v2/api/dealers/users/" . rawurlencode((string)$id);
         return HttpRequest::sendRequest(Services::get_urlApi(), $action, $path, Services::get_token(), null, Services::get_proxy());
     }
 

@@ -2,6 +2,9 @@
 
 namespace SWServices\CancelationRetention;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 class CancelationRetentionRequest
 {
     public static function cancelByXML($baseUrl, $token, $xmlContent)
@@ -50,10 +53,6 @@ class CancelationRetentionRequest
 
     private static function sendReq($method, $url, array $headers, $body)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $ch = curl_init();
 
@@ -63,16 +62,15 @@ class CancelationRetentionRequest
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_HTTPHEADER => $headers,
             CURLOPT_POSTFIELDS => $body,
-            CURLOPT_SSLVERSION => $protocols,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 0
         ]);
 
+        CurlHelper::applySslOptions($ch, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($ch);
+        CurlHelper::applyRedirectOptions($ch, $url, false);
         $response = curl_exec($ch);
         $errNo    = curl_errno($ch);
         $errMsg   = curl_error($ch);
         $httpCode  = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        curl_close($ch);
 
         if ($errNo) {
             return CancelationRetentionHelper::fromCurlError($errMsg, $httpCode);

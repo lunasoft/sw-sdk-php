@@ -2,6 +2,8 @@
 
 namespace SWServices\Validation;
 
+use SWServices\Helpers\CurlHelper;
+
 use SWServices\Services as Services;
 use Exception;
 
@@ -10,10 +12,6 @@ class ValidateRequest
 
     public static function sendReqXML($url, $token, $xml, $status, $proxy)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $delimiter = '-------------' . uniqid();
         $fileFields = array(
@@ -34,13 +32,10 @@ class ValidateRequest
         }
         $data .= "--" . $delimiter . "--\r\n";
 
-        $path = $url . '/validate/cfdi' . ($status == false ? '?validatestatus=false' : '');
+        $path = $url . '/validate/cfdi' . ($status == false ? '?' . http_build_query(['validatestatus' => 'false']) : '');
 
         $curl  = curl_init($path);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_POST, true);
 
         if (isset($proxy)) {
@@ -53,9 +48,11 @@ class ValidateRequest
         ));
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $err = curl_error($curl);
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);

@@ -2,6 +2,9 @@
 
 namespace SWServices\JSonIssuer;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use Exception;
 
 
@@ -11,17 +14,13 @@ class JsonIssuerRequest
 
 	public static function sendReq($url, $token, $json, $version, $isb64, $proxy)
 	{
-		$protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
 		$headers = array(
 			"Authorization: Bearer " . $token,
 			"Content-Type: application/jsontoxml"
 		);
 
-		$path = $url . "/v3/cfdi33/issue/json/" . $version . ($isb64 ? '/b64' : '');
+		$path = $url . "/v3/cfdi33/issue/json/" . rawurlencode((string)$version) . ($isb64 ? '/b64' : '');
 
 		$curl = curl_init();
 
@@ -32,20 +31,18 @@ class JsonIssuerRequest
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => $path,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSLVERSION => $protocols,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_TIMEOUT => 30,
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $json,
 			CURLOPT_HTTPHEADER => $headers
 		));
 
 		try {
+			CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+			CurlHelper::applyTimeoutOptions($curl, [], 120);
+			CurlHelper::applyRedirectOptions($curl, $url, false);
 			$response = curl_exec($curl);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			$err = curl_error($curl);
-			curl_close($curl);
 
 			if ($err) {
 				throw new Exception("cURL Error #:" . $err);
@@ -53,20 +50,16 @@ class JsonIssuerRequest
 				if ($httpcode < 500) {
 					return json_decode($response);
 				} else {
-					throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+					throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
 				}
 			}
 		} catch (Exception $e) {
-			throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+			throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
 		}
 	}
 
 	public static function sendReqJsonV4($url, $token, $json, $version, $customId, $pdf, $email, $path, $proxy)
 	{
-		$protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
 		$headers = array(
 			"Authorization: Bearer " . $token,
@@ -93,25 +86,23 @@ class JsonIssuerRequest
 			curl_setopt($curl, CURLOPT_PROXY, $proxy);
 		}
 
-		$url = $url . $path . $version;
+		$url = $url . $path . rawurlencode((string)$version);
 
 		curl_setopt_array($curl, array(
 			CURLOPT_URL => $url,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_SSLVERSION => $protocols,
-			CURLOPT_SSL_VERIFYPEER => 0,
-			CURLOPT_SSL_VERIFYHOST => 0,
-			CURLOPT_TIMEOUT => 30,
 			CURLOPT_CUSTOMREQUEST => "POST",
 			CURLOPT_POSTFIELDS => $json,
 			CURLOPT_HTTPHEADER => $headers
 		));
 
 		try {
+			CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+			CurlHelper::applyTimeoutOptions($curl, [], 120);
+			CurlHelper::applyRedirectOptions($curl, $url, false);
 			$response = curl_exec($curl);
 			$httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 			$err = curl_error($curl);
-			curl_close($curl);
 
 			if ($err) {
 				throw new Exception("cURL Error #:" . $err);
@@ -119,11 +110,11 @@ class JsonIssuerRequest
 				if ($httpcode < 500) {
 					return json_decode($response);
 				} else {
-					throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+					throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
 				}
 			}
 		} catch (Exception $e) {
-			throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: $response");
+			throw new Exception("cUrl Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
 		}
 	}
 }

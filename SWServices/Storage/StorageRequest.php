@@ -17,7 +17,7 @@ class StorageRequest extends Services
     protected static function postStorage($uuid)
     {
         try {
-            $response = HttpRequest::postPath(Services::get_urlApi(), '/datawarehouse/v1/live/' . $uuid, Services::get_token(), Services::get_proxy());
+            $response = HttpRequest::postPath(Services::get_urlApi(), '/datawarehouse/v1/live/' . rawurlencode((string)$uuid), Services::get_token(), Services::get_proxy());
             return $response;
         } catch (Exception $e) {
             return Response::handleException($e);

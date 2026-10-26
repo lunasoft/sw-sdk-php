@@ -2,6 +2,9 @@
 
 namespace SWServices\Csd;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use Exception;
 
 class CsdRequest
@@ -9,18 +12,19 @@ class CsdRequest
     private static function sendRequest($url, $token, $proxy, $service, $method, $data = null)
     {
 
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
+        // Service paths already contain the identifiers supplied by CsdService.
+        $service = preg_replace_callback('#^(/certificates/(rfc|type)/)(.*)$#s', function ($matches) {
+            $segments = $matches[2] === 'rfc' ? explode('/', $matches[3], 2) : [$matches[3]];
+            return $matches[1] . implode('/', array_map('rawurlencode', $segments));
+        }, $service, -1, $encoded);
+        if (!$encoded && strpos($service, '/certificates/') === 0 && $service !== '/certificates/save') {
+            $service = '/certificates/' . rawurlencode(substr($service, strlen('/certificates/')));
+        }
         $path = $url . $service;
 
         $curl = curl_init($path);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
 
         if (isset($proxy)) {
             curl_setopt($curl, CURLOPT_PROXY, $proxy);
@@ -45,11 +49,13 @@ class CsdRequest
             curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'DELETE');
         }
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
 
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error #:" . $err);
@@ -57,7 +63,7 @@ class CsdRequest
             if ($httpcode < 500) {
                 return json_decode($response);
             } else {
-                throw new Exception("cURL Error, HTTPCode: $httpcode, Response: $response");
+                throw new Exception("cURL Error, HTTPCode: $httpcode, Response: " . CurlHelper::truncateResponse($response));
             }
         }
     }
