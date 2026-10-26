@@ -12,3 +12,4 @@ Samples/vendor/composer/installed.json
 .fake
 
 .vscode/*
+.phpunit.result.cache
