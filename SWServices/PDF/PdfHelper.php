@@ -29,7 +29,7 @@ class PdfHelper
                 return self::validateXml(base64_decode(self::$xml));
             }
         } catch (Exception $e) {
-            echo 'xml vacio o no es válido.', $e->getMessage();
+            echo 'xml vacio o no es válido.';
             exit();
         }
     }
