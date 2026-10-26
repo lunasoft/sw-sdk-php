@@ -9,9 +9,9 @@
     	public function testSign(){
     		$resultSpect = "success";
     		$params = array(
-			    "cadenaOriginal"=> "./Test/Resources/SignResources/cadenaOriginal.txt",
-			    "archivoKeyPem"=> "./Test/Resources/SignResources/resultado.key.pem",
-			    "archivoCerPem"=> "./Test/Resources/SignResources/resultado.cer.pem"
+			    "cadenaOriginal"=> __DIR__ . '/Resources/SignResources/cadenaoriginal.txt',
+			    "archivoKeyPem"=> __DIR__ . '/Resources/SignResources/resultado.key.pem',
+			    "archivoCerPem"=> __DIR__ . '/Resources/SignResources/resultado.cer.pem'
 		    );
 
     		$result = Sello::obtenerSello($params);

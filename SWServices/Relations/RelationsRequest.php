@@ -2,29 +2,23 @@
 
 namespace SWServices\Relations;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use Exception;
 
 class RelationsRequest
 {
     public static function sendRequest($url, $token, $data = null, $headers = [], $proxy = null, $method = 'POST')
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $curl = curl_init();
 
         curl_setopt_array($curl, [
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_SSLVERSION => $protocols,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 0,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => $method,
         ]);
@@ -35,6 +29,9 @@ class RelationsRequest
 
         if ($data) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        } elseif (strtoupper((string)$method) === 'POST') {
+            // Sin cuerpo, cURL no envía Content-Length y el servicio responde 411.
+            curl_setopt($curl, CURLOPT_POSTFIELDS, '');
         }
 
         $defaultHeaders = [
@@ -43,11 +40,13 @@ class RelationsRequest
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array_merge($defaultHeaders, $headers));
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, $data === null && strtoupper((string)$method) === 'GET');
         $response = curl_exec($curl);
         $err = curl_error($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error #: " . $err);
@@ -93,7 +92,7 @@ class RelationsRequest
 
     public static function sendReqUUID($url, $service, $token, $rfc, $uuid, $proxy = null)
     {
-        $path = $url . $service . $rfc . '/' . $uuid;
+        $path = $url . $service . rawurlencode((string)$rfc) . '/' . rawurlencode((string)$uuid);
 
         return self::sendRequest($path, $token, null, [], $proxy);
     }

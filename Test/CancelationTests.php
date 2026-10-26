@@ -13,8 +13,8 @@ final class CancelationTests extends TestCase
 		$resultSpect = "success";
 		$rfc = "EKU9003173C9";
 		$uuid = "5643d565-3efb-4a29-98d1-dcf271503cb6";
-		$cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		$keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+		$cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		$keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		$password = "12345678a";
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
@@ -26,6 +26,8 @@ final class CancelationTests extends TestCase
 			$cancelationService = CancelationService::Set($params);
 			$result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, $cerB64, $keyB64, $password);
 			$this->assertEquals($resultSpect, $result->status);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -36,7 +38,7 @@ final class CancelationTests extends TestCase
 		$messageSpect = "CACFDI33 - Problemas con los campos.";
 		$rfc = "EKU9003173C9";
 		$uuid = "5643d565-3efb-4a29-98d1-dcf271503cb6";
-		$keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+		$keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		$password = "12345678a";
 		$motivo = "02";
 		$token = getenv('SDKTEST_TOKEN');
@@ -49,6 +51,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByCSD($rfc, $uuid, $motivo, null, $keyB64, $password);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEquals($messageSpect, $result->message);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -57,7 +61,7 @@ final class CancelationTests extends TestCase
 	public function testCancelationByXML()
 	{
 		$resultSpect = "success";
-		$xml = file_get_contents('Test\Resources\cancel_xml.xml');
+		$xml = file_get_contents(__DIR__ . '/Resources/cancel_xml.xml');
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
 			"url" => "https://services.test.sw.com.mx/",
@@ -68,6 +72,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByXML($xml);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data, "Acuse vacio");
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -86,6 +92,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByXML(null);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEquals($messageSpect, $result->message);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -94,7 +102,7 @@ final class CancelationTests extends TestCase
 	public function testCancelationByPfx()
 	{
 		$resultSpect = "success";
-		$pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+		$pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
 		$passwordPfx = "12345678a";
 		$uuid = "cfc771b4-7d90-459e-ab06-afd2b3c59c10";
 		$rfc = "EKU9003173C9";
@@ -109,6 +117,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, $pfxB64, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data, "Acuse vacio");
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -131,6 +141,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByPFX($rfc, $uuid, $motivo, null, $passwordPfx);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEquals($messageSpect, $result->message);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -152,6 +164,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByUUID($rfc, $uuid, $motivo);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data, "Acuse vacio");
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -172,6 +186,8 @@ final class CancelationTests extends TestCase
 			$result = $cancelationService::CancelationByUUID($rfc, "null", $motivo);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEquals($messageSpect, $result->messageDetail);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

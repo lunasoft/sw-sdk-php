@@ -24,6 +24,8 @@ final class ResendTest extends TestCase
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
             $this->assertNotEmpty($result->data, "Data viene vacio.");
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -47,6 +49,8 @@ final class ResendTest extends TestCase
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
             $this->assertNotEmpty($result->data, "Data viene vacio.");
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -73,6 +77,8 @@ final class ResendTest extends TestCase
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "MessageDetail viene vacio.");
             $this->assertNotEmpty($result->data, "Data viene vacio.");
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -99,6 +105,8 @@ final class ResendTest extends TestCase
             $this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -120,6 +128,8 @@ final class ResendTest extends TestCase
             $this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertNotEmpty($result->messageDetail, "Message viene vacio.");
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -141,6 +151,8 @@ final class ResendTest extends TestCase
             $this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -163,6 +175,8 @@ final class ResendTest extends TestCase
             $this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -181,6 +195,8 @@ final class ResendTest extends TestCase
             $this->assertEquals("error", $result->status, "El status fue " . $result->status);
             $this->assertNotEmpty($result->message, "Message viene vacio.");
             $this->assertEquals("El UUID o los correos no son válidos.", $result->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }

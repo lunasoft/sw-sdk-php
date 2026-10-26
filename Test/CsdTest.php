@@ -11,8 +11,8 @@ final class CsdTest extends TestCase
         $resultSpect = "success";
         $isActive = true;
         $type = "stamp";
-        $b64Cer = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-        $b64Key = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+        $b64Cer = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+        $b64Key = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
         $password = "12345678a";
         $params = array(
 			"url" => "https://services.test.sw.com.mx/",
