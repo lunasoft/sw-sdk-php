@@ -14,16 +14,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      # Las pruebas de integración usan el mismo sandbox: en paralelo se pisan (timbres duplicados).
+      max-parallel: 1
       matrix:
         include:
+          # tests: true ejecuta PHPUnit (mínimo y más reciente); false solo verifica sintaxis.
           - php: '8.2'
             min: '8.2.35'
+            tests: true
           - php: '8.3'
             min: '8.3.36'
+            tests: false
           - php: '8.4'
             min: '8.4.27'
+            tests: false
           - php: '8.5'
             min: '8.5.12'
+            tests: true
     env:
       SDKTEST_USER: ${{ secrets.SDKTEST_USER }}
       SDKTEST_PASSWORD: ${{ secrets.SDKTEST_PASSWORD }}
@@ -59,13 +66,13 @@ jobs:
           fi
 
       - name: Ejecutar pruebas
-        if: steps.integration.outputs.has_secrets == 'true'
+        if: matrix.tests && steps.integration.outputs.has_secrets == 'true'
         run: vendor/bin/phpunit
 
       - name: Verificar sintaxis sin secretos
-        if: steps.integration.outputs.has_secrets != 'true'
+        if: ${{ !matrix.tests || steps.integration.outputs.has_secrets != 'true' }}
         shell: bash
         run: |
-          echo "::notice::Sin SDKTEST_TOKEN; se omiten las pruebas de integración y se verifica la sintaxis PHP."
+          echo "::notice::Solo se verifica la sintaxis PHP (sin pruebas de integración en esta versión o sin SDKTEST_TOKEN)."
           find SWServices -type f -name '*.php' -print0 | xargs -0 -r -n 1 php -l
           php -l SWSDK.php
