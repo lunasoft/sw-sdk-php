@@ -19,7 +19,7 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 ### Compatibilidad
 
 * CFDI 4.0
-* PHP 5.6 ó en su versión PHP 7
+* PHP 8.2 ó superior. Se recomienda usar versiones con soporte de seguridad vigente: 8.2.35, 8.3.36, 8.4.27, 8.5.12 o posteriores.
 ------------
 
 ### Dependencias
@@ -37,7 +37,7 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 
 ### Instalación
 
-Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP ya sea la **5.6** o la version **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
+Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP **8.2** o superior (ver [Compatibilidad](#Compatibilidad)) y posteriormente instalar manejador de paquetes de PHP **Composer**
 
 #### Instalar Composer #####
 * Paso 1:
@@ -95,6 +95,29 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
         "proxy"=> "server.domain.com:8888"
     );
 ```
+
+#### Opciones de conexión ####
+Todos los servicios aceptan estos parametros opcionales en el mismo arreglo de configuracion:
+
+| Parametro | Descripcion | Valor por defecto |
+| --- | --- | --- |
+| `verify_ssl` | Verificacion del certificado TLS. Solo se desactiva con el booleano `false`, por ejemplo cuando un proxy corporativo intercepta TLS con su propio certificado. | `true` |
+| `cainfo` | Ruta a un bundle de certificados de CA propio, si el de PHP no esta configurado (comun en Windows). | el de PHP |
+| `timeout` | Tiempo maximo total de la solicitud en segundos. | 60 (120 en timbrado, emision y retenciones) |
+| `connect_timeout` | Tiempo maximo para conectar en segundos. | 15 |
+| `debug` | Con `true`, los errores incluyen el detalle tecnico (traza) en `messageDetail`. | `false` |
+
+Se usa TLS 1.2 como version minima.
+
+```php
+    $params = array(
+        "url"=>"https://services.test.sw.com.mx",
+        "user"=> "usuario",
+        "password"=> "contraseña",
+        "cainfo"=> "C:/ruta/cacert.pem",
+        "timeout"=> 90
+    );
+```
 ## Autenticación ###
 
 <details>
@@ -133,7 +156,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 ```json
 {
   "data": {
-    "token": "T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB35..."
+    "token": "TU_TOKEN"
   },
   "status": "success"
 }
@@ -197,7 +220,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -282,7 +305,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -322,7 +345,7 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -400,7 +423,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -485,7 +508,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -530,7 +553,7 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -756,7 +779,7 @@ Timbrado Retenciones V3 recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -800,7 +823,7 @@ Timbrado Retenciones V4 recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -1364,7 +1387,7 @@ Los datos enviados en el data son los siguientes:
             'email' => "correo_cuenta@gmail.com",
             'stamps' => 1,
             'isUnlimited' => false,
-            'password' => "SWpass1!",
+            'password' => "TU_PASSWORD",
             'notificationEmail' => "correo_notificaciones@gmail.com",
             'phone' => "1234567890"
         );
