@@ -12,14 +12,14 @@ final class CancelationRetentionTests extends TestCase
 
     protected function setUp(): void
     {
-        $paramsath = 'Test/Resources/cancel_retention_xml.xml';
+        $paramsath = __DIR__ . '/Resources/cancel_retention_xml.xml';
         $this->xmlCancel = is_file($paramsath) ? file_get_contents($paramsath) : '';
     }
 
     private function paramsCSD(): array
     {
-        $cerB64 = base64_encode(file_get_contents('Test/Resources/cert_pruebas/EKU9003173C9.cer'));
-        $keyB64 = base64_encode(file_get_contents('Test/Resources/cert_pruebas/EKU9003173C9.key'));
+        $cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+        $keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
         return [
             "rfc"      => "EKU9003173C9",
             "uuid"     => "1fae5735-ca51-4be4-9180-827c44fdb227",
@@ -32,7 +32,7 @@ final class CancelationRetentionTests extends TestCase
 
     private function paramsPFX(): array
     {
-        $paramsfxB64 = base64_encode(file_get_contents('Test/Resources/cert_pruebas/EKU9003173C9.pfx'));
+        $paramsfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
         return [
             "rfc"              => "EKU9003173C9",
             "uuid"             => "578052ce-710f-4d0b-9ffc-6ca73daf92a5",
@@ -68,6 +68,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByXML($this->xmlCancel);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -80,6 +82,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByXML($this->xmlCancel);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -91,7 +95,10 @@ final class CancelationRetentionTests extends TestCase
             $service = CancelRetentionService::Set($this->paramsToken());
             $response = $service::CancelationByXML('<Cancelacion/>');
             $this->assertEquals('error', $response->status);
-            $this->assertEquals('CASD - Acuse sin descripción específica.', $response->message);
+            $this->assertStringContainsString('CR1002', $response->message);
+            $this->assertStringContainsString('objeto de cancelación viene vacio', $response->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -107,6 +114,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByCSD($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Cer'], $params['b64Key'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -120,6 +129,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByCSD($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Cer'], $params['b64Key'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -133,6 +144,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByCSD($params['rfc'], "000000000000", $params['motivo'], $params['b64Cer'], $params['b64Key'], $params['password']);
             $this->assertEquals('error', $response->status);
             $this->assertEquals('CACFDI33 - Problemas con el xml.', $response->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -148,6 +161,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -161,6 +176,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByPFX($params['rfc'], $params['uuid'], $params['motivo'], $params['b64Pfx'], $params['password']);
             $this->assertEquals('success', $response->status);
             $this->assertNotEmpty($response->data);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -174,6 +191,8 @@ final class CancelationRetentionTests extends TestCase
             $response = $service::CancelationByPFX($params['rfc'], "00000000-0000-0000-0000-000000000000", $params['motivo'], "AAA", $params['password']);
             $this->assertEquals('error', $response->status);
             $this->assertEquals('CACFDI33 - Problemas con los campos.', $response->message);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }

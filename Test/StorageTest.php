@@ -21,6 +21,8 @@ final class StorageTest extends TestCase
             $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertEquals($resultSpect, $result::getStatus());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -39,6 +41,8 @@ final class StorageTest extends TestCase
             $result = $resend::getXml("08b5ed92-9a4f-4423-b284-36324a8aee61");
             $resultSpect = "success";
             $this->assertEquals($resultSpect, $result::getStatus());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -55,6 +59,8 @@ final class StorageTest extends TestCase
             $resultSpect = "success";
             $this->assertNotEmpty($result::getXml(), "url xml vacío");
             $this->assertEquals($resultSpect, $result::getStatus());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -71,6 +77,8 @@ final class StorageTest extends TestCase
             $resultSpect = "success";
             $this->assertNotEmpty($result::getPdf(), "UUID inválido o no pertenece a la cuenta.");
             $this->assertEquals($resultSpect, $result::getStatus());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -89,6 +97,8 @@ final class StorageTest extends TestCase
             $resultSpect = "success";
             $this->assertNotEmpty($result::getUrlCancelacion(), "UUID inválido o no pertenece a la cuenta.");
             $this->assertEquals($resultSpect, $result::getStatus());
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo $e->getMessage();
         }
@@ -97,18 +107,18 @@ final class StorageTest extends TestCase
     {
         $params = array(
             "urlApi" => "https://api.test.sw.com.mx",
-            "token" => "T2lYQ0t4L0RHVkR5Nkk1VHNEakZ3Y"
+            "token" => 'token_invalido'
         );
-        try {
-            $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
-            $this->assertNotEmpty($result, "Authentication error: AU2000 - El usuario y/o contraseña son inválidos, no se puede autenticar el servicio.");
-        } catch (Exception $e) {
-            $this->expectException(\Exception::class);
-            $this->expectExceptionMessageMatches('/AU2000/');
-            $resend = StorageService::Set($params);
-            $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
-        }
+        // StorageResponse descarta el status de error; comprobamos la respuesta del request real.
+        $storage = new class($params) extends \SWServices\Storage\StorageRequest {
+            public static function getErrorResponse($uuid)
+            {
+                return parent::postStorage($uuid);
+            }
+        };
+        $result = $storage::getErrorResponse("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
+        $this->assertNotEmpty($result);
+        $this->assertSame('error', $result->status);
     }
 
     public function testGetAllDataUser_Error()
@@ -123,6 +133,8 @@ final class StorageTest extends TestCase
             $resend = StorageService::Set($params);
             $result = $resend::getXml("4714f6f7-ccb4-4eb5-8ba6-3a523092e2b4");
             $this->assertNotEmpty($result, "Authentication error: AU2000 - El usuario y/o contraseña son inválidos, no se puede autenticar el servicio.");
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             $this->expectException(\Exception::class);
             $this->expectExceptionMessageMatches('/AU2000/');

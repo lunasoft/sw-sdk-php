@@ -36,7 +36,7 @@ final class AccountUserTests extends TestCase
             'email' => "pruebas3_test@gmail.com",
             'stamps' => 1,
             'isUnlimited' => false,
-            'password' => "SWpass1!",
+            'password' => getenv('SDKTEST_PASSWORD'),
             'notificationEmail' => "pruebas3_test@gmail.com",
             'phone' => "5550123457"
         );
@@ -55,7 +55,7 @@ final class AccountUserTests extends TestCase
             'email' => "pruebas3_test@gmail.com",
             'stamps' => 1,
             'isUnlimited' => false,
-            'password' => "SWpass1!",
+            'password' => getenv('SDKTEST_PASSWORD'),
             'notificationEmail' => "pruebas3_test@gmail.com",
             'phone' => "5550123457"
         );

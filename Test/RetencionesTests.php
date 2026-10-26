@@ -17,7 +17,10 @@ final class RetencionesTests extends TestCase
 
     public static function setUpBeforeClass(): void
     {
-        self::$generateXML = new GenerateXML();
+        if (!class_exists('XSLTProcessor')) {
+            self::markTestSkipped('Se requiere la extension xsl de PHP (ext-xsl).');
+        }
+        self::$generateXML = new GenerateXMLRetenciones();
     }
 
     public static function tearDownAfterClass(): void
@@ -164,24 +167,24 @@ final class RetencionesTests extends TestCase
     }
 }
 // -------------------------------------------End UT´s----------------------------------------------------------//
-final class GenerateXML
+final class GenerateXMLRetenciones
 {
-    public $cadenaOriginal = "./Test/Resources/cadenaOriginalRetenciones.txt";
+    public $cadenaOriginal = __DIR__ . "/Resources/cadenaOriginalRetenciones.txt";
 
     function __construct()
     {
         date_default_timezone_set('America/Mexico_City');
-        $xml = simplexml_load_file('./Test/Resources/retencion20.xml');
+        $xml = simplexml_load_file(__DIR__ . '/Resources/retencion20.xml');
 
         $currentDateTime = new DateTime();
         $interval = new DateInterval('PT1H0M0S');
         $currentDateTime->sub($interval);
         $xml["FechaExp"] = $currentDateTime->format('Y-m-d\TH:i:s');
-        $xml->asXML('./Test/Resources/retencion20_test.xml');
+        $xml->asXML(__DIR__ . '/Resources/retencion20_test.xml');
 
-        $xml = file_get_contents('./Test/Resources/retencion20_test.xml');
-        $xmlFile = "./Test/Resources/retencion20_test.xml";
-        $xslFile = "./Test/Resources/xslt/retencion_2_0.xslt";
+        $xml = file_get_contents(__DIR__ . '/Resources/retencion20_test.xml');
+        $xmlFile = __DIR__ . "/Resources/retencion20_test.xml";
+        $xslFile = __DIR__ . "/Resources/xslt/retencion_2_0.xslt";
 
         $xml = new DOMDocument("1.0", "UTF-8");
         $xml->load($xmlFile);
@@ -193,48 +196,50 @@ final class GenerateXML
         $proc->importStyleSheet($xsl);
         $cadenaOriginal = $proc->transformToXML($xml);
 
-        file_put_contents("./Test/Resources/cadenaOriginalRetenciones.txt", $cadenaOriginal);
+        file_put_contents(__DIR__ . "/Resources/cadenaOriginalRetenciones.txt", $cadenaOriginal);
     }
 
     public function createXML()
     {
-        $xml = simplexml_load_file('./Test/Resources/retencion20_test.xml');
+        $xml = simplexml_load_file(__DIR__ . '/Resources/retencion20_test.xml');
         $currentDateTime = new DateTime();
         $interval = new DateInterval('PT1H0M0S');
         $currentDateTime->sub($interval);
 
         $date = $date = $currentDateTime->format('Y-m-d\TH:i:s');
         $xml["FechaExp"] = $date;
-        $xml->asXML('./Test/Resources/retencion20_test.xml');
+        $xml->asXML(__DIR__ . '/Resources/retencion20_test.xml');
 
-        $cadenaOriginal = file_get_contents('./Test/Resources/cadenaOriginalRetenciones.txt');
+        $cadenaOriginal = file_get_contents(__DIR__ . '/Resources/cadenaOriginalRetenciones.txt');
         $cadenaOriginal = preg_replace('/\d{4}-\d{2}-\d{2}\T\d{2}:\d{2}:\d{2}/', $date, $cadenaOriginal);
 
-        file_put_contents("./Test/Resources/cadenaOriginalRetenciones.txt", $cadenaOriginal);
+        file_put_contents(__DIR__ . "/Resources/cadenaOriginalRetenciones.txt", $cadenaOriginal);
 
         $params = array(
-            "cadenaOriginal" => "./Test/Resources/cadenaOriginalRetenciones.txt",
-            "archivoKeyPem" => "./Test/Resources/cert_pruebas/EKU9003173C9_key.pem",
-            "archivoCerPem" => "./Test/Resources/cert_pruebas/EKU9003173C9_Cer.pem"
+            "cadenaOriginal" => __DIR__ . "/Resources/cadenaOriginalRetenciones.txt",
+            "archivoKeyPem" => __DIR__ . "/Resources/cert_pruebas/EKU9003173C9_key.pem",
+            "archivoCerPem" => __DIR__ . "/Resources/cert_pruebas/EKU9003173C9_Cer.pem"
         );
 
         try {
             $result = Sellar::ObtenerSello($params);
             if ($result->status == "success") {
-                $xml = simplexml_load_file('./Test/Resources/retencion20_test.xml');
+                $xml = simplexml_load_file(__DIR__ . '/Resources/retencion20_test.xml');
                 $xml["Sello"] = $result->sello;
-                $xml->asXML('./Test/Resources/retencion20_test.xml');
+                $xml->asXML(__DIR__ . '/Resources/retencion20_test.xml');
                 sleep(2);
-                return "./Test/Resources/retencion20_test.xml";
+                return __DIR__ . "/Resources/retencion20_test.xml";
             }
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             echo 'Caught exception: ',  $e->getMessage(), "\n";
         }
-        return '/Test/Resources/retencion20.xml';
+        return __DIR__ . '/Resources/retencion20.xml';
     }
 
     public function errorXML()
     {
-        return './Test/Resources/retencion20_test_error.xml';
+        return __DIR__ . '/Resources/retencion20_test_error.xml';
     }
 }

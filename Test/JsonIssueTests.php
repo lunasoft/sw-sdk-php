@@ -34,7 +34,7 @@ final class JsonIssueTests extends TestCase
         );
 
         $resultSpect = "success";
-        $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+        $json = file_get_contents(self::$generateJson->dateJson(__DIR__ . "/Resources/cfdi40_json.json"));
         JsonEmisionTimbrado::Set($params);
         $result = JsonEmisionTimbrado::jsonEmisionTimbradoV1($json);
 
@@ -70,7 +70,7 @@ final class JsonIssueTests extends TestCase
             "url" => "https://services.test.sw.com.mx",
             "token" => getenv('SDKTEST_TOKEN')
         );
-        $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+        $json = file_get_contents(self::$generateJson->dateJson(__DIR__ . "/Resources/cfdi40_json.json"));
         JsonEmisionTimbradoV4::Set($params);
         $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
         if ($result->status == "error" && strpos($result->message, '307') !== false) {
@@ -90,7 +90,7 @@ final class JsonIssueTests extends TestCase
             "url" => "https://services.test.sw.com.mx",
             "token" => getenv('SDKTEST_TOKEN')
         );
-        $json = file_get_contents(self::$generateJson->dateJson("Test/Resources/cfdi40_json.json"));
+        $json = file_get_contents(self::$generateJson->dateJson(__DIR__ . "/Resources/cfdi40_json.json"));
         JsonEmisionTimbradoV4::Set($params);
         $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
         if ($result->status == "error" && strpos($result->message, '307') !== false) {
@@ -108,7 +108,7 @@ final class JsonIssueTests extends TestCase
             "url" => "https://services.test.sw.com.mx",
             "token" => getenv('SDKTEST_TOKEN')
         );
-        $json = file_get_contents("Test/Resources/cfdi40_json.json");
+        $json = file_get_contents(__DIR__ . "/Resources/cfdi40_json.json");
         JsonEmisionTimbradoV4::Set($params);
         $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdPdfV1($json, $customId, $pdf);
         $this->assertTrue($resultSpect == $result->status);
@@ -123,7 +123,7 @@ final class JsonIssueTests extends TestCase
             "url" => "https://services.test.sw.com.mx",
             "token" => getenv('SDKTEST_TOKEN')
         );
-        $json = file_get_contents("Test/Resources/cfdi40_json.json");
+        $json = file_get_contents(__DIR__ . "/Resources/cfdi40_json.json");
         JsonEmisionTimbradoV4::Set($params);
         $result = JsonEmisionTimbradoV4::jsonIssueV4CustomIdEmailV1($json, $customId, $email);
         $this->assertTrue($resultSpect == $result->status);
@@ -147,6 +147,6 @@ final class GenerateJson
         $newJson = json_encode($data);
         file_put_contents($path, $newJson);
 
-        return "Test/Resources/cfdi40_json.json";
+        return __DIR__ . "/Resources/cfdi40_json.json";
     }
 }

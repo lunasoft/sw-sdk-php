@@ -17,7 +17,7 @@ final class ValidateXMLTest extends TestCase
             "password" => getenv('SDKTEST_PASSWORD')
         );
 
-        $xml = file_get_contents('Test\Resources\cfdi40_sellado.xml');
+        $xml = file_get_contents(__DIR__ . '/Resources/cfdi40_sellado.xml');
         $validateStatus = false;
         $validateXml = ValidateXMLService::Set($params);
         $result = $validateXml::ValidaXML($xml, $validateStatus);
@@ -33,7 +33,7 @@ final class ValidateXMLTest extends TestCase
             "token" => getenv('SDKTEST_TOKEN')
         );
 
-        $xml = file_get_contents('Test\Resources\cfdi40_sellado.xml');
+        $xml = file_get_contents(__DIR__ . '/Resources/cfdi40_sellado.xml');
         $validateStatus =  false;
         $validateXml = ValidateXMLService::Set($params);
         $result = $validateXml::ValidaXML($xml, $validateStatus);

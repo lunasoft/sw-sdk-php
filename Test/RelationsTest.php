@@ -24,6 +24,8 @@ final class RelationsTest extends TestCase
 			$result = $relationsService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEmpty($result->data);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -31,7 +33,7 @@ final class RelationsTest extends TestCase
 
 	public function testRelationsByUUID_NoData()
 	{
-		$resultSpect = "CACFDI33 - Error no controlado";
+		$resultSpect = "No se encontraron CFDI relacionados.";
 		$uuid = "22061fa1-dd22-4e2a-9ec5-a80c08b6532a";
 		$rfc = "EKU9003173C9";
 		$token = getenv('SDKTEST_TOKEN');
@@ -42,7 +44,9 @@ final class RelationsTest extends TestCase
 		try {
 			$relationsService = RelationsService::Set($params);
 			$result = $relationsService::ConsultarCFDIRelacionadosUUID($rfc, $uuid);
-			$this->assertEquals($resultSpect, $result->message);
+			$this->assertEquals($resultSpect, trim($result->message));
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -53,8 +57,8 @@ final class RelationsTest extends TestCase
 		$resultSpect = "success";
 		$uuid = "cfc771b4-7d90-459e-ab06-afd2b3c59c10";
 		$rfc = "EKU9003173C9";
-		$cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		$keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+		$cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		$keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		$password = "12345678a";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
@@ -66,6 +70,8 @@ final class RelationsTest extends TestCase
 			$result = $relationsService::ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, $cerB64, $keyB64);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEmpty($result->data);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -73,11 +79,11 @@ final class RelationsTest extends TestCase
 
 	public function testRelationsByCSD_NoData()
 	{
-		$resultSpect = "CACFDI33 - Error no controlado";
+		$resultSpect = "No se encontraron CFDI relacionados.";
 		$uuid = "22061fa1-dd22-4e2a-9ec5-a80c08b6532a";
 		$rfc = "EKU9003173C9";
-		$cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		$keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+		$cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		$keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		$password = "12345678a";
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
@@ -87,7 +93,9 @@ final class RelationsTest extends TestCase
 		try {
 			$relationsService = RelationsService::Set($params);
 			$result = $relationsService::ConsultarCFDIRelacionadosCSD($uuid, $password, $rfc, $cerB64, $keyB64);
-			$this->assertEquals($resultSpect, $result->message);
+			$this->assertEquals($resultSpect, trim($result->message));
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -99,7 +107,7 @@ final class RelationsTest extends TestCase
 		$uuid = "cfc771b4-7d90-459e-ab06-afd2b3c59c10";
 		$rfc = "EKU9003173C9";
 		$password = "12345678a";
-		$pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+		$pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
 			"url" => "https://services.test.sw.com.mx",
@@ -110,6 +118,8 @@ final class RelationsTest extends TestCase
 			$result = $relationsService::ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, $pfxB64);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertEmpty($result->data);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -117,11 +127,11 @@ final class RelationsTest extends TestCase
 
 	public function testRelationsByPFX_NoData()
 	{
-		$resultSpect = "CACFDI33 - Error no controlado";
+		$resultSpect = "No se encontraron CFDI relacionados.";
 		$uuid = "22061fa1-dd22-4e2a-9ec5-a80c08b6532a";
 		$rfc = "EKU9003173C9";
 		$password = "12345678a";
-		$pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+		$pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
 		$token = getenv('SDKTEST_TOKEN');
 		$params = array(
 			"url" => "https://services.test.sw.com.mx",
@@ -130,7 +140,9 @@ final class RelationsTest extends TestCase
 		try {
 			$relationsService = RelationsService::Set($params);
 			$result = $relationsService::ConsultarCFDIRelacionadosPFX($uuid, $password, $rfc, $pfxB64);
-			$this->assertEquals($resultSpect, $result->message);
+			$this->assertEquals($resultSpect, trim($result->message));
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

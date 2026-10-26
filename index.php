@@ -1,4 +1,5 @@
 <?php
+if (PHP_SAPI !== 'cli') { http_response_code(403); exit; }
 require_once 'SWSDK.php';
 
 use SWServices\Authentication\AuthenticationService as Authentication;
@@ -32,7 +33,7 @@ try {
     $result = Authentication::Token();
 
     if ($result->status == "success") {
-        echo $result->data->token;
+        echo 'Token obtenido';
     } else {
         echo $result->message;
     }
@@ -198,8 +199,8 @@ var_dump($consultaCfdi);
 
 echo "\n\n--------------- Consulta Usuario ------------------\n\n";
 $paramUser = array(
-    "url" => "http://services.test.sw.com.mx",
-    "urlApi" => "http://api.test.sw.com.mx",
+    "url" => "https://services.test.sw.com.mx",
+    "urlApi" => "https://api.test.sw.com.mx",
     "user" => getenv('SDKTEST_USER'),
     "password" => getenv('SDKTEST_PASSWORD')
     );

@@ -24,6 +24,8 @@ final class SatQueryTests extends TestCase
 
             $result = SatQueryService::ServicioConsultaSAT($url, $rfcEmisor, $rfcReceptor, $total, $uuid, $sello);
             $this->assertContains($result->Status, $resultSpect);
+        } catch (\PHPUnit\Framework\AssertionFailedError $e) {
+        	throw $e;
         } catch (Exception $e) {
             $this->assertTrue(true);
         }
