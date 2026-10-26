@@ -29,6 +29,9 @@ class RelationsRequest
 
         if ($data) {
             curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        } elseif (strtoupper((string)$method) === 'POST') {
+            // Sin cuerpo, cURL no envía Content-Length y el servicio responde 411.
+            curl_setopt($curl, CURLOPT_POSTFIELDS, '');
         }
 
         $defaultHeaders = [
