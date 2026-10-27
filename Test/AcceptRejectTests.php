@@ -64,8 +64,8 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+            $cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		    $keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
 			    "url"=>"https://services.test.sw.com.mx",
@@ -84,8 +84,8 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+            $cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		    $keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
                 'url'=> 'https://services.test.sw.com.mx',
@@ -105,8 +105,8 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $cerB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.cer'));
-		    $keyB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.key'));
+            $cerB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.cer'));
+		    $keyB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.key'));
 		    $password = "12345678a";
             $params = array(
                 'url'=> 'https://services.test.sw.com.mx',
@@ -125,7 +125,7 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+            $pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
             $passwordPfx = "12345678a";
             $params = array(
 			    "url"=>"https://services.test.sw.com.mx",
@@ -144,7 +144,7 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+            $pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
             $passwordPfx = "12345678a";
             $params = array(
                 'url'=> 'https://services.test.sw.com.mx',
@@ -165,7 +165,7 @@
             $list = [
                 ['uuid' => 'dcbddeb9-a208-42be-ae5b-0390a929fe48', 'action' => 'Aceptacion']
             ];
-            $pfxB64 = base64_encode(file_get_contents('Test\Resources\cert_pruebas\EKU9003173C9.pfx'));
+            $pfxB64 = base64_encode(file_get_contents(__DIR__ . '/Resources/cert_pruebas/EKU9003173C9.pfx'));
             $passwordPfx = "swpass";
             $params = array(
                 'url'=> 'https://services.test.sw.com.mx',
@@ -180,7 +180,7 @@
         /* -------------------------- Aceptación/Rechazo XML -------------------------------------------- */
         public function testAcceptRejectServiceByXML_auth(){
             $resultSpect = "success";
-            $xml = file_get_contents('Test\Resources\acceptReject_xml.xml');
+            $xml = file_get_contents(__DIR__ . '/Resources/acceptReject_xml.xml');
             $params = array(
 			    "url"=>"https://services.test.sw.com.mx",
 			    "user"=> getenv('SDKTEST_USER'),
@@ -194,7 +194,7 @@
         }
         public function testAcceptRejectServiceByXML_success(){
             $resultSpect = "success";
-            $xml = file_get_contents('Test\Resources\acceptReject_xml.xml');
+            $xml = file_get_contents(__DIR__ . '/Resources/acceptReject_xml.xml');
             $params = array(
                 'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
@@ -211,7 +211,7 @@
             $messageDetail = "CA1000 - El xml proporcionado está mal formado o es inválido. There is an error in XML document (0, 0).";
             $xml = null;
             $params = array(
-                'url'=> 'services.test.sw.com.mx',
+                'url'=> 'https://services.test.sw.com.mx',
                 'token'=> getenv('SDKTEST_TOKEN'),
             );
             $acceptReject = AcceptRejectService::Set($params);

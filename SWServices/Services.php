@@ -17,6 +17,8 @@ class Services extends Request
     private static $_urlApi = null;
     private static $_expirationDate = null;
     private static $_proxy = null;
+    private static $_sslOptions = [];
+    private static $_timeoutOptions = ['timeout' => null, 'connect_timeout' => null];
     private static $_timeSession = "PT2H";
 
     public function __construct($params)
@@ -43,6 +45,15 @@ class Services extends Request
         if (isset($params['proxy'])) {
             self::$_proxy = $params['proxy'];
         }
+        // Reset request options on each service configuration, before authentication.
+        self::$_sslOptions = [
+            'verify_ssl' => ($params['verify_ssl'] ?? true) !== false,
+            'cainfo' => $params['cainfo'] ?? null
+        ];
+        self::$_timeoutOptions = [
+            'timeout' => $params['timeout'] ?? null,
+            'connect_timeout' => $params['connect_timeout'] ?? null
+        ];
         if (isset($params['token'])) {
             self::$_token = $params['token'];
             date_default_timezone_set("America/Mexico_City");
@@ -58,7 +69,11 @@ class Services extends Request
             $params = array(
                 "url" => self::$_url,
                 "user" => self::$_user,
-                "password" => self::$_password
+                "password" => self::$_password,
+                "verify_ssl" => self::$_sslOptions['verify_ssl'] ?? true,
+                "cainfo" => self::$_sslOptions['cainfo'] ?? null,
+                "timeout" => self::$_timeoutOptions['timeout'],
+                "connect_timeout" => self::$_timeoutOptions['connect_timeout']
             );
 
             $auth = Authentication::auth($params);
@@ -69,8 +84,6 @@ class Services extends Request
                 throw new Exception("Authentication error: $token->message Detail: $token->messageDetail");
             }
             date_default_timezone_set("America/Mexico_City");
-            $_expirationDate = new \DateTime('NOW');
-            $_expirationDate->add(new \DateInterval("P15Y"));
         }
         return  self::$_token;
     }
@@ -96,6 +109,19 @@ class Services extends Request
     {
         self::$_token = $token;
     }
+    /**
+     * SSL configuration shared by requests, including token renewal.
+     */
+    public static function get_ssl_options(): array
+    {
+        return self::$_sslOptions;
+    }
+
+    public static function get_timeout_options(): array
+    {
+        return self::$_timeoutOptions;
+    }
+
     public static function get_proxy()
     {
         return self::$_proxy;

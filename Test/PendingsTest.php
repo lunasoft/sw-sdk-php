@@ -23,6 +23,8 @@ final class PendingsTest extends TestCase
 			$result = $pendingsService::PendientesPorCancelar($rfc);
 			$this->assertEquals($resultSpect, $result->status);
 			$this->assertNotEmpty($result->data);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}
@@ -43,6 +45,8 @@ final class PendingsTest extends TestCase
 			$result = $pendingsService::PendientesPorCancelar($rfc);
 			$this->assertEquals($resultSpect, $result->message);
 			$this->assertEquals($codeSpect, $result->codStatus);
+		} catch (\PHPUnit\Framework\AssertionFailedError $e) {
+			throw $e;
 		} catch (Exception $e) {
 			echo $e->getMessage();
 		}

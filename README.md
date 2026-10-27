@@ -19,7 +19,7 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 ### Compatibilidad
 
 * CFDI 4.0
-* PHP 5.6 ó en su versión PHP 7
+* PHP 8.2 ó superior. Se recomienda usar versiones con soporte de seguridad vigente: 8.2.35, 8.3.36, 8.4.27, 8.5.12 o posteriores.
 ------------
 
 ### Dependencias
@@ -37,7 +37,7 @@ A continuación encontraras una librería php para el timbrado de **CFDI 4.0** m
 
 ### Instalación
 
-Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP ya sea la **5.6** o la version **7** y posteriormente instalar manejador de paquetes de PHP **Composer**
+Para poder hacer uso de nuestro SDK para consumir el servio **REST** que **SmarterWeb** le provee primero es necesario tener instalado una version de PHP **8.2** o superior (ver [Compatibilidad](#Compatibilidad)) y posteriormente instalar manejador de paquetes de PHP **Composer**
 
 #### Instalar Composer #####
 * Paso 1:
@@ -95,6 +95,28 @@ Si tu posees un servidor proxy en tu empresa y deseas que la libreria lo use, de
         "proxy"=> "server.domain.com:8888"
     );
 ```
+
+#### Opciones de conexión ####
+Todos los servicios aceptan estos parametros opcionales en el mismo arreglo de configuracion:
+
+| Parametro | Descripcion | Valor por defecto |
+| --- | --- | --- |
+| `verify_ssl` | Verificacion del certificado TLS. Solo se desactiva con el booleano `false`, por ejemplo cuando un proxy corporativo intercepta TLS con su propio certificado. | `true` |
+| `cainfo` | Ruta a un bundle de certificados de CA propio, si el de PHP no esta configurado (comun en Windows). | el de PHP |
+| `timeout` | Tiempo maximo total de la solicitud en segundos. Con `0` no hay limite. | 60 |
+| `connect_timeout` | Tiempo maximo para conectar en segundos. | 15 |
+
+Se usa TLS 1.2 como version minima.
+
+```php
+    $params = array(
+        "url"=>"https://services.test.sw.com.mx",
+        "user"=> "usuario",
+        "password"=> "contraseña",
+        "cainfo"=> "C:/ruta/cacert.pem",
+        "timeout"=> 90
+    );
+```
 ## Autenticación ###
 
 <details>
@@ -133,7 +155,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 ```json
 {
   "data": {
-    "token": "T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE1wVm5tbXB35..."
+    "token": "TU_TOKEN"
   },
   "status": "success"
 }
@@ -197,7 +219,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -282,7 +304,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -322,7 +344,7 @@ Si se desea, se puede usar la version 2 en la modalidad base64, esto quiere deci
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -400,7 +422,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -485,7 +507,7 @@ El ejemplo anterior la respuesta es un objeto tipo **JSON** y dentro de el se en
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -530,7 +552,7 @@ Si se desea, se puede usar la version 4 en la modalidad base64, esto quiere deci
 
     $params = array(
         "url"=>"https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -756,7 +778,7 @@ Timbrado Retenciones V3 recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -800,7 +822,7 @@ Timbrado Retenciones V4 recibe el contenido de un XML ya emitido (sellado) en fo
 
     $params = array(
         "url" => "https://services.test.sw.com.mx",
-        "token"=>"T2lYQ0t4L0RHVkR4dHZ5Nkk1VHNEakZ3Y0J4Nk9GODZuRyt4cE..............."
+        "token"=>"TU_TOKEN"
     );
 
     try
@@ -1364,7 +1386,7 @@ Los datos enviados en el data son los siguientes:
             'email' => "correo_cuenta@gmail.com",
             'stamps' => 1,
             'isUnlimited' => false,
-            'password' => "SWpass1!",
+            'password' => "TU_PASSWORD",
             'notificationEmail' => "correo_notificaciones@gmail.com",
             'phone' => "1234567890"
         );
@@ -2219,7 +2241,7 @@ Ejemplo de uso:
 
 ```php
 require_once 'SWSDK.php';
-use SWServices\PDF\PDFService as pdfService;
+use SWServices\PDF\PdfService as pdfService;
 
     $xml = "<?xml version='1.0' encoding='utf-8'?> <cfdi:Comprobante......";
     $logo = "JP39LSM5mdbtAd1...........";
@@ -2237,7 +2259,7 @@ use SWServices\PDF\PDFService as pdfService;
 Plantilla con datos adicionales
 ```php
 require_once 'SWSDK.php';
-use SWServices\PDF\PDFService as pdfService;
+use SWServices\PDF\PdfService as pdfService;
 
     $xml = "<?xml version='1.0' encoding='utf-8'?> <cfdi:Comprobante......";
     $logo = "JP39LSM5mdbtAd1...........";
@@ -2283,7 +2305,7 @@ Ejemplo de uso
 ```php
 require_once 'SWSDK.php';
 
-use SWServices\PDF\PDFService as pdfService;
+use SWServices\PDF\PdfService as pdfService;
 
     $uuid = "604729a6-a1d9-4969-b35f-e7d04c7ad75c";
     $params = array(
@@ -2300,7 +2322,7 @@ Con datos adicionales
 ```php
 require_once 'SWSDK.php';
 
-use SWServices\PDF\PDFService as pdfService;
+use SWServices\PDF\PdfService as pdfService;
     //Si se cuentan con distintos templateId, 
     //es necesario especificarlo
     $extras =  array(
@@ -2550,7 +2572,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2579,7 +2601,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2608,7 +2630,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2636,7 +2658,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2779,7 +2801,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2809,7 +2831,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2839,7 +2861,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 
@@ -2869,7 +2891,7 @@ Recibe el contenido de un **XML** sin sellar en formato **String** se pasa un pa
 <?php
     require_once 'SWSDK.php';
 
-    use SWServices\PDF\PDFService as pdfService;
+    use SWServices\PDF\PdfService as pdfService;
     use SWServices\Stamp\StampService as StampService;
     use SWServices\Stamp\EmisionTimbrado as EmisionTimbrado;
 

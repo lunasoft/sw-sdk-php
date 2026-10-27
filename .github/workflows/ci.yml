@@ -1,0 +1,78 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, main, master]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    name: Pruebas con PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      # Las pruebas de integración usan el mismo sandbox: en paralelo se pisan (timbres duplicados).
+      max-parallel: 1
+      matrix:
+        include:
+          # tests: true ejecuta PHPUnit (mínimo y más reciente); false solo verifica sintaxis.
+          - php: '8.2'
+            min: '8.2.35'
+            tests: true
+          - php: '8.3'
+            min: '8.3.36'
+            tests: false
+          - php: '8.4'
+            min: '8.4.27'
+            tests: false
+          - php: '8.5'
+            min: '8.5.12'
+            tests: true
+    env:
+      SDKTEST_USER: ${{ secrets.SDKTEST_USER }}
+      SDKTEST_PASSWORD: ${{ secrets.SDKTEST_PASSWORD }}
+      SDKTEST_TOKEN: ${{ secrets.SDKTEST_TOKEN }}
+    steps:
+      - name: Obtener el código
+        uses: actions/checkout@v4
+
+      - name: Preparar PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, mbstring, dom, openssl, gd, xsl
+          tools: composer:v2
+          coverage: none
+
+      - name: Verificar versión de PHP con parche de seguridad
+        run: |
+          php -v
+          php -r 'exit(version_compare(PHP_VERSION, "${{ matrix.min }}", ">=") ? 0 : 1);'
+
+      - name: Instalar dependencias
+        run: composer install --no-interaction --prefer-dist --no-progress
+
+      - name: Comprobar secretos de integración
+        id: integration
+        shell: bash
+        run: |
+          if [ -n "$SDKTEST_TOKEN" ]; then
+            echo "has_secrets=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_secrets=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ejecutar pruebas
+        if: matrix.tests && steps.integration.outputs.has_secrets == 'true'
+        run: vendor/bin/phpunit
+
+      - name: Verificar sintaxis sin secretos
+        if: ${{ !matrix.tests || steps.integration.outputs.has_secrets != 'true' }}
+        shell: bash
+        run: |
+          echo "::notice::Solo se verifica la sintaxis PHP (sin pruebas de integración en esta versión o sin SDKTEST_TOKEN)."
+          find SWServices -type f -name '*.php' -print0 | xargs -0 -r -n 1 php -l
+          php -l SWSDK.php

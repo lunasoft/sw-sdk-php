@@ -2,22 +2,18 @@
 
 namespace SWServices\AcceptReject;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use Exception;
 
 class AcceptRejectRequest
 {
     private static function sendRequest($url, $token, $method, $data, $headers = [], $proxy = null)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         $curl = curl_init($url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($curl, CURLOPT_SSLVERSION, $protocols);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
         curl_setopt($curl, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
@@ -31,11 +27,13 @@ class AcceptRejectRequest
 
         curl_setopt($curl, CURLOPT_HTTPHEADER, array_merge($defaultHeaders, $headers));
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
 
-        curl_close($curl);
 
         if ($err) {
             throw new Exception("cURL Error: " . $err);
@@ -58,7 +56,7 @@ class AcceptRejectRequest
             "action" => $action ?? null
         ]);
 
-        $path = $url . $service . $rfc . '/' . $uuid . '/' . $action;
+        $path = $url . $service . rawurlencode((string)$rfc) . '/' . rawurlencode((string)$uuid) . '/' . rawurlencode((string)$action);
         $headers = ['Content-Type: application/json'];
         return self::sendRequest($path, $token, 'POST', $data, $headers, $proxy);
     }

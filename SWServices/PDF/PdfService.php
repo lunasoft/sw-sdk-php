@@ -58,7 +58,7 @@ class PdfService extends Services
                 $extra = json_encode($extra);
             }
             PdfHelper::validateUuid($uuid);
-            return HttpRequest::postJson(Services::get_urlApi(), '/pdf/v1/api/RegeneratePdf/' . $uuid, Services::get_token(), $extra, Services::get_proxy());
+            return HttpRequest::postJson(Services::get_urlApi(), '/pdf/v1/api/RegeneratePdf/' . rawurlencode((string)$uuid), Services::get_token(), $extra, Services::get_proxy());
         } catch (Exception $e) {
             return Response::handleException($e);
         }

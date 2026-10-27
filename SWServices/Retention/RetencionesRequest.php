@@ -2,6 +2,9 @@
 
 namespace SWServices\Retention;
 
+use SWServices\Helpers\CurlHelper;
+use SWServices\Services;
+
 use SWServices\Retention\RetencionesHelper as Response;
 use chillerlan\QRCode\QRCode;
 use chillerlan\QRCode\QROptions;
@@ -19,10 +22,6 @@ class RetencionesRequest
 
     public static function sendReq($url, $token, $xml, $version, $isB64)
     {
-        $protocols = [
-            CURL_SSLVERSION_TLSv1_2,
-            CURL_SSLVERSION_TLSv1_3
-        ];
 
         if ($url === '' || $token === '' || $xml === '') {
             return Response::toErrorResponse('Parámetros inválidos', 'url/token/xml requerido');
@@ -45,7 +44,7 @@ class RetencionesRequest
         }
         $data .= "--" . $delimiter . "--\r\n";
 
-        $endpoint = $url . rtrim(self::PATH_STAMP, '/') . '/' . $version . ($isB64 ? '/b64' : '');
+        $endpoint = $url . rtrim(self::PATH_STAMP, '/') . '/' . rawurlencode((string)$version) . ($isB64 ? '/b64' : '');
 
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -58,26 +57,25 @@ class RetencionesRequest
                 'Content-Length: ' . strlen($data),
                 'Authorization: Bearer ' . $token,
             ],
-            CURLOPT_SSLVERSION => $protocols,
-            CURLOPT_SSL_VERIFYPEER => 0,
-            CURLOPT_SSL_VERIFYHOST => 0
         ]);
 
+        CurlHelper::applySslOptions($curl, Services::get_ssl_options());
+        CurlHelper::applyTimeoutOptions($curl);
+        CurlHelper::applyRedirectOptions($curl, $url, false);
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         $err = curl_error($curl);
-        curl_close($curl);
 
         if ($err) {
             return Response::toErrorResponse('Error de conexión', $err);
         }
         if ($httpcode >= 500) {
-            return Response::toErrorResponse('Error HTTP', "HTTPCode: $httpcode, Response: " . substr((string)$response, 0, 500));
+            return Response::toErrorResponse('Error HTTP', "HTTPCode: $httpcode, Response: " . $response);
         }
 
         $decoded = json_decode($response, true);
         if (!is_array($decoded)) {
-            return Response::toErrorResponse('Respuesta no es JSON', substr((string)$response, 0, 500));
+            return Response::toErrorResponse('Respuesta no es JSON', (string)$response);
         }
 
         return json_encode($decoded, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT);
@@ -87,7 +85,7 @@ class RetencionesRequest
     {
         $json = json_decode($rawJson, true);
         if (!is_array($json)) {
-            return Response::toErrorResponse('Respuesta no es JSON', substr((string)$rawJson, 0, 500));
+            return Response::toErrorResponse('Respuesta no es JSON', (string)$rawJson);
         }
         if (($json['status'] ?? '') !== 'success') {
             if (!array_key_exists('data', $json)) {
@@ -102,7 +100,7 @@ class RetencionesRequest
         }
 
         try {
-            $tfd = simplexml_load_string($retencion);
+            $tfd = simplexml_load_string($retencion, 'SimpleXMLElement', LIBXML_NONET);
             if ($tfd === false) {
                 return Response::toErrorResponse('No se pudo cargar XML de data.retencion', '');
             }
@@ -165,7 +163,9 @@ class RetencionesRequest
     {
         try {
             $dom = new DOMDocument();
-            $dom->loadXML($retencion);
+            if (!$dom->loadXML($retencion, LIBXML_NONET)) {
+                return '';
+            }
             $xp = new DOMXPath($dom);
             $xp->registerNamespace('retenciones', self::XMLNS_RETENTION);
             $xp->registerNamespace('tfd', self::XMLNS_TFD);

@@ -117,6 +117,58 @@ class StorageResponse extends Services
             self::$status = $data->status;
 
         } else {
+            self::$datos = null;
+            self::$xml = null;
+            self::$codigoCancelacion = null;
+            self::$statusSAT = null;
+            self::$urlPDF = null;
+            self::$urlAckCancellation = null;
+            self::$hasAddenda = null;
+            self::$addenda = null;
+            self::$urlAddenda = null;
+            self::$fechaGeneracionPdf = null;
+            self::$idDealer = null;
+            self::$idUser = null;
+            self::$version = null;
+            self::$serie = null;
+            self::$folio = null;
+            self::$fecha = null;
+            self::$numeroCertificado = null;
+            self::$subTotal = null;
+            self::$descuento = null;
+            self::$total = null;
+            self::$moneda = null;
+            self::$tipoCambio = null;
+            self::$tipoDeComprobante = null;
+            self::$metodoPago = null;
+            self::$formaPago = null;
+            self::$condicionesPago = null;
+            self::$luegarExpedicion = null;
+            self::$emisorRfc = null;
+            self::$emisorNombre = null;
+            self::$regimenFiscal = null;
+            self::$receptorRfc = null;
+            self::$receptorNombre = null;
+            self::$residenciaFiscal = null;
+            self::$numRegIdTrib = null;
+            self::$usoCFDI = null;
+            self::$totalImpuestosTraslados = null;
+            self::$totalImpuestosRetencion = null;
+            self::$trasladosIVA = null;
+            self::$trasladosIEPS = null;
+            self::$retencionesISR = null;
+            self::$retencionesIVA = null;
+            self::$retencionesIEPS = null;
+            self::$totalImpuestosLocalesTraslados = null;
+            self::$totalImpuestosLocalesRetencion = null;
+            self::$complementos = null;
+            self::$uuid = null;
+            self::$fechaTimbrado = null;
+            self::$rfcProvCertif = null;
+            self::$selloCFD = null;
+            self::$urlXml = null;
+            self::$yearMonth = null;
+            self::$status = null;
             //se valida credenciales en esta clase ya que es la última en instanciarse
             //en storageservice
             self::ValidateCredentials();
