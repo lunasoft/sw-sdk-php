@@ -7,6 +7,6 @@
         }
     ],
     "require": {
-        "lunasoft/sw-sdk-php": "dev-master"
+        "swsapiendev/sw-sdk-php": "dev-master"
     }
 }
