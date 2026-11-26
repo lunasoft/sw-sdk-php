@@ -51,7 +51,7 @@ Ejecutar el archivo descargado **Composer-Setup.exe** y seguir los pasos de inst
 
 #### Preparar nuestro ambiente de Desarrollo #####
 * Paso 1:
-Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresaremos la libreria de la cual queremos hacer uso en nuestro ejemplo es **lunasoft/sw-sdk-php**
+Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresaremos la libreria de la cual queremos hacer uso en nuestro ejemplo es **swsapiendev/sw-sdk-php**
 
 ```php
 {
@@ -63,7 +63,7 @@ Necesitaremos crear un archivo llamador **composer.json** y dentro de el ingresa
         }
     ],
     "require": {
-        "lunasoft/sw-sdk-php": "dev-master"
+        "swsapiendev/sw-sdk-php": "dev-master"
     }
 }
 ```
